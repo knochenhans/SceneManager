@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://b46xhre03dhm8"]
+
+[ext_resource type="PackedScene" uid="uid://bawrmdt67ohun" path="res://Scenes/Scene.tscn" id="1_hl7nu"]
+[ext_resource type="Script" path="res://Scenes/Game.cs" id="2_4jlpu"]
+
+[node name="Game" instance=ExtResource("1_hl7nu")]
+script = ExtResource("2_4jlpu")
+
+[node name="ColorRect" type="ColorRect" parent="." index="0"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="ColorRect/MarginContainer" index="0"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/CenterContainer" index="0"]
+layout_mode = 2
+text = "Game"
+
+[node name="Button" type="Button" parent="." index="1"]
+offset_left = 1099.0
+offset_top = 617.0
+offset_right = 1152.0
+offset_bottom = 648.0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "Exit"
+
+[connection signal="pressed" from="Button" to="." method="_OnButtonPressed"]
