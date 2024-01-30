@@ -16,7 +16,7 @@ public partial class Scene : Node
 	[Export]
 	public float FadeOutTime = 1f;
 
-	PackedScene FadeScene = ResourceLoader.Load<PackedScene>("res://Scenes/Fade.tscn");
+	PackedScene FadeScene = ResourceLoader.Load<PackedScene>("res://Fade/Fade.tscn");
 
 	public SceneManager SceneManagerNode { get; set; }
 
@@ -32,14 +32,14 @@ public partial class Scene : Node
 	{
 		SceneManagerNode = GetNode<SceneManager>("/root/SceneManager");
 
-		await Fade(global::Fade.FadeDirectionEnum.In, FadeOutTime);
+		await Fade(global::Fade.FadeDirectionEnum.In, FadeInTime);
 
 		EmitSignal(SignalName.ReadyFinished);
 	}
 
 	public async void Exit()
 	{
-		await Fade(global::Fade.FadeDirectionEnum.Out, FadeInTime);
+		await Fade(global::Fade.FadeDirectionEnum.Out, FadeOutTime);
 
 		EmitSignal(SignalName.ExitFinished);
 		QueueFree();
