@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Godot;
 
 public partial class Fade : ColorRect
@@ -6,25 +5,22 @@ public partial class Fade : ColorRect
 	[Signal]
 	public delegate void FadeFinishedEventHandler();
 
+	public enum FadeDirectionEnum
+	{
+		In,
+		Out
+	}
+
 	public AnimationPlayer AnimationPlayerNode { get; set; }
 
 	public override void _Ready() => AnimationPlayerNode = GetNode<AnimationPlayer>("AnimationPlayer");
 
-	public async void FadeIn(float duration)
+	public async void Run(FadeDirectionEnum direction, float time)
 	{
-		AnimationPlayerNode.Play("FadeIn");
+		string animationName = direction == FadeDirectionEnum.In ? "FadeIn" : "FadeOut";
+		AnimationPlayerNode.Play(animationName);
 		AnimationPlayerNode.Seek(0, true);
-		AnimationPlayerNode.SpeedScale = 1 / duration;
-		await ToSignal(AnimationPlayerNode, "animation_finished");
-		EmitSignal(SignalName.FadeFinished);
-		QueueFree();
-	}
-
-	public async void FadeOut(float duration)
-	{
-		AnimationPlayerNode.Play("FadeOut");
-		AnimationPlayerNode.Seek(0, true);
-		AnimationPlayerNode.SpeedScale = 1 / duration;
+		AnimationPlayerNode.SpeedScale = 1 / time;
 		await ToSignal(AnimationPlayerNode, "animation_finished");
 		EmitSignal(SignalName.FadeFinished);
 		QueueFree();

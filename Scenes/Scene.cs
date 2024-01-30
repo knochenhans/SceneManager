@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 public partial class Scene : Node
 {
@@ -19,24 +20,26 @@ public partial class Scene : Node
 
 	public SceneManager SceneManagerNode { get; set; }
 
+	private async Task Fade(global::Fade.FadeDirectionEnum direction, float time)
+	{
+		var fade = FadeScene.Instantiate<Fade>();
+		GetTree().Root.AddChild(fade);
+		fade.Run(direction, time);
+		await ToSignal(fade, "FadeFinished");
+	}
+	
 	public async override void _Ready()
 	{
 		SceneManagerNode = GetNode<SceneManager>("/root/SceneManager");
 
-		var fade = FadeScene.Instantiate<Fade>();
-		GetTree().Root.AddChild(fade);
-		fade.FadeIn(FadeInTime);
-		await ToSignal(fade, "FadeFinished");
+		await Fade(global::Fade.FadeDirectionEnum.In, FadeOutTime);
 
 		EmitSignal(SignalName.ReadyFinished);
 	}
 
 	public async void Exit()
 	{
-		var fade = FadeScene.Instantiate<Fade>();
-		GetTree().Root.AddChild(fade);
-		fade.FadeOut(FadeOutTime);
-		await ToSignal(fade, "FadeFinished");
+		await Fade(global::Fade.FadeDirectionEnum.Out, FadeInTime);
 
 		EmitSignal(SignalName.ExitFinished);
 		QueueFree();
