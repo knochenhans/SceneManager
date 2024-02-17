@@ -1,26 +1,24 @@
 using Godot;
 using Godot.Collections;
 
-public partial class SceneManager : Node
+public partial class SceneManagerNode : Node
 {
-	[Export]
-	Array<string> SceneNames;
+	public Array<string> SceneNames { get; set; }
 
-	[Export]
-	string InitialSceneName;
-
-	string CurrentSceneName { get; set; } = "";
+	string CurrentSceneName { get; set; }
 	Scene CurrentScene { get; set; }
 
-	public override void _Ready()
+	public void Init(Array<string> sceneNames, string initialSceneName)
 	{
-		CurrentSceneName = InitialSceneName;
+		CurrentSceneName = initialSceneName;
+		SceneNames = sceneNames;
 
 		CallDeferred("ChangeToScene", CurrentSceneName);
 	}
 
 	public async void ChangeToScene(string sceneName)
 	{
+		GD.Print($"Changing to scene {sceneName}");
 		CurrentSceneName = sceneName;
 
 		if (CurrentScene != null)

@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SceneManager", "SceneManager.csproj", "{C39C0F6A-D3F8-4106-9547-9E538DED15D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SceneManager", "SceneManager.csproj", "{0FE5DBDB-CCAF-4C0B-AF66-63A6EF3E72F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,11 +9,11 @@ Global
 	ExportRelease|Any CPU = ExportRelease|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C39C0F6A-D3F8-4106-9547-9E538DED15D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C39C0F6A-D3F8-4106-9547-9E538DED15D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C39C0F6A-D3F8-4106-9547-9E538DED15D9}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
-		{C39C0F6A-D3F8-4106-9547-9E538DED15D9}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
-		{C39C0F6A-D3F8-4106-9547-9E538DED15D9}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
-		{C39C0F6A-D3F8-4106-9547-9E538DED15D9}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{0FE5DBDB-CCAF-4C0B-AF66-63A6EF3E72F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FE5DBDB-CCAF-4C0B-AF66-63A6EF3E72F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FE5DBDB-CCAF-4C0B-AF66-63A6EF3E72F9}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{0FE5DBDB-CCAF-4C0B-AF66-63A6EF3E72F9}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{0FE5DBDB-CCAF-4C0B-AF66-63A6EF3E72F9}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{0FE5DBDB-CCAF-4C0B-AF66-63A6EF3E72F9}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
 	EndGlobalSection
 EndGlobal

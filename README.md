@@ -1,3 +1,3 @@
-# Godot SceneManager Setup
+# Godot Scene Manager Addon
 
-Simple setup for a scene manager (for scene switching and fades) including some example scenes.
+Scene manager addon for scene switching and fades, including example scenes.

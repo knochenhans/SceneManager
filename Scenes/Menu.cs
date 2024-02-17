@@ -1,6 +1,3 @@
-using Godot;
-using System;
-
 public partial class Menu : Scene
 {
     public void _OnStartButtonPressed() => SceneManagerNode.ChangeToScene("Game");
