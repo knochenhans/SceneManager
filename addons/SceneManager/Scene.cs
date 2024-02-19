@@ -22,7 +22,7 @@ public partial class Scene : Node
 	private async Task Fade(Fade.FadeDirectionEnum direction, float time)
 	{
 		var fade = FadeScene.Instantiate<Fade>();
-		GetTree().Root.AddChild(fade);
+		GetNode<CanvasLayer>("CanvasLayer").AddChild(fade);
 		fade.Run(direction, time);
 		await ToSignal(fade, "FadeFinished");
 	}

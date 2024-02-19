@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://by7hokk5l6fh4"]
 
-[ext_resource type="PackedScene" uid="uid://bawrmdt67ohun" path="res://Scenes/Scene.tscn" id="1_sarmc"]
+[ext_resource type="PackedScene" uid="uid://bawrmdt67ohun" path="res://addons/SceneManager/Scene.tscn" id="1_sarmc"]
 [ext_resource type="Script" path="res://Scenes/Options.cs" id="2_dgqmq"]
 
 [node name="Options" instance=ExtResource("1_sarmc")]
