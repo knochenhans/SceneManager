@@ -1,7 +1,7 @@
 using Godot;
 using Godot.Collections;
 
-public partial class Main : Node2D
+public partial class Main : Node
 {
 	public SceneManagerNode SceneManagerNode { get; set; }
 
