@@ -17,7 +17,7 @@ public partial class Scene : Node
 
 	PackedScene FadeScene = ResourceLoader.Load<PackedScene>("res://addons/SceneManager/Fade/Fade.tscn");
 
-	public SceneManagerNode SceneManagerNode { get; set; }
+	public SceneManagerNode SceneManagerNode => GetNode<SceneManagerNode>("/root/SceneManagerNode");
 
 	private async Task Fade(Fade.FadeDirectionEnum direction, float time)
 	{
@@ -30,7 +30,6 @@ public partial class Scene : Node
 	public async override void _Ready()
 	{
 		GD.Print($"Starting scene {this.Name}");
-		SceneManagerNode = GetNode<SceneManagerNode>("/root/SceneManagerNode");
 
 		await Fade(global::Fade.FadeDirectionEnum.In, FadeInTime);
 
