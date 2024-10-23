@@ -46,6 +46,6 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 text = "Exit"
 
-[connection signal="pressed" from="ColorRect/MarginContainer/CenterContainer/VBoxContainer/StartButton" to="." method="_OnStartButtonPressed"]
-[connection signal="pressed" from="ColorRect/MarginContainer/CenterContainer/VBoxContainer/OptionsButton" to="." method="_OnOptionsButtonPressed"]
-[connection signal="pressed" from="ColorRect/MarginContainer/CenterContainer/VBoxContainer/ExitButton" to="." method="_OnExitButtonPressed"]
+[connection signal="pressed" from="ColorRect/MarginContainer/CenterContainer/VBoxContainer/StartButton" to="." method="OnStartButtonPressed"]
+[connection signal="pressed" from="ColorRect/MarginContainer/CenterContainer/VBoxContainer/OptionsButton" to="." method="OnOptionsButtonPressed"]
+[connection signal="pressed" from="ColorRect/MarginContainer/CenterContainer/VBoxContainer/ExitButton" to="." method="OnExitButtonPressed"]

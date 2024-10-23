@@ -13,7 +13,7 @@ public partial class SceneManagerNode : Node
 		CurrentSceneName = initialSceneName;
 		SceneNames = sceneNames;
 
-		CallDeferred("ChangeToScene", CurrentSceneName);
+		CallDeferred(MethodName.ChangeToScene, CurrentSceneName);
 	}
 
 	public async void ChangeToScene(string sceneName)
@@ -24,7 +24,7 @@ public partial class SceneManagerNode : Node
 		if (CurrentScene != null)
 		{
 			CurrentScene.Exit();
-			await ToSignal(CurrentScene, "ExitFinished");
+			await ToSignal(CurrentScene, Scene.SignalName.ExitFinished);
 		}
 
 		var newScene = ResourceLoader.Load<PackedScene>($"res://Scenes/{CurrentSceneName}.tscn").Instantiate();
@@ -40,7 +40,7 @@ public partial class SceneManagerNode : Node
 		if (CurrentScene != null)
 		{
 			CurrentScene.Exit();
-			await ToSignal(CurrentScene, "ExitFinished");
+			await ToSignal(CurrentScene, Scene.SignalName.ExitFinished);
 		}
 
 		GetTree().Quit();
