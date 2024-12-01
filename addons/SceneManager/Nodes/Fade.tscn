@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cc20k8en6s4lt"]
 
-[ext_resource type="Script" path="res://addons/SceneManager/Fade/Fade.cs" id="1_lnhvw"]
+[ext_resource type="Script" path="res://addons/SceneManager/Source/Fade.cs" id="1_lnhvw"]
 
 [sub_resource type="Animation" id="Animation_ueawl"]
 resource_name = "FadeIn"

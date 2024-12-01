@@ -1,7 +1,7 @@
 using Godot;
 using Godot.Collections;
 
-public partial class SceneManagerNode : Node
+public partial class SceneManager : Node
 {
 	public Array<string> SceneNames { get; set; }
 

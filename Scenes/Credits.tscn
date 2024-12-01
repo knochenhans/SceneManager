@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://kdapt7s0edwl"]
 
-[ext_resource type="PackedScene" uid="uid://bawrmdt67ohun" path="res://addons/SceneManager/Scene.tscn" id="1_8dig6"]
+[ext_resource type="PackedScene" uid="uid://bawrmdt67ohun" path="res://addons/SceneManager/Nodes/Scene.tscn" id="1_8dig6"]
 [ext_resource type="Script" path="res://Scenes/Credits.cs" id="2_5en6x"]
 
 [node name="Credits" instance=ExtResource("1_8dig6")]

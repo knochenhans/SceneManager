@@ -4,16 +4,14 @@ using System.Threading.Tasks;
 public partial class Scene : Node
 {
 	[Signal] public delegate void ReadyFinishedEventHandler();
-
 	[Signal] public delegate void ExitFinishedEventHandler();
 
 	[Export] public float FadeInTime = 1f;
-
 	[Export] public float FadeOutTime = 1f;
 
-	PackedScene FadeScene = ResourceLoader.Load<PackedScene>("res://addons/SceneManager/Fade/Fade.tscn");
+	PackedScene FadeScene = ResourceLoader.Load<PackedScene>("res://addons/SceneManager/Nodes/Fade.tscn");
 
-	public SceneManagerNode SceneManagerNode => GetNode<SceneManagerNode>("/root/SceneManagerNode");
+	public SceneManager SceneManager => GetNode<SceneManager>("/root/SceneManager");
 
 	private async Task Fade(Fade.FadeDirectionEnum direction, float time)
 	{

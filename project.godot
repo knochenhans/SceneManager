@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-SceneManagerNode="*res://addons/SceneManager/SceneManagerNode.tscn"
+SceneManager="*res://addons/SceneManager/Nodes/SceneManager.tscn"
 
 [dotnet]
 
