@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cc20k8en6s4lt"]
 
-[ext_resource type="Script" path="res://addons/SceneManager/Source/Fade.cs" id="1_lnhvw"]
+[ext_resource type="Script" uid="uid://dli672ubkl5qr" path="res://addons/SceneManager/Source/Fade.cs" id="1_lnhvw"]
 
 [sub_resource type="Animation" id="Animation_ueawl"]
 resource_name = "FadeIn"
@@ -49,9 +49,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c24p3"]
 _data = {
-"FadeIn": SubResource("Animation_ueawl"),
-"FadeOut": SubResource("Animation_tjxrp"),
-"RESET": SubResource("Animation_p7ho2")
+&"FadeIn": SubResource("Animation_ueawl"),
+&"FadeOut": SubResource("Animation_tjxrp"),
+&"RESET": SubResource("Animation_p7ho2")
 }
 
 [node name="Fade" type="ColorRect"]
