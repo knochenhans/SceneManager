@@ -1,5 +1,6 @@
 using Godot;
 using System.Threading.Tasks;
+using static Logger;
 
 public partial class Scene : Node
 {
@@ -23,7 +24,7 @@ public partial class Scene : Node
 
 	public async override void _Ready()
 	{
-		GD.Print($"Starting scene {this.Name}");
+		Log($"Starting scene {this.Name}", LogTypeEnum.Framework);
 		await Fade(global::Fade.FadeDirectionEnum.In, FadeInTime);
 
 		EmitSignal(SignalName.ReadyFinished);
@@ -31,7 +32,7 @@ public partial class Scene : Node
 
 	public async void Exit()
 	{
-		GD.Print($"Exiting scene {this.Name}");
+		Log($"Exiting scene {this.Name}", LogTypeEnum.Framework);
 		await Fade(global::Fade.FadeDirectionEnum.Out, FadeOutTime);
 
 		EmitSignal(SignalName.ExitFinished);

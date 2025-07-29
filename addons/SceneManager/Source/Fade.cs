@@ -1,4 +1,5 @@
 using Godot;
+using static Logger;
 
 public partial class Fade : ColorRect
 {

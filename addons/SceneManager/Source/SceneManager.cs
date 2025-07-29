@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using static Logger;
 
 public partial class SceneManager : Node
 {
@@ -18,7 +19,7 @@ public partial class SceneManager : Node
 
 	public async void ChangeToScene(string sceneName)
 	{
-		GD.Print($"Changing to scene {sceneName}");
+		Log($"Changing to scene {sceneName}", LogTypeEnum.Framework);
 		CurrentSceneName = sceneName;
 
 		if (CurrentScene != null)
