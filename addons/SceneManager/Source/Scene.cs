@@ -12,8 +12,6 @@ public partial class Scene : Node
 
 	PackedScene FadeScene = ResourceLoader.Load<PackedScene>("res://addons/SceneManager/Nodes/Fade.tscn");
 
-	public SceneManager SceneManager => GetNode<SceneManager>("/root/SceneManager");
-
 	private async Task Fade(Fade.FadeDirectionEnum direction, float time)
 	{
 		var fade = FadeScene.Instantiate<Fade>();

@@ -4,10 +4,24 @@ using static Logger;
 
 public partial class SceneManager : Node
 {
-	public Array<string> SceneNames { get; set; }
+	public static SceneManager Instance { get; private set; }
 
+	public Array<string> SceneNames { get; set; }
 	string CurrentSceneName { get; set; }
 	Scene CurrentScene { get; set; }
+
+	public override void _EnterTree()
+	{
+		// Singleton setup
+		if (Instance != null && Instance != this)
+		{
+			LogError("Duplicate SceneManager instance detected, destroying the new one.", "SceneManager", LogTypeEnum.Framework);
+			QueueFree();
+			return;
+		}
+
+		Instance = this;
+	}
 
 	public void Init(Array<string> sceneNames, string initialSceneName)
 	{
