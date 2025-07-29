@@ -17,12 +17,12 @@ public partial class Fade : ColorRect
 
 	public async void Run(FadeDirectionEnum direction, float time)
 	{
-		GD.Print($"Fade {direction} in {time} seconds");
+		Log($"Fade {direction} in {time} seconds", LogTypeEnum.Framework);
 		string animationName = direction == FadeDirectionEnum.In ? "FadeIn" : "FadeOut";
 		AnimationPlayerNode.Play(animationName);
 		AnimationPlayerNode.Seek(0, true);
 		AnimationPlayerNode.SpeedScale = 1 / time;
-		await ToSignal(AnimationPlayerNode, AnimationPlayer.SignalName.AnimationFinished);
+		await ToSignal(AnimationPlayerNode, AnimationMixer.SignalName.AnimationFinished);
 		EmitSignal(SignalName.FadeFinished);
 		QueueFree();
 	}
