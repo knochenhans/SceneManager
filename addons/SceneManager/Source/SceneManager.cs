@@ -33,7 +33,6 @@ public partial class SceneManager : Node
 
 	public async void ChangeToScene(string sceneName)
 	{
-		Log($"Changing to scene {sceneName}", "SceneManager", LogTypeEnum.Framework);
 		CurrentSceneName = sceneName;
 
 		if (CurrentScene != null)
@@ -43,6 +42,7 @@ public partial class SceneManager : Node
 		}
 
 		var newScene = ScenesPackedScenes[CurrentSceneName].Instantiate();
+		Log($"Changing to scene {newScene.Name}", "SceneManager", LogTypeEnum.Framework);
 		GetTree().Root.AddChild(newScene);
 		GetTree().CurrentScene = newScene;
 		CurrentScene = newScene as Scene;

@@ -31,7 +31,7 @@ public partial class Scene : Node
 				SceneManager.Instance.ChangeToDefaultNextScene();
 		};
 
-		Log($"Starting scene {Name}", "SceneManager", LogTypeEnum.Framework);
+		Log($"Starting scene {SceneFilePath}", "SceneManager", LogTypeEnum.Framework);
 		await Fade(global::Fade.FadeDirectionEnum.In, FadeInTime);
 
 		EmitSignal(SignalName.ReadyFinished);
@@ -39,7 +39,7 @@ public partial class Scene : Node
 
 	public async void Exit()
 	{
-		Log($"Exiting scene {Name}", "SceneManager", LogTypeEnum.Framework);
+		Log($"Exiting scene {SceneFilePath}", "SceneManager", LogTypeEnum.Framework);
 		await Fade(global::Fade.FadeDirectionEnum.Out, FadeOutTime);
 
 		EmitSignal(SignalName.ExitFinished);
