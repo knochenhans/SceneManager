@@ -11,11 +11,12 @@ public partial class Scene : Node
 	[Export] public float FadeOutTime = 0.5f;
 
 	PackedScene FadeScene = ResourceLoader.Load<PackedScene>("res://addons/SceneManager/Nodes/Fade.tscn");
+	CanvasLayer CanvasLayerNode => GetNode<CanvasLayer>("CanvasLayer");
 
 	private async Task Fade(Fade.FadeDirectionEnum direction, float time)
 	{
 		var fade = FadeScene.Instantiate<Fade>();
-		GetNode<CanvasLayer>("CanvasLayer").AddChild(fade);
+		CanvasLayerNode.AddChild(fade);
 		fade.Run(direction, time);
 		await ToSignal(fade, global::Fade.SignalName.FadeFinished);
 	}
