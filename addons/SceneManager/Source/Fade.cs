@@ -17,7 +17,7 @@ public partial class Fade : ColorRect
 
 	public async void Run(FadeDirectionEnum direction, float time)
 	{
-		Log($"Fade {direction} in {time} seconds", LogTypeEnum.Framework);
+		Log($"Fade {direction} in {time} seconds", "SceneManager", LogTypeEnum.Framework);
 		string animationName = direction == FadeDirectionEnum.In ? "FadeIn" : "FadeOut";
 		AnimationPlayerNode.Play(animationName);
 		AnimationPlayerNode.Seek(0, true);

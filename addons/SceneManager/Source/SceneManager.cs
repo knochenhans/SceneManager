@@ -33,7 +33,7 @@ public partial class SceneManager : Node
 
 	public async void ChangeToScene(string sceneName)
 	{
-		Log($"Changing to scene {sceneName}", LogTypeEnum.Framework);
+		Log($"Changing to scene {sceneName}", "SceneManager", LogTypeEnum.Framework);
 		CurrentSceneName = sceneName;
 
 		if (CurrentScene != null)

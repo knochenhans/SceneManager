@@ -22,7 +22,7 @@ public partial class Scene : Node
 
 	public async override void _Ready()
 	{
-		Log($"Starting scene {this.Name}", LogTypeEnum.Framework);
+		Log($"Starting scene {Name}", "SceneManager", LogTypeEnum.Framework);
 		await Fade(global::Fade.FadeDirectionEnum.In, FadeInTime);
 
 		EmitSignal(SignalName.ReadyFinished);
@@ -30,7 +30,7 @@ public partial class Scene : Node
 
 	public async void Exit()
 	{
-		Log($"Exiting scene {this.Name}", LogTypeEnum.Framework);
+		Log($"Exiting scene {Name}", "SceneManager", LogTypeEnum.Framework);
 		await Fade(global::Fade.FadeDirectionEnum.Out, FadeOutTime);
 
 		EmitSignal(SignalName.ExitFinished);
