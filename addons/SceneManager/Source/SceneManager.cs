@@ -4,6 +4,9 @@ using static Logger;
 
 public partial class SceneManager : Node
 {
+	[Export] public Dictionary<string, PackedScene> ScenesPackedScenes = [];
+	[Export] public string initialSceneName = "game";
+
 	public static SceneManager Instance { get; private set; }
 
 	public Array<string> SceneNames { get; set; }
@@ -23,12 +26,9 @@ public partial class SceneManager : Node
 		Instance = this;
 	}
 
-	public void Init(Array<string> sceneNames, string initialSceneName)
+	public override void _Ready()
 	{
-		CurrentSceneName = initialSceneName;
-		SceneNames = sceneNames;
-
-		CallDeferred(MethodName.ChangeToScene, CurrentSceneName);
+		CallDeferred(MethodName.ChangeToScene, initialSceneName);
 	}
 
 	public async void ChangeToScene(string sceneName)
@@ -42,10 +42,24 @@ public partial class SceneManager : Node
 			await ToSignal(CurrentScene, Scene.SignalName.ExitFinished);
 		}
 
-		var newScene = ResourceLoader.Load<PackedScene>($"res://Scenes/{CurrentSceneName}.tscn").Instantiate();
+		var newScene = ScenesPackedScenes[CurrentSceneName].Instantiate();
 		GetTree().Root.AddChild(newScene);
 		GetTree().CurrentScene = newScene;
 		CurrentScene = newScene as Scene;
+	}
+
+	public void ChangeToDefaultNextScene()
+	{
+		if (CurrentScene.DefaultNextScene == "")
+		{
+			Log($"No default next scene set for {CurrentScene.Name}, quitting.", "SceneManager", LogTypeEnum.Framework);
+			Quit();
+		}
+		else
+		{
+			Log($"Changing to default next scene {CurrentScene.DefaultNextScene}", "SceneManager", LogTypeEnum.Framework);
+			ChangeToScene(CurrentScene.DefaultNextScene);
+		}
 	}
 
 	public void RestartScene() => GetTree().ReloadCurrentScene();

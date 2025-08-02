@@ -9,9 +9,11 @@ public partial class Scene : Node
 
 	[Export] public float FadeInTime = 0.5f;
 	[Export] public float FadeOutTime = 0.5f;
+	[Export] public string DefaultNextScene = "";
 
 	PackedScene FadeScene = ResourceLoader.Load<PackedScene>("res://addons/SceneManager/Nodes/Fade.tscn");
 	CanvasLayer CanvasLayerNode => GetNode<CanvasLayer>("CanvasLayer");
+	ColorRect BackgroundNode => GetNode<ColorRect>("ColorRect");
 
 	private async Task Fade(Fade.FadeDirectionEnum direction, float time)
 	{
@@ -23,6 +25,12 @@ public partial class Scene : Node
 
 	public async override void _Ready()
 	{
+		BackgroundNode.GuiInput += @event =>
+		{
+			if (@event is InputEventMouseButton mouseButtonEvent && mouseButtonEvent.Pressed)
+				SceneManager.Instance.ChangeToDefaultNextScene();
+		};
+
 		Log($"Starting scene {Name}", "SceneManager", LogTypeEnum.Framework);
 		await Fade(global::Fade.FadeDirectionEnum.In, FadeInTime);
 
