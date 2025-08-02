@@ -7,8 +7,8 @@ public partial class Scene : Node
 	[Signal] public delegate void ReadyFinishedEventHandler();
 	[Signal] public delegate void ExitFinishedEventHandler();
 
-	[Export] public float FadeInTime = 1f;
-	[Export] public float FadeOutTime = 1f;
+	[Export] public float FadeInTime = 0.5f;
+	[Export] public float FadeOutTime = 0.5f;
 
 	PackedScene FadeScene = ResourceLoader.Load<PackedScene>("res://addons/SceneManager/Nodes/Fade.tscn");
 
