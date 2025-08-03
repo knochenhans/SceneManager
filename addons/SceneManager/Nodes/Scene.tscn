@@ -6,3 +6,5 @@
 script = ExtResource("1_ytdvc")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="LifeTimer" type="Timer" parent="."]
