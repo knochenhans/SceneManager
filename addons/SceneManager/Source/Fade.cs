@@ -11,19 +11,16 @@ public partial class Fade : ColorRect
 		Out
 	}
 
-	public AnimationPlayer AnimationPlayerNode { get; set; }
-
-	public override void _Ready() => AnimationPlayerNode = GetNode<AnimationPlayer>("AnimationPlayer");
+	public AnimationPlayer AnimationPlayerNode => GetNode<AnimationPlayer>("AnimationPlayer");
 
 	public async void Run(FadeDirectionEnum direction, float time)
 	{
-		Log($"Fade {direction} in {time} seconds", "SceneManager", LogTypeEnum.Framework);
+		Log($"Fade {direction} for {time} seconds", "SceneManager", LogTypeEnum.Framework);
 		string animationName = direction == FadeDirectionEnum.In ? "FadeIn" : "FadeOut";
+		AnimationPlayerNode.SpeedScale = 1 / time;
 		AnimationPlayerNode.Play(animationName);
 		AnimationPlayerNode.Seek(0, true);
-		AnimationPlayerNode.SpeedScale = 1 / time;
 		await ToSignal(AnimationPlayerNode, AnimationMixer.SignalName.AnimationFinished);
 		EmitSignal(SignalName.FadeFinished);
-		QueueFree();
 	}
 }

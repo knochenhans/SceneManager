@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Godot;
 using Godot.Collections;
 using static Logger;
@@ -12,6 +13,8 @@ public partial class SceneManager : Node
 	public Array<string> SceneNames { get; set; }
 	string CurrentSceneName { get; set; }
 	Scene CurrentScene { get; set; }
+
+	Fade FadeScene => GetNode<Fade>("Fade");
 
 	public override void _EnterTree()
 	{
@@ -33,26 +36,36 @@ public partial class SceneManager : Node
 
 	public async void ChangeToScene(string sceneName)
 	{
-		CurrentSceneName = sceneName;
-
 		if (CurrentScene != null)
-		{
-			CurrentScene.Exit();
-			await ToSignal(CurrentScene, Scene.SignalName.ExitFinished);
-		}
+            await ExitCurrentScene();
 
-		var newScene = ScenesPackedScenes[CurrentSceneName].Instantiate();
-		Log($"Changing to scene {newScene.Name}", "SceneManager", LogTypeEnum.Framework);
-		GetTree().Root.AddChild(newScene);
-		GetTree().CurrentScene = newScene;
-		CurrentScene = newScene as Scene;
+        CurrentSceneName = sceneName;
+
+		CurrentScene = ScenesPackedScenes[CurrentSceneName].Instantiate() as Scene;
+		Log($"Changing to scene {CurrentScene.Name}", "SceneManager", LogTypeEnum.Framework);
+
+		AddChild(CurrentScene);
+		FadeScene.Run(Fade.FadeDirectionEnum.In, CurrentScene.FadeInTime);
+		await ToSignal(FadeScene, Fade.SignalName.FadeFinished);
 	}
 
-	public void ChangeToDefaultNextScene()
+	private async Task ExitCurrentScene()
+	{
+		Log($"Exiting scene {CurrentScene.Name}", "SceneManager", LogTypeEnum.Framework);
+
+		FadeScene.Run(Fade.FadeDirectionEnum.Out, CurrentScene.FadeOutTime);
+		await ToSignal(FadeScene, Fade.SignalName.FadeFinished);
+		CurrentScene.QueueFree();
+		await ToSignal(CurrentScene, Node.SignalName.TreeExited);
+		CurrentScene = null;
+    }
+
+    public async Task ChangeToDefaultNextScene()
 	{
 		if (CurrentScene.DefaultNextScene == "")
 		{
 			Log($"No default next scene set for {CurrentScene.Name}, quitting.", "SceneManager", LogTypeEnum.Framework);
+			await ExitCurrentScene();
 			Quit();
 		}
 		else
@@ -67,10 +80,7 @@ public partial class SceneManager : Node
 	public async void Quit()
 	{
 		if (CurrentScene != null)
-		{
-			CurrentScene.Exit();
-			await ToSignal(CurrentScene, Scene.SignalName.ExitFinished);
-		}
+			await ExitCurrentScene();
 
 		GetTree().Quit();
 	}
