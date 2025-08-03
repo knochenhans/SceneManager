@@ -8,7 +8,6 @@ public partial class Scene : Node
 	[Export] public float LifeTime = 0.0f;
 	[Export] public string DefaultNextScene = "";
 
-	CanvasLayer CanvasLayerNode => GetNode<CanvasLayer>("CanvasLayer");
 	protected ColorRect BackgroundNode => GetNode<ColorRect>("ColorRect");
 	Timer LifeTimerNode => GetNode<Timer>("LifeTimer");
 
