@@ -56,6 +56,8 @@ public partial class SceneManager : Node
 	{
 		Log($"Exiting scene {CurrentScene.Name}", "SceneManager", LogTypeEnum.Framework);
 
+		CurrentScene.DisableInput();
+
 		await FadeManager.TweenFadeModulate(FadeScene, FadeManager.FadeDirectionEnum.Out, CurrentScene.FadeOutTime);
 
 		CurrentScene.QueueFree();

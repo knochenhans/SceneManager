@@ -32,5 +32,7 @@ public partial class Scene : Node
 			ChangeToNextScene();
 	}
 
-    protected async void ChangeToNextScene() => await SceneManager.Instance.ChangeToDefaultNextScene();
+	protected async void ChangeToNextScene() => await SceneManager.Instance.ChangeToDefaultNextScene();
+
+    public void DisableInput() => BackgroundNode.ProcessMode = ProcessModeEnum.Disabled;
 }
