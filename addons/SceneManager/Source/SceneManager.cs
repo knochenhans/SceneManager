@@ -7,14 +7,16 @@ public partial class SceneManager : Node
 {
 	[Export] public Dictionary<string, PackedScene> ScenesPackedScenes = [];
 	[Export] public string initialSceneName = "game";
+	[Export] public float OverlayMenuOpacity = 0.5f;
 
 	public static SceneManager Instance { get; private set; }
+	public OverlayMenu OverlayMenuNode => GetNode<OverlayMenu>("%OverlayMenu");
 
 	public Array<string> SceneNames { get; set; }
 	string CurrentSceneName { get; set; }
 	Scene CurrentScene { get; set; }
 
-	Fade FadeScene => GetNode<Fade>("Fade");
+	ColorRect FadeScene => GetNode<ColorRect>("%Fade");
 
 	public override void _EnterTree()
 	{
@@ -29,38 +31,38 @@ public partial class SceneManager : Node
 		Instance = this;
 	}
 
-	public override void _Ready()
-	{
-		CallDeferred(MethodName.ChangeToScene, initialSceneName);
-	}
+	public override void _Ready() => CallDeferred(MethodName.ChangeToScene, initialSceneName);	
 
 	public async void ChangeToScene(string sceneName)
 	{
 		if (CurrentScene != null)
-            await ExitCurrentScene();
+			await ExitCurrentScene();
 
-        CurrentSceneName = sceneName;
+		CurrentSceneName = sceneName;
 
 		CurrentScene = ScenesPackedScenes[CurrentSceneName].Instantiate() as Scene;
+
+		await FadeManager.TweenFadeModulate(FadeScene, FadeManager.FadeDirectionEnum.Out, CurrentScene.FadeOutTime);
+
 		Log($"Changing to scene {CurrentScene.Name}", "SceneManager", LogTypeEnum.Framework);
 
 		AddChild(CurrentScene);
-		FadeScene.Run(Fade.FadeDirectionEnum.In, CurrentScene.FadeInTime);
-		await ToSignal(FadeScene, Fade.SignalName.FadeFinished);
+
+		await FadeManager.TweenFadeModulate(FadeScene, FadeManager.FadeDirectionEnum.In, CurrentScene.FadeInTime);
 	}
 
 	private async Task ExitCurrentScene()
 	{
 		Log($"Exiting scene {CurrentScene.Name}", "SceneManager", LogTypeEnum.Framework);
 
-		FadeScene.Run(Fade.FadeDirectionEnum.Out, CurrentScene.FadeOutTime);
-		await ToSignal(FadeScene, Fade.SignalName.FadeFinished);
+		await FadeManager.TweenFadeModulate(FadeScene, FadeManager.FadeDirectionEnum.Out, CurrentScene.FadeOutTime);
+
 		CurrentScene.QueueFree();
 		await ToSignal(CurrentScene, Node.SignalName.TreeExited);
 		CurrentScene = null;
-    }
+	}
 
-    public async Task ChangeToDefaultNextScene()
+	public async Task ChangeToDefaultNextScene()
 	{
 		if (CurrentScene.DefaultNextScene == "")
 		{
