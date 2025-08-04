@@ -10,26 +10,18 @@ public partial class OverlayMenu : ColorRect
         SelfModulate = new Color(0, 0, 0, SceneManager.Instance.OverlayMenuOpacity);
     }
 
-    private void TweenSelfModulate(Color target, float duration = 0.3f)
-    {
-        var tween = CreateTween();
-        tween.TweenProperty(this, "self_modulate", target, duration)
-            .SetTrans(Tween.TransitionType.Cubic)
-            .SetEase(Tween.EaseType.InOut);
-    }
-
-    public void ShowMenu()
+    public async void ShowMenu()
     {
         Visible = true;
-        TweenSelfModulate(new Color(0, 0, 0, SceneManager.Instance.OverlayMenuOpacity));
-
         OptionGridNode.Init();
+
+        await FadeManager.TweenFadeModulate(this, FadeManager.FadeDirectionEnum.Out, SceneManager.Instance.OverlayMenuFadeTime, SceneManager.Instance.OverlayMenuOpacity, "self_modulate");
     }
 
-    public void HideMenu()
+    public async void HideMenu()
     {
         Visible = false;
-        TweenSelfModulate(new Color(0, 0, 0, 0));
+        await FadeManager.TweenFadeModulate(this, FadeManager.FadeDirectionEnum.In, SceneManager.Instance.OverlayMenuFadeTime, 0f, "self_modulate");
 
         OptionGridNode.Clear();
     }

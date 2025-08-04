@@ -8,6 +8,7 @@ public partial class SceneManager : Node
 	[Export] public Dictionary<string, PackedScene> ScenesPackedScenes = [];
 	[Export] public string initialSceneName = "game";
 	[Export] public float OverlayMenuOpacity = 0.5f;
+	[Export] public float OverlayMenuFadeTime = 0.3f;
 
 	public static SceneManager Instance { get; private set; }
 	public OverlayMenu OverlayMenuNode => GetNode<OverlayMenu>("%OverlayMenu");

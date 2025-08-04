@@ -9,7 +9,7 @@ public static class FadeManager
 		Out
 	}
 
-	public static async Task TweenFadeModulate(ColorRect fadeNode, FadeDirectionEnum direction, float duration, float targetOpacity = 1.0f)
+	public static async Task TweenFadeModulate(ColorRect fadeNode, FadeDirectionEnum direction, float duration, float targetOpacity = 1.0f, string fadeProperty = "modulate")
 	{
 		Color target = direction == FadeDirectionEnum.In
 			? new Color(1, 1, 1, 0)
@@ -17,7 +17,7 @@ public static class FadeManager
 
 		var tcs = new TaskCompletionSource();
 		var tween = fadeNode.CreateTween();
-		tween.TweenProperty(fadeNode, "modulate", target, duration)
+		tween.TweenProperty(fadeNode, fadeProperty, target, duration)
 			.SetTrans(Tween.TransitionType.Cubic)
 			.SetEase(Tween.EaseType.InOut);
 		tween.Finished += () => tcs.SetResult();
