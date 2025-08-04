@@ -11,9 +11,11 @@ public static class FadeManager
 
 	public static async Task TweenFadeModulate(ColorRect fadeNode, FadeDirectionEnum direction, float duration, float targetOpacity = 1.0f, string fadeProperty = "modulate")
 	{
+		var originalColor = fadeNode.Modulate;
+
 		Color target = direction == FadeDirectionEnum.In
-			? new Color(1, 1, 1, 0)
-			: new Color(1, 1, 1, targetOpacity);
+			? new Color(originalColor.R, originalColor.G, originalColor.B, 0)
+			: new Color(originalColor.R, originalColor.G, originalColor.B, targetOpacity);
 
 		var tcs = new TaskCompletionSource();
 		var tween = fadeNode.CreateTween();

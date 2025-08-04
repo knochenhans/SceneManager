@@ -21,7 +21,7 @@ public partial class OverlayMenu : ColorRect
     public async void HideMenu()
     {
         Visible = false;
-        await FadeManager.TweenFadeModulate(this, FadeManager.FadeDirectionEnum.In, SceneManager.Instance.OverlayMenuFadeTime, 0f, "self_modulate");
+        await FadeManager.TweenFadeModulate(this, FadeManager.FadeDirectionEnum.In, SceneManager.Instance.OverlayMenuFadeTime, fadeProperty: "self_modulate");
 
         OptionGridNode.Clear();
     }
