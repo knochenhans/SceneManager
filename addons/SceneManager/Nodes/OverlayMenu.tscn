@@ -1,14 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://8n7nqm7w3crp"]
+[gd_scene load_steps=4 format=3 uid="uid://8n7nqm7w3crp"]
 
 [ext_resource type="PackedScene" uid="uid://bf1cf06vio4fu" path="res://addons/GameOptions/OptionGrid.tscn" id="1_c27mk"]
+[ext_resource type="Script" uid="uid://cp6fkjxy4e7o3" path="res://addons/SceneManager/Nodes/OverlayMenu.cs" id="1_ms2y5"]
+[ext_resource type="Script" uid="uid://d1l22qsiuoe6n" path="res://addons/CustomGame/Scenes/SceneButton.cs" id="3_ijjnr"]
 
-[node name="ColorRect" type="ColorRect"]
+[node name="OverlayMenu" type="ColorRect"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+script = ExtResource("1_ms2y5")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -33,8 +36,11 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="ExitButton" type="Button" parent="MarginContainer/CenterContainer/VBoxContainer"]
+[node name="BackButton" type="Button" parent="MarginContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
-text = "Exit"
+text = "Back"
+script = ExtResource("3_ijjnr")
+
+[connection signal="pressed" from="MarginContainer/CenterContainer/VBoxContainer/BackButton" to="." method="OnBackButtonPressed"]

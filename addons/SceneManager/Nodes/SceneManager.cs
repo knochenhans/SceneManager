@@ -17,6 +17,8 @@ public partial class SceneManager : Node
 	string CurrentSceneName { get; set; }
 	Scene CurrentScene { get; set; }
 
+	public UISoundPlayer UISoundPlayer => GetNodeOrNull<UISoundPlayer>("../UISoundPlayer");
+
 	ColorRect FadeScene => GetNode<ColorRect>("%Fade");
 
 	public override void _EnterTree()
@@ -32,20 +34,27 @@ public partial class SceneManager : Node
 		Instance = this;
 	}
 
-	public override void _Ready() => CallDeferred(MethodName.ChangeToScene, initialSceneName);	
+    public override void _Ready()
+    {
+		OverlayMenuNode.UISoundPlayer = UISoundPlayer;
+        CallDeferred(MethodName.ChangeToScene, initialSceneName);
+    }
 
-	public async void ChangeToScene(string sceneName)
+    public async void ChangeToScene(string sceneName)
 	{
 		if (CurrentScene != null)
 			await ExitCurrentScene();
 
+		await StartScene(sceneName);
+	}
+
+	private async Task StartScene(string sceneName)
+	{
+		Log($"Starting scene {sceneName}", "SceneManager", LogTypeEnum.Framework);
+
 		CurrentSceneName = sceneName;
-
 		CurrentScene = ScenesPackedScenes[CurrentSceneName].Instantiate() as Scene;
-
-		await FadeManager.TweenFadeModulate(FadeScene, FadeManager.FadeDirectionEnum.Out, CurrentScene.FadeOutTime);
-
-		Log($"Changing to scene {CurrentScene.Name}", "SceneManager", LogTypeEnum.Framework);
+		CurrentScene.UISoundPlayer = UISoundPlayer;
 
 		AddChild(CurrentScene);
 
@@ -54,6 +63,12 @@ public partial class SceneManager : Node
 
 	private async Task ExitCurrentScene()
 	{
+		if (CurrentScene == null)
+		{
+			LogWarning("No current scene to exit.", "SceneManager", LogTypeEnum.Framework);
+			return;
+		}
+
 		Log($"Exiting scene {CurrentScene.Name}", "SceneManager", LogTypeEnum.Framework);
 
 		CurrentScene.DisableInput();
@@ -61,7 +76,9 @@ public partial class SceneManager : Node
 		await FadeManager.TweenFadeModulate(FadeScene, FadeManager.FadeDirectionEnum.Out, CurrentScene.FadeOutTime);
 
 		CurrentScene.QueueFree();
+
 		await ToSignal(CurrentScene, Node.SignalName.TreeExited);
+
 		CurrentScene = null;
 	}
 
@@ -84,8 +101,7 @@ public partial class SceneManager : Node
 
 	public async void Quit()
 	{
-		if (CurrentScene != null)
-			await ExitCurrentScene();
+		await ExitCurrentScene();
 
 		GetTree().Quit();
 	}
