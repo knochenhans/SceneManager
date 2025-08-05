@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://b2l6ex2ecglbl"]
+[gd_scene load_steps=3 format=3 uid="uid://b2l6ex2ecglbl"]
 
 [ext_resource type="Script" uid="uid://dr8iqvwfbflh5" path="res://addons/SceneManager/Nodes/SceneManager.cs" id="1_s6e5y"]
 [ext_resource type="PackedScene" uid="uid://8n7nqm7w3crp" path="res://addons/SceneManager/Nodes/OverlayMenu.tscn" id="3_mwrw3"]
-[ext_resource type="Script" uid="uid://cp6fkjxy4e7o3" path="res://addons/SceneManager/Nodes/OverlayMenu.cs" id="4_yw25f"]
 
 [node name="SceneManager" type="Node"]
 script = ExtResource("1_s6e5y")
@@ -27,4 +26,3 @@ unique_name_in_owner = true
 visible = false
 z_index = 1000
 z_as_relative = false
-script = ExtResource("4_yw25f")

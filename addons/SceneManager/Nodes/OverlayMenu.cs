@@ -1,4 +1,6 @@
+using System.Linq;
 using Godot;
+using Godot.Collections;
 
 public partial class OverlayMenu : ColorRect
 {
@@ -6,9 +8,14 @@ public partial class OverlayMenu : ColorRect
 
     OptionGrid OptionGridNode => GetNode<OptionGrid>("%OptionGrid");
     public UISoundPlayer UISoundPlayer;
+    protected VBoxContainer ButtonsNode => GetNode<VBoxContainer>("%Buttons");
+    protected Array<SceneButton> OverlayButtons;
+
 
     public override void _Ready()
     {
+        OverlayButtons = [.. ButtonsNode.GetChildren().Where(node => node is SceneButton).Cast<SceneButton>()];
+
         Visible = false;
         SelfModulate = new Color(0, 0, 0, SceneManager.Instance.OverlayMenuOpacity);
     }
@@ -17,6 +24,9 @@ public partial class OverlayMenu : ColorRect
     {
         Visible = true;
         OptionGridNode.Init(UISoundPlayer);
+
+        foreach (var button in OverlayButtons)
+            button.UISoundPlayer = UISoundPlayer;
 
         await FadeManager.TweenFadeModulate(this, FadeManager.FadeDirectionEnum.Out, SceneManager.Instance.OverlayMenuFadeTime, SceneManager.Instance.OverlayMenuOpacity, "self_modulate");
     }
