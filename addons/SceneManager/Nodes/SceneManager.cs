@@ -17,8 +17,6 @@ public partial class SceneManager : Node
 	string CurrentSceneName { get; set; }
 	Scene CurrentScene { get; set; }
 
-	public UISoundPlayer UISoundPlayer => GetNodeOrNull<UISoundPlayer>("../UISoundPlayer");
-
 	ColorRect FadeScene => GetNode<ColorRect>("%Fade");
 
 	public override void _EnterTree()
@@ -36,7 +34,6 @@ public partial class SceneManager : Node
 
     public override void _Ready()
     {
-		OverlayMenuNode.UISoundPlayer = UISoundPlayer;
         CallDeferred(MethodName.ChangeToScene, initialSceneName);
     }
 
@@ -54,7 +51,6 @@ public partial class SceneManager : Node
 
 		CurrentSceneName = sceneName;
 		CurrentScene = ScenesPackedScenes[CurrentSceneName].Instantiate() as Scene;
-		CurrentScene.UISoundPlayer = UISoundPlayer;
 
 		AddChild(CurrentScene);
 

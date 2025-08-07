@@ -15,7 +15,6 @@ public partial class Scene : Node
 	protected Array<SceneButton> SceneButtons;
 
 	Timer LifeTimerNode => GetNode<Timer>("LifeTimer");
-	public UISoundPlayer UISoundPlayer;
 
 	public override void _Ready()
 	{
@@ -31,9 +30,6 @@ public partial class Scene : Node
 			Log($"Scene {Name} will change to next scene after {LifeTime} seconds.", "Scene", LogTypeEnum.Framework);
 		}
 
-		foreach (var button in SceneButtons)
-			button.UISoundPlayer = UISoundPlayer;
-
 		Log($"Starting scene {SceneFilePath}", "SceneManager", LogTypeEnum.Framework);
 	}
 
@@ -41,7 +37,7 @@ public partial class Scene : Node
 	{
 		if (@event is InputEventMouseButton mouseButtonEvent && mouseButtonEvent.Pressed)
 		{
-			UISoundPlayer.PlaySound("click1");
+			UISoundPlayer.Instance.PlaySound("click1");
 			ChangeToNextScene();
 		}
 	}

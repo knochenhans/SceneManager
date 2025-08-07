@@ -7,7 +7,7 @@ public partial class OverlayMenu : ColorRect
     [Signal] public delegate void ClosedEventHandler();
 
     OptionGrid OptionGridNode => GetNode<OptionGrid>("%OptionGrid");
-    public UISoundPlayer UISoundPlayer;
+
     protected VBoxContainer ButtonsNode => GetNode<VBoxContainer>("%Buttons");
     protected Array<SceneButton> OverlayButtons;
 
@@ -23,10 +23,7 @@ public partial class OverlayMenu : ColorRect
     public async void ShowMenu()
     {
         Visible = true;
-        OptionGridNode.Init(UISoundPlayer);
-
-        foreach (var button in OverlayButtons)
-            button.UISoundPlayer = UISoundPlayer;
+        OptionGridNode.Init();
 
         await FadeManager.TweenFadeModulate(this, FadeManager.FadeDirectionEnum.Out, SceneManager.Instance.OverlayMenuFadeTime, SceneManager.Instance.OverlayMenuOpacity, "self_modulate");
     }
