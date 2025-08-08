@@ -54,7 +54,7 @@ public partial class SceneManager : Node
 
 		AddChild(CurrentScene);
 
-		await FadeManager.TweenFadeModulate(FadeScene, FadeManager.FadeDirectionEnum.In, CurrentScene.FadeInTime);
+		await FadeHelper.TweenFadeModulate(FadeScene, FadeHelper.FadeDirectionEnum.In, CurrentScene.FadeInTime);
 	}
 
 	private async Task ExitCurrentScene()
@@ -69,7 +69,7 @@ public partial class SceneManager : Node
 
 		CurrentScene.DisableInput();
 
-		await FadeManager.TweenFadeModulate(FadeScene, FadeManager.FadeDirectionEnum.Out, CurrentScene.FadeOutTime);
+		await FadeHelper.TweenFadeModulate(FadeScene, FadeHelper.FadeDirectionEnum.Out, CurrentScene.FadeOutTime);
 
 		CurrentScene.QueueFree();
 

@@ -25,14 +25,14 @@ public partial class OverlayMenu : ColorRect
         Visible = true;
         OptionGridNode.Init();
 
-        await FadeManager.TweenFadeModulate(this, FadeManager.FadeDirectionEnum.Out, SceneManager.Instance.OverlayMenuFadeTime, SceneManager.Instance.OverlayMenuOpacity, "self_modulate");
+        await FadeHelper.TweenFadeModulate(this, FadeHelper.FadeDirectionEnum.Out, SceneManager.Instance.OverlayMenuFadeTime, SceneManager.Instance.OverlayMenuOpacity, "self_modulate");
     }
 
     public async void HideMenu()
     {
         Visible = false;
         OptionGridNode.DisableInput();
-        await FadeManager.TweenFadeModulate(this, FadeManager.FadeDirectionEnum.In, SceneManager.Instance.OverlayMenuFadeTime, fadeProperty: "self_modulate");
+        await FadeHelper.TweenFadeModulate(this, FadeHelper.FadeDirectionEnum.In, SceneManager.Instance.OverlayMenuFadeTime, fadeProperty: "self_modulate");
 
         OptionGridNode.Clear();
     }
