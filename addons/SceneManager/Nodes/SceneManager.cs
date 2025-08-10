@@ -34,6 +34,12 @@ public partial class SceneManager : Node
 
     public override void _Ready()
     {
+		Log("SceneManager is ready.", "SceneManager", LogTypeEnum.Framework);
+		Log($"Found {ScenesPackedScenes.Count} scenes in ScenesPackedScenes.", "SceneManager", LogTypeEnum.Framework);
+		foreach (var scene in ScenesPackedScenes)
+			Log($"Scene: {scene.Key}", "SceneManager", LogTypeEnum.Framework);
+		Log($"Initial scene: {initialSceneName}", "SceneManager", LogTypeEnum.Framework);
+
         CallDeferred(MethodName.ChangeToScene, initialSceneName);
     }
 
@@ -51,6 +57,12 @@ public partial class SceneManager : Node
 
 		CurrentSceneName = sceneName;
 		CurrentScene = ScenesPackedScenes[CurrentSceneName].Instantiate() as Scene;
+
+		if (CurrentScene == null)
+		{
+			LogError($"Failed to instantiate scene {CurrentSceneName}", "SceneManager", LogTypeEnum.Framework);
+			return;
+		}
 
 		AddChild(CurrentScene);
 
