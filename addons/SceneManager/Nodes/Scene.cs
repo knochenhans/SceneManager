@@ -5,20 +5,29 @@ using static Logger;
 
 public partial class Scene : Node
 {
+	public enum SceneStateEnum
+	{
+		Idle,
+		TransitioningIn,
+		TransitioningOut
+	}
+
 	[Export] public float FadeInTime = 0.5f;
 	[Export] public float FadeOutTime = 0.5f;
 	[Export] public float LifeTime = 0.0f;
 	[Export] public string DefaultNextScene = "";
 
 	protected ColorRect BackgroundNode => GetNode<ColorRect>("ColorRect");
-	protected VBoxContainer ButtonsNode => GetNode<VBoxContainer>("%Buttons");
+	protected VBoxContainer ButtonsNode => GetNodeOrNull<VBoxContainer>("%Buttons");
 	protected Array<SceneButton> SceneButtons;
+	protected SceneStateEnum SceneState = SceneStateEnum.TransitioningIn;
 
 	Timer LifeTimerNode => GetNode<Timer>("LifeTimer");
 
 	public override void _Ready()
 	{
-		SceneButtons = [.. ButtonsNode.GetChildren().Where(node => node is SceneButton).Cast<SceneButton>()];
+		if (ButtonsNode != null)
+			SceneButtons = [.. ButtonsNode.GetChildren().Where(node => node is SceneButton).Cast<SceneButton>()];
 
 		BackgroundNode.GuiInput += OnBackgroundClicked;
 
@@ -31,6 +40,8 @@ public partial class Scene : Node
 		}
 
 		Log($"Starting scene {SceneFilePath}", "SceneManager", LogTypeEnum.Framework);
+
+		SceneState = SceneStateEnum.Idle;
 	}
 
 	protected virtual void OnBackgroundClicked(InputEvent @event)
@@ -42,9 +53,21 @@ public partial class Scene : Node
 		}
 	}
 
-	protected async void ChangeToNextScene() => await SceneManager.Instance.ChangeToDefaultNextScene();
+    protected async void ChangeToNextScene()
+    {
+        SceneState = SceneStateEnum.TransitioningOut;
+        await SceneManager.Instance.ChangeToDefaultNextScene();
+    }
 
-	public virtual void DisableInput()
+	public override void _Input(InputEvent @event)
+	{
+		if (SceneState != SceneStateEnum.Idle)
+			return;
+
+		base._Input(@event);
+	}
+
+    public virtual void DisableInput()
 	{
 		BackgroundNode.SetBlockSignals(true);
 		if (SceneButtons != null)
