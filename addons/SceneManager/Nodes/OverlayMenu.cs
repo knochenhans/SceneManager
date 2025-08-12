@@ -8,12 +8,15 @@ public partial class OverlayMenu : ColorRect
 
     OptionGrid OptionGridNode => GetNode<OptionGrid>("%OptionGrid");
 
-    protected VBoxContainer ButtonsNode => GetNode<VBoxContainer>("%Buttons");
+    protected VBoxContainer ButtonsNode => GetNodeOrNull<VBoxContainer>("%Buttons");
     protected Array<SceneButton> OverlayButtons;
 
 
     public override void _Ready()
     {
+        if (ButtonsNode == null)
+            return;
+
         OverlayButtons = [.. ButtonsNode.GetChildren().Where(node => node is SceneButton).Cast<SceneButton>()];
 
         Visible = false;

@@ -1,6 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://dx71q56o5biur"]
+[gd_scene load_steps=8 format=3 uid="uid://dx71q56o5biur"]
 
 [ext_resource type="Script" uid="uid://gpn4b3wh10vd" path="res://Main.cs" id="1_b0jck"]
+[ext_resource type="PackedScene" uid="uid://b2l6ex2ecglbl" path="res://addons/SceneManager/Nodes/SceneManager.tscn" id="2_uu6xs"]
+[ext_resource type="PackedScene" uid="uid://cha1cbiyoi3gn" path="res://Scenes/Intro.tscn" id="3_lgr22"]
+[ext_resource type="PackedScene" uid="uid://by7hokk5l6fh4" path="res://Scenes/Options.tscn" id="4_trn2v"]
+[ext_resource type="PackedScene" uid="uid://fiu4i8obc6yd" path="res://Scenes/Menu.tscn" id="5_03owx"]
+[ext_resource type="PackedScene" uid="uid://b46xhre03dhm8" path="res://Scenes/Game.tscn" id="6_wkp8b"]
+[ext_resource type="PackedScene" uid="uid://kdapt7s0edwl" path="res://Scenes/Credits.tscn" id="7_20pc6"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_b0jck")
+
+[node name="SceneManager" parent="." instance=ExtResource("2_uu6xs")]
+ScenesPackedScenes = Dictionary[String, PackedScene]({
+"credits": ExtResource("7_20pc6"),
+"game": ExtResource("6_wkp8b"),
+"intro": ExtResource("3_lgr22"),
+"menu": ExtResource("5_03owx"),
+"options": ExtResource("4_trn2v")
+})

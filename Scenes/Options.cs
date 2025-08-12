@@ -1,4 +1,4 @@
 public partial class Options : Scene
 {
-	public void OnButtonPressed() => SceneManager.ChangeToScene("Menu");
+	public void OnButtonPressed() => SceneManager.Instance.ChangeToScene("Menu");
 }

@@ -3,6 +3,7 @@ using Godot;
 using Godot.Collections;
 using static Logger;
 
+[GlobalClass]
 public partial class Scene : Node
 {
 	public enum SceneStateEnum
@@ -17,7 +18,7 @@ public partial class Scene : Node
 	[Export] public float LifeTime = 0.0f;
 	[Export] public string DefaultNextScene = "";
 
-	protected ColorRect BackgroundNode => GetNode<ColorRect>("ColorRect");
+	protected ColorRect BackgroundNode => GetNodeOrNull<ColorRect>("SceneBackground");
 	protected VBoxContainer ButtonsNode => GetNodeOrNull<VBoxContainer>("%Buttons");
 	protected Array<SceneButton> SceneButtons;
 	protected SceneStateEnum SceneState = SceneStateEnum.TransitioningIn;
@@ -29,7 +30,8 @@ public partial class Scene : Node
 		if (ButtonsNode != null)
 			SceneButtons = [.. ButtonsNode.GetChildren().Where(node => node is SceneButton).Cast<SceneButton>()];
 
-		BackgroundNode.GuiInput += OnBackgroundClicked;
+		if (BackgroundNode != null)
+			BackgroundNode.GuiInput += OnBackgroundClicked;
 
 		if (LifeTime > 0)
 		{
@@ -53,11 +55,11 @@ public partial class Scene : Node
 		}
 	}
 
-    protected async void ChangeToNextScene()
-    {
-        SceneState = SceneStateEnum.TransitioningOut;
-        await SceneManager.Instance.ChangeToDefaultNextScene();
-    }
+	protected async void ChangeToNextScene()
+	{
+		SceneState = SceneStateEnum.TransitioningOut;
+		await SceneManager.Instance.ChangeToDefaultNextScene();
+	}
 
 	public override void _Input(InputEvent @event)
 	{
@@ -67,7 +69,7 @@ public partial class Scene : Node
 		base._Input(@event);
 	}
 
-    public virtual void DisableInput()
+	public virtual void DisableInput()
 	{
 		BackgroundNode.SetBlockSignals(true);
 		if (SceneButtons != null)

@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://dc14s1yyhr3yu"]
+
+[ext_resource type="PackedScene" uid="uid://e3yjqqcvdjy" path="res://addons/SceneManager/Scenes/CentralLayoutScene.tscn" id="1_t1ptt"]
+[ext_resource type="Script" uid="uid://dr8yw1824c2w4" path="res://addons/SceneManager/Scenes/OptionsScene.cs" id="2_0pr02"]
+[ext_resource type="PackedScene" uid="uid://bf1cf06vio4fu" path="res://addons/GameOptions/OptionGrid.tscn" id="2_is1yg"]
+[ext_resource type="Script" uid="uid://d1l22qsiuoe6n" path="res://addons/SceneManager/Nodes/SceneButton.cs" id="2_prjpf"]
+
+[node name="OptionsScene" instance=ExtResource("1_t1ptt")]
+script = ExtResource("2_0pr02")
+DefaultNextScene = "menu"
+
+[node name="Label" type="Label" parent="SceneBackground/MarginContainer/CenterContainer/Buttons" index="0"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Options"
+
+[node name="HSeparator" type="HSeparator" parent="SceneBackground/MarginContainer/CenterContainer/Buttons" index="1"]
+layout_mode = 2
+
+[node name="OptionGrid" parent="SceneBackground/MarginContainer/CenterContainer/Buttons" index="2" instance=ExtResource("2_is1yg")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ExitButton" type="Button" parent="SceneBackground/MarginContainer/CenterContainer/Buttons" index="3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Exit"
+alignment = 0
+script = ExtResource("2_prjpf")
+
+[connection signal="pressed" from="SceneBackground/MarginContainer/CenterContainer/Buttons/ExitButton" to="." method="OnExitButtonPressed"]

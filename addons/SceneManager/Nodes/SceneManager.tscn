@@ -1,10 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://b2l6ex2ecglbl"]
+[gd_scene load_steps=4 format=3 uid="uid://b2l6ex2ecglbl"]
 
 [ext_resource type="Script" uid="uid://dr8iqvwfbflh5" path="res://addons/SceneManager/Nodes/SceneManager.cs" id="1_s6e5y"]
+[ext_resource type="Resource" uid="uid://b18aenp3m56bn" path="res://addons/SceneManager/Resources/SceneManagerDefault.tres" id="2_mfvxm"]
 [ext_resource type="PackedScene" uid="uid://8n7nqm7w3crp" path="res://addons/SceneManager/Nodes/OverlayMenu.tscn" id="3_mwrw3"]
 
 [node name="SceneManager" type="Node"]
 script = ExtResource("1_s6e5y")
+SceneManagerResource = ExtResource("2_mfvxm")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

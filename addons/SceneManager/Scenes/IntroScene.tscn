@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4hulv2gjask8"]
+
+[ext_resource type="PackedScene" uid="uid://e3yjqqcvdjy" path="res://addons/SceneManager/Scenes/CentralLayoutScene.tscn" id="1_0edhc"]
+
+[node name="IntroScene" instance=ExtResource("1_0edhc")]
+DefaultNextScene = "menu"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SceneBackground/MarginContainer/CenterContainer/Buttons" index="0"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="SceneBackground/MarginContainer/CenterContainer/Buttons/HBoxContainer" index="0"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SceneBackground/MarginContainer/CenterContainer/Buttons/HBoxContainer" index="1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Intro"
+horizontal_alignment = 1

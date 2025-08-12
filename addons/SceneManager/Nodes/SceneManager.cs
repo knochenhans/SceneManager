@@ -5,10 +5,12 @@ using static Logger;
 
 public partial class SceneManager : Node
 {
-	[Export] public Dictionary<string, PackedScene> ScenesPackedScenes = [];
-	[Export] public string initialSceneName = "game";
-	[Export] public float OverlayMenuOpacity = 0.5f;
-	[Export] public float OverlayMenuFadeTime = 0.3f;
+	[Export] public SceneManagerResource SceneManagerResource;
+	
+	public Dictionary<string, PackedScene> ScenesPackedScenes => SceneManagerResource.ScenesPackedScenes;
+	public string initialSceneName => SceneManagerResource.initialSceneName;
+	public float OverlayMenuOpacity => SceneManagerResource.OverlayMenuOpacity;
+	public float OverlayMenuFadeTime => SceneManagerResource.OverlayMenuFadeTime;
 
 	public static SceneManager Instance { get; private set; }
 	public OverlayMenu OverlayMenuNode => GetNode<OverlayMenu>("%OverlayMenu");
@@ -19,7 +21,7 @@ public partial class SceneManager : Node
 
 	ColorRect FadeScene => GetNode<ColorRect>("%Fade");
 
-	public override void _EnterTree()
+	public override void _EnterTree()	
 	{
 		// Singleton setup
 		if (Instance != null && Instance != this)
@@ -32,18 +34,18 @@ public partial class SceneManager : Node
 		Instance = this;
 	}
 
-    public override void _Ready()
-    {
+	public override void _Ready()
+	{
 		Log("SceneManager is ready.", "SceneManager", LogTypeEnum.Framework);
 		Log($"Found {ScenesPackedScenes.Count} scenes in ScenesPackedScenes.", "SceneManager", LogTypeEnum.Framework);
 		foreach (var scene in ScenesPackedScenes)
 			Log($"Scene: {scene.Key}", "SceneManager", LogTypeEnum.Framework);
 		Log($"Initial scene: {initialSceneName}", "SceneManager", LogTypeEnum.Framework);
 
-        CallDeferred(MethodName.ChangeToScene, initialSceneName);
-    }
+		CallDeferred(MethodName.ChangeToScene, initialSceneName);
+	}
 
-    public async void ChangeToScene(string sceneName)
+	public async void ChangeToScene(string sceneName)
 	{
 		if (CurrentScene != null)
 			await ExitCurrentScene();
@@ -53,10 +55,11 @@ public partial class SceneManager : Node
 
 	private async Task StartScene(string sceneName)
 	{
+		sceneName = sceneName.ToLower();
 		Log($"Starting scene {sceneName}", "SceneManager", LogTypeEnum.Framework);
 
 		CurrentSceneName = sceneName;
-		CurrentScene = ScenesPackedScenes[CurrentSceneName].Instantiate() as Scene;
+		CurrentScene = ScenesPackedScenes.TryGetValue(CurrentSceneName, out var packedScene) ? packedScene.Instantiate() as Scene : null;
 
 		if (CurrentScene == null)
 		{
@@ -94,7 +97,7 @@ public partial class SceneManager : Node
 	{
 		if (CurrentScene.DefaultNextScene == "")
 		{
-			Log($"No default next scene set for {CurrentScene.Name}, quitting.", "SceneManager", LogTypeEnum.Framework);
+			Log($"No default next scene set for {CurrentScene.Name}, quitting instead.", "SceneManager", LogTypeEnum.Framework);
 			await ExitCurrentScene();
 			Quit();
 		}

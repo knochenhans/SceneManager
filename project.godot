@@ -15,17 +15,13 @@ run/main_scene="res://Main.tscn"
 config/features=PackedStringArray("4.4", "C#", "Mobile")
 config/icon="res://icon.svg"
 
-[autoload]
-
-SceneManager="*res://addons/SceneManager/Nodes/SceneManager.tscn"
-
 [dotnet]
 
 project/assembly_name="SceneManager"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/SceneManager/plugin.cfg")
+enabled=PackedStringArray("res://addons/Logger/plugin.cfg", "res://addons/SceneManager/plugin.cfg")
 
 [rendering]
 

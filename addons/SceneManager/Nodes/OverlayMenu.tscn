@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bf1cf06vio4fu" path="res://addons/GameOptions/OptionGrid.tscn" id="1_c27mk"]
 [ext_resource type="Script" uid="uid://cp6fkjxy4e7o3" path="res://addons/SceneManager/Nodes/OverlayMenu.cs" id="1_ms2y5"]
-[ext_resource type="Script" uid="uid://d1l22qsiuoe6n" path="res://addons/CustomGame/Scenes/SceneButton.cs" id="3_ijjnr"]
+[ext_resource type="Script" uid="uid://d1l22qsiuoe6n" path="res://addons/SceneManager/Nodes/SceneButton.cs" id="3_ijjnr"]
 
 [node name="OverlayMenu" type="ColorRect"]
 anchors_preset = 15

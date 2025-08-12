@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://7a0i5aulc65b"]
+
+[ext_resource type="PackedScene" uid="uid://bawrmdt67ohun" path="res://addons/SceneManager/Scenes/Scene.tscn" id="1_vvakc"]
+
+[node name="GameScene" instance=ExtResource("1_vvakc")]
+DefaultNextScene = "menu"
