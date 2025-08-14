@@ -27,6 +27,8 @@ public partial class Scene : Node
 
 	public override void _Ready()
 	{
+		Log($"Starting scene {SceneFilePath}", "SceneManager", LogTypeEnum.Framework);
+
 		if (ButtonsNode != null)
 			SceneButtons = [.. ButtonsNode.GetChildren().Where(node => node is SceneButton).Cast<SceneButton>()];
 
@@ -40,8 +42,6 @@ public partial class Scene : Node
 			LifeTimerNode.Timeout += ChangeToNextScene;
 			Log($"Scene {Name} will change to next scene after {LifeTime} seconds.", "Scene", LogTypeEnum.Framework);
 		}
-
-		Log($"Starting scene {SceneFilePath}", "SceneManager", LogTypeEnum.Framework);
 
 		SceneState = SceneStateEnum.Idle;
 	}
