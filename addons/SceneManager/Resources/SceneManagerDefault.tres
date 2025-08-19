@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="SceneManagerResource" load_steps=7 format=3 uid="uid://b18aenp3m56bn"]
 
 [ext_resource type="PackedScene" uid="uid://b4hulv2gjask8" path="res://addons/SceneManager/Scenes/IntroScene.tscn" id="1_6a48i"]
+[ext_resource type="PackedScene" uid="uid://b46xhre03dhm8" path="res://Scenes/CustomGame.tscn" id="2_6a48i"]
 [ext_resource type="PackedScene" uid="uid://dw38qbbkyxh35" path="res://addons/SceneManager/Scenes/MenuScene.tscn" id="2_yehpw"]
 [ext_resource type="PackedScene" uid="uid://dc14s1yyhr3yu" path="res://addons/SceneManager/Scenes/OptionsScene.tscn" id="3_qbvvx"]
-[ext_resource type="PackedScene" uid="uid://7a0i5aulc65b" path="res://addons/SceneManager/Scenes/GameScene.tscn" id="4_dp8co"]
 [ext_resource type="PackedScene" uid="uid://dm6frlk3i0bo8" path="res://addons/SceneManager/Scenes/CreditsScene.tscn" id="5_btt46"]
 [ext_resource type="Script" uid="uid://q5kvegfjxjon" path="res://addons/SceneManager/Nodes/SceneManagerResource.cs" id="6_ryig2"]
 
@@ -11,12 +11,12 @@
 script = ExtResource("6_ryig2")
 ScenesPackedScenes = Dictionary[String, PackedScene]({
 "credits": ExtResource("5_btt46"),
-"game": ExtResource("4_dp8co"),
+"game": ExtResource("2_6a48i"),
 "intro": ExtResource("1_6a48i"),
 "menu": ExtResource("2_yehpw"),
 "options": ExtResource("3_qbvvx")
 })
-initialSceneName = "intro"
+initialSceneName = "game"
 OverlayMenuOpacity = 0.5
 OverlayMenuFadeTime = 0.3
 metadata/_custom_type_script = "uid://q5kvegfjxjon"
