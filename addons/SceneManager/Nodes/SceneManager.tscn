@@ -9,6 +9,7 @@ script = ExtResource("1_s6e5y")
 SceneManagerResource = ExtResource("2_mfvxm")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
 
 [node name="Fade" type="ColorRect" parent="CanvasLayer"]
 unique_name_in_owner = true
