@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using Godot;
 using Godot.Collections;
 
@@ -11,19 +12,16 @@ public partial class OverlayMenu : ColorRect
     protected VBoxContainer ButtonsNode => GetNodeOrNull<VBoxContainer>("%Buttons");
     protected Array<SceneButton> OverlayButtons;
 
-
     public override void _Ready()
     {
-        if (ButtonsNode == null)
-            return;
-
-        OverlayButtons = [.. ButtonsNode.GetChildren().Where(node => node is SceneButton).Cast<SceneButton>()];
+        if (ButtonsNode != null)
+            OverlayButtons = [.. ButtonsNode.GetChildren().Where(node => node is SceneButton).Cast<SceneButton>()];
 
         Visible = false;
         SelfModulate = new Color(0, 0, 0, SceneManager.Instance.OverlayMenuOpacity);
     }
 
-    public async void ShowMenu()
+    public async Task ShowMenu()
     {
         Visible = true;
         OptionGridNode.Init();
@@ -31,7 +29,7 @@ public partial class OverlayMenu : ColorRect
         await FadeHelper.TweenFadeModulate(this, FadeHelper.FadeDirectionEnum.Out, SceneManager.Instance.OverlayMenuFadeTime, SceneManager.Instance.OverlayMenuOpacity, "self_modulate", transitionType: Tween.TransitionType.Cubic);
     }
 
-    public async void HideMenu()
+    public async Task HideMenu()
     {
         Visible = false;
         OptionGridNode.DisableInput();

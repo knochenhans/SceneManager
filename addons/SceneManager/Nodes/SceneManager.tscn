@@ -7,6 +7,7 @@
 [node name="SceneManager" type="Node"]
 script = ExtResource("1_s6e5y")
 SceneManagerResource = ExtResource("2_mfvxm")
+OverlayMenuPackedScene = ExtResource("3_mwrw3")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2
@@ -23,9 +24,3 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
-
-[node name="OverlayMenu" parent="CanvasLayer" instance=ExtResource("3_mwrw3")]
-unique_name_in_owner = true
-visible = false
-z_index = 1000
-z_as_relative = false

@@ -6,22 +6,27 @@ using static Logger;
 public partial class SceneManager : Node
 {
 	[Export] public SceneManagerResource SceneManagerResource;
-	
+	[Export] public PackedScene OverlayMenuPackedScene;
+
+	[Signal] public delegate void OverlayMenuOpenedEventHandler();
+	[Signal] public delegate void OverlayMenuClosedEventHandler();
+
 	public Dictionary<string, PackedScene> ScenesPackedScenes => SceneManagerResource.ScenesPackedScenes;
-	public string initialSceneName => SceneManagerResource.initialSceneName;
+	public string InitialSceneName => SceneManagerResource.initialSceneName;
 	public float OverlayMenuOpacity => SceneManagerResource.OverlayMenuOpacity;
 	public float OverlayMenuFadeTime => SceneManagerResource.OverlayMenuFadeTime;
 
 	public static SceneManager Instance { get; private set; }
-	public OverlayMenu OverlayMenuNode => GetNode<OverlayMenu>("%OverlayMenu");
+	public OverlayMenu OverlayMenuNode;
 
 	public Array<string> SceneNames { get; set; }
 	string CurrentSceneName { get; set; }
 	Scene CurrentScene { get; set; }
 
 	ColorRect FadeScene => GetNode<ColorRect>("%Fade");
+	CanvasLayer CanvasLayer => GetNode<CanvasLayer>("CanvasLayer");
 
-	public override void _EnterTree()	
+	public override void _EnterTree()
 	{
 		// Singleton setup
 		if (Instance != null && Instance != this)
@@ -40,9 +45,9 @@ public partial class SceneManager : Node
 		Log($"Found {ScenesPackedScenes.Count} scenes in ScenesPackedScenes.", "SceneManager", LogTypeEnum.Framework);
 		foreach (var scene in ScenesPackedScenes)
 			Log($"Scene: {scene.Key}", "SceneManager", LogTypeEnum.Framework);
-		Log($"Initial scene: {initialSceneName}", "SceneManager", LogTypeEnum.Framework);
+		Log($"Initial scene: {InitialSceneName}", "SceneManager", LogTypeEnum.Framework);
 
-		CallDeferred(MethodName.ChangeToScene, initialSceneName);
+		CallDeferred(MethodName.ChangeToScene, InitialSceneName);
 	}
 
 	public async void ChangeToScene(string sceneName)
@@ -115,5 +120,24 @@ public partial class SceneManager : Node
 		await ExitCurrentScene();
 
 		GetTree().Quit();
+	}
+
+	public async void ShowOverlayMenu()
+	{
+		OverlayMenuNode = OverlayMenuPackedScene.Instantiate<OverlayMenu>();
+		CanvasLayer.AddChild(OverlayMenuNode);
+		OverlayMenuNode.Closed += () => HideOverlayMenu();
+
+		await OverlayMenuNode.ShowMenu();
+		EmitSignal(SignalName.OverlayMenuOpened);
+	}
+
+	public async void HideOverlayMenu()
+	{
+		await OverlayMenuNode.HideMenu();
+		OverlayMenuNode.Closed -= () => HideOverlayMenu();
+		OverlayMenuNode.QueueFree();
+
+		EmitSignal(SignalName.OverlayMenuClosed);
 	}
 }
