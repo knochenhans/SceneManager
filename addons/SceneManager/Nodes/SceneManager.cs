@@ -6,7 +6,8 @@ using static Logger;
 public partial class SceneManager : Node
 {
 	[Export] public SceneManagerResource SceneManagerResource;
-	[Export] public PackedScene OverlayMenuPackedScene;
+	[Export] public PackedScene OverlayMenuFramePackedScene;
+	[Export] public Dictionary<string, PackedScene> OverlayMenusInnerPackedScenes = [];
 
 	[Signal] public delegate void OverlayMenuOpenedEventHandler();
 	[Signal] public delegate void OverlayMenuClosedEventHandler();
@@ -122,13 +123,16 @@ public partial class SceneManager : Node
 		GetTree().Quit();
 	}
 
-	public async void ShowOverlayMenu()
+	public async void ShowOverlayMenu(string id = "options")
 	{
-		OverlayMenuNode = OverlayMenuPackedScene.Instantiate<OverlayMenu>();
+		OverlayMenuNode = OverlayMenuFramePackedScene.Instantiate<OverlayMenu>();
 		CanvasLayer.AddChild(OverlayMenuNode);
+
 		OverlayMenuNode.Closed += () => HideOverlayMenu();
 
-		await OverlayMenuNode.ShowMenu();
+		if (OverlayMenusInnerPackedScenes.TryGetValue(id, out var packedScene))
+			await OverlayMenuNode.ShowMenu(packedScene);
+
 		EmitSignal(SignalName.OverlayMenuOpened);
 	}
 
