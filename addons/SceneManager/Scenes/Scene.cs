@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using Godot;
 using Godot.Collections;
 using static Logger;
@@ -77,5 +78,9 @@ public partial class Scene : Node
 			foreach (var button in SceneButtons)
 				button.SetBlockSignals(true);
 		}
+	}
+
+	public async virtual Task Close()
+	{
 	}
 }

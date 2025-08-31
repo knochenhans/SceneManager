@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 public partial class OptionsScene : Scene
 {
-    OptionGrid OptionGridNode => GetNode<OptionGrid>("%OptionGrid");
+    OptionsContainer OptionGridNode => GetNode<OptionsContainer>("%OptionGrid");
 
     public override void _Ready() => OptionGridNode.Init();
 

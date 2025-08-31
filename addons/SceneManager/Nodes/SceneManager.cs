@@ -1,7 +1,10 @@
 using System.Threading.Tasks;
 using Godot;
 using Godot.Collections;
+using MenuEntryData = Godot.Collections.Dictionary<string, Godot.Variant>;
 using static Logger;
+
+
 
 public partial class SceneManager : Node
 {
@@ -11,6 +14,7 @@ public partial class SceneManager : Node
 
 	[Signal] public delegate void OverlayMenuOpenedEventHandler();
 	[Signal] public delegate void OverlayMenuClosedEventHandler();
+	[Signal] public delegate void OverlayMenuEntrySelectedEventHandler(MenuEntryData entryData);
 
 	public Dictionary<string, PackedScene> ScenesPackedScenes => SceneManagerResource.ScenesPackedScenes;
 	public string InitialSceneName => SceneManagerResource.initialSceneName;
@@ -92,6 +96,7 @@ public partial class SceneManager : Node
 
 		await FadeHelper.TweenFadeModulate(FadeScene, FadeHelper.FadeDirectionEnum.Out, CurrentScene.FadeOutTime, transitionType: Tween.TransitionType.Cubic);
 
+		await CurrentScene.Close();
 		CurrentScene.QueueFree();
 
 		await ToSignal(CurrentScene, Node.SignalName.TreeExited);
@@ -123,15 +128,19 @@ public partial class SceneManager : Node
 		GetTree().Quit();
 	}
 
-	public async void ShowOverlayMenu(string id = "options")
+	public async Task ShowOverlayMenu(string id = "options")
 	{
 		OverlayMenuNode = OverlayMenuFramePackedScene.Instantiate<OverlayMenu>();
 		CanvasLayer.AddChild(OverlayMenuNode);
 
-		OverlayMenuNode.Closed += () => HideOverlayMenu();
+		OverlayMenuNode.Closed += HideOverlayMenu;
+		OverlayMenuNode.EntrySelected += (entryName) => EmitSignal(SignalName.OverlayMenuEntrySelected, entryName);
 
 		if (OverlayMenusInnerPackedScenes.TryGetValue(id, out var packedScene))
-			await OverlayMenuNode.ShowMenu(packedScene);
+		{
+			var inner = packedScene.Instantiate<OverlayInner>();
+			await OverlayMenuNode.ShowMenu(inner);
+		}
 
 		EmitSignal(SignalName.OverlayMenuOpened);
 	}

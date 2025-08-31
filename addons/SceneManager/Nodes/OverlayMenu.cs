@@ -1,15 +1,19 @@
 using System.Threading.Tasks;
 using Godot;
+using MenuEntryData = Godot.Collections.Dictionary<string, Godot.Variant>;
+
 
 public partial class OverlayMenu : ColorRect
 {
     [Signal] public delegate void ClosedEventHandler();
+    [Signal] public delegate void EntrySelectedEventHandler(MenuEntryData entryData);
 
-    OptionGrid OptionGridNode;
+    OptionsContainer OptionGridNode;
     Button BackButtonNode;
     Button QuitButtonNode;
 
-    protected Control ButtonsContainerNode => GetNodeOrNull<Control>("%ButtonsContainer");
+    protected Control InnerContainerNode => GetNodeOrNull<Control>("%InnerContainer");
+    protected OverlayInner InnerNode;
 
     public override void _Ready()
     {
@@ -17,27 +21,21 @@ public partial class OverlayMenu : ColorRect
         SelfModulate = new Color(0, 0, 0, SceneManager.Instance.OverlayMenuOpacity);
     }
 
-    public async Task ShowMenu(PackedScene innerPackedScene)
+    public async Task ShowMenu(OverlayInner inner)
     {
-        var buttons = innerPackedScene.Instantiate<Control>();
-        ButtonsContainerNode.AddChild(buttons);
+        InnerNode = inner;
+        InnerContainerNode.AddChild(InnerNode);
+        InnerNode.EntrySelected += (entry) => EmitSignal(SignalName.EntrySelected, entry);
+        InnerNode.BackButtonPressed += async () => await HideMenu();
+        InnerNode.QuitButtonPressed += SceneManager.Instance.Quit;
 
         Visible = true;
 
-        foreach (var control in buttons.GetChildren())
-            if (control is OptionGrid optionGrid)
+        foreach (var control in inner.GetChildren())
+            if (control is OptionsContainer optionGrid)
                 OptionGridNode = optionGrid;
 
         OptionGridNode?.Init();
-
-        BackButtonNode = buttons.GetNodeOrNull<Button>("%BackButton");
-        QuitButtonNode = buttons.GetNodeOrNull<Button>("%QuitButton");
-
-        if (BackButtonNode != null)
-            BackButtonNode.Pressed += OnBackButtonPressed;
-
-        if (QuitButtonNode != null)
-            QuitButtonNode.Pressed += OnQuitButtonPressed;
 
         await FadeHelper.TweenFadeModulate(this, FadeHelper.FadeDirectionEnum.Out, SceneManager.Instance.OverlayMenuFadeTime, SceneManager.Instance.OverlayMenuOpacity, "self_modulate", transitionType: Tween.TransitionType.Cubic);
     }
@@ -48,15 +46,16 @@ public partial class OverlayMenu : ColorRect
         OptionGridNode?.DisableInput();
         await FadeHelper.TweenFadeModulate(this, FadeHelper.FadeDirectionEnum.In, SceneManager.Instance.OverlayMenuFadeTime, fadeProperty: "self_modulate", transitionType: Tween.TransitionType.Cubic);
 
+        InnerNode.EntrySelected -= (entryName) => EmitSignal(SignalName.EntrySelected, entryName);
+
         OptionGridNode?.Clear();
 
         if (BackButtonNode != null)
-            BackButtonNode.Pressed -= OnBackButtonPressed;
+            BackButtonNode.Pressed -= async () => await HideMenu();
 
         if (QuitButtonNode != null)
-            QuitButtonNode.Pressed -= OnQuitButtonPressed;
-    }
+            QuitButtonNode.Pressed -= async () => await HideMenu();
 
-    public void OnBackButtonPressed() => EmitSignal(SignalName.Closed);
-    public void OnQuitButtonPressed() => SceneManager.Instance.Quit();
+        EmitSignal(SignalName.Closed);
+    }
 }

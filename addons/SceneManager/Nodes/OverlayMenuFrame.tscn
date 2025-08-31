@@ -25,7 +25,7 @@ layout_mode = 2
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/CenterContainer"]
 layout_mode = 2
 
-[node name="ButtonsContainer" type="MarginContainer" parent="MarginContainer/CenterContainer/PanelContainer"]
+[node name="InnerContainer" type="MarginContainer" parent="MarginContainer/CenterContainer/PanelContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/margin_left = 50

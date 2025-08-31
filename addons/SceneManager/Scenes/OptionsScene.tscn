@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://e3yjqqcvdjy" path="res://addons/SceneManager/Scenes/CentralLayoutScene.tscn" id="1_t1ptt"]
 [ext_resource type="Script" uid="uid://dr8yw1824c2w4" path="res://addons/SceneManager/Scenes/OptionsScene.cs" id="2_0pr02"]
-[ext_resource type="PackedScene" uid="uid://bf1cf06vio4fu" path="res://addons/GameOptions/OptionGrid.tscn" id="2_is1yg"]
+[ext_resource type="PackedScene" uid="uid://bf1cf06vio4fu" path="res://addons/GameOptions/OptionsContainer.tscn" id="2_is1yg"]
 [ext_resource type="Script" uid="uid://d1l22qsiuoe6n" path="res://addons/SceneManager/Nodes/SceneButton.cs" id="2_prjpf"]
 
 [node name="OptionsScene" instance=ExtResource("1_t1ptt")]
