@@ -30,6 +30,9 @@ public partial class Scene : Node
 	{
 		Log($"Starting scene {SceneFilePath}", "SceneManager", LogTypeEnum.Framework);
 
+		if (UISoundPlayer.Instance == null)
+			LogError("UISoundPlayer instance is null!", "SceneManager", LogTypeEnum.Framework);
+
 		if (ButtonsNode != null)
 			SceneButtons = [.. ButtonsNode.GetChildren().Where(node => node is SceneButton).Cast<SceneButton>()];
 
