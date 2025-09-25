@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="SceneManager"
-run/main_scene="res://Main.tscn"
+run/main_scene="uid://cpe6iiaq8xigt"
 config/features=PackedStringArray("4.5", "C#", "Mobile")
 config/icon="res://icon.svg"
 

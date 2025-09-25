@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dxtei7po7k5xx"]
 
-[ext_resource type="Script" uid="uid://c1snhi0kyav5m" path="res://addons/SceneManager/Nodes/OverlayInner.cs" id="1_5ddfv"]
+[ext_resource type="Script" uid="uid://c1snhi0kyav5m" path="res://addons/SceneManager/Overlay/OverlayInner.cs" id="1_5ddfv"]
 [ext_resource type="PackedScene" uid="uid://bf1cf06vio4fu" path="res://addons/GameOptions/OptionsContainer.tscn" id="1_bxif1"]
 [ext_resource type="Script" uid="uid://d1l22qsiuoe6n" path="res://addons/SceneManager/Nodes/SceneButton.cs" id="2_cg2ol"]
 

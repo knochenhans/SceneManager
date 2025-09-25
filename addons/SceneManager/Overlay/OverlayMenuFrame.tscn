@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ba8uv7k72mxv"]
 
-[ext_resource type="Script" uid="uid://cp6fkjxy4e7o3" path="res://addons/SceneManager/Nodes/OverlayMenu.cs" id="2_tk4cw"]
+[ext_resource type="Script" uid="uid://cp6fkjxy4e7o3" path="res://addons/SceneManager/Overlay/OverlayMenu.cs" id="2_tk4cw"]
 
 [node name="OverlayMenu" type="ColorRect"]
 anchors_preset = 15

@@ -1,17 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://b2l6ex2ecglbl"]
+[gd_scene load_steps=2 format=3 uid="uid://b2l6ex2ecglbl"]
 
 [ext_resource type="Script" uid="uid://dr8iqvwfbflh5" path="res://addons/SceneManager/Nodes/SceneManager.cs" id="1_s6e5y"]
-[ext_resource type="Resource" uid="uid://b18aenp3m56bn" path="res://addons/SceneManager/Resources/SceneManagerDefault.tres" id="2_mfvxm"]
-[ext_resource type="PackedScene" uid="uid://ba8uv7k72mxv" path="res://addons/SceneManager/Nodes/OverlayMenuFrame.tscn" id="3_mfvxm"]
-[ext_resource type="PackedScene" uid="uid://dxtei7po7k5xx" path="res://addons/SceneManager/Nodes/OptionsOverlayInner.tscn" id="4_mwrw3"]
 
 [node name="SceneManager" type="Node"]
 script = ExtResource("1_s6e5y")
-SceneManagerResource = ExtResource("2_mfvxm")
-OverlayMenuFramePackedScene = ExtResource("3_mfvxm")
-OverlayMenusInnerPackedScenes = Dictionary[String, PackedScene]({
-"options": ExtResource("4_mwrw3")
-})
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2
