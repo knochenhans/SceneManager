@@ -1,5 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://cpe6iiaq8xigt"]
+[gd_scene load_steps=3 format=3 uid="uid://cpe6iiaq8xigt"]
 
 [ext_resource type="PackedScene" uid="uid://dx71q56o5biur" path="res://addons/SceneManager/Main.tscn" id="1_glv2v"]
+[ext_resource type="PackedScene" uid="uid://ba8uv7k72mxv" path="res://addons/SceneManager/Overlay/OverlayMenuFrame.tscn" id="2_uu6xs"]
 
 [node name="Main" instance=ExtResource("1_glv2v")]
+
+[node name="SceneManager" parent="." index="0"]
+OverlayMenuFramePackedScene = ExtResource("2_uu6xs")

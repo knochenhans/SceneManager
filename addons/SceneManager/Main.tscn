@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dx71q56o5biur"]
+[gd_scene load_steps=13 format=3 uid="uid://dx71q56o5biur"]
 
 [ext_resource type="Script" uid="uid://gpn4b3wh10vd" path="res://addons/SceneManager/Main.cs" id="1_b0jck"]
 [ext_resource type="PackedScene" uid="uid://b2l6ex2ecglbl" path="res://addons/SceneManager/Nodes/SceneManager.tscn" id="2_uu6xs"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dw38qbbkyxh35" path="res://addons/SceneManager/Scenes/MenuScene.tscn" id="6_5vvyt"]
 [ext_resource type="PackedScene" uid="uid://dc14s1yyhr3yu" path="res://addons/SceneManager/Scenes/OptionsScene.tscn" id="7_c6i3y"]
 [ext_resource type="Script" uid="uid://q5kvegfjxjon" path="res://addons/SceneManager/Nodes/SceneManagerResource.cs" id="8_c2ibq"]
+[ext_resource type="PackedScene" uid="uid://ba8uv7k72mxv" path="res://addons/SceneManager/Overlay/OverlayMenuFrame.tscn" id="9_dkiu0"]
 [ext_resource type="PackedScene" uid="uid://cfal58ed8k0u3" path="res://addons/GameOptions/GameOptions.tscn" id="10_wkp8b"]
 
 [sub_resource type="Resource" id="Resource_j4qnp"]
@@ -29,6 +30,7 @@ script = ExtResource("1_b0jck")
 
 [node name="SceneManager" parent="." instance=ExtResource("2_uu6xs")]
 SceneManagerResource = SubResource("Resource_j4qnp")
+OverlayMenuFramePackedScene = ExtResource("9_dkiu0")
 
 [node name="UISoundManager" parent="." instance=ExtResource("3_r0du0")]
 
