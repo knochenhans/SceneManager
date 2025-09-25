@@ -148,7 +148,7 @@ public partial class SceneManager : Node
 	public async void HideOverlayMenu()
 	{
 		await OverlayMenuNode.HideMenu();
-		OverlayMenuNode.Closed -= () => HideOverlayMenu();
+		OverlayMenuNode.Closed -= HideOverlayMenu;
 		OverlayMenuNode.QueueFree();
 
 		EmitSignal(SignalName.OverlayMenuClosed);
