@@ -1,6 +1,5 @@
-[gd_scene load_steps=13 format=3 uid="uid://dx71q56o5biur"]
+[gd_scene load_steps=12 format=3 uid="uid://dx71q56o5biur"]
 
-[ext_resource type="Script" uid="uid://gpn4b3wh10vd" path="res://addons/SceneManager/Main.cs" id="1_b0jck"]
 [ext_resource type="PackedScene" uid="uid://b2l6ex2ecglbl" path="res://addons/SceneManager/Nodes/SceneManager.tscn" id="2_uu6xs"]
 [ext_resource type="PackedScene" uid="uid://dm6frlk3i0bo8" path="res://addons/SceneManager/Scenes/CreditsScene.tscn" id="3_03owx"]
 [ext_resource type="PackedScene" uid="uid://dgbmno8m15yrd" path="res://addons/UISoundPlayer/UISoundPlayer.tscn" id="3_r0du0"]
@@ -26,7 +25,6 @@ OverlayMenuFadeTime = 0.3
 metadata/_custom_type_script = "uid://q5kvegfjxjon"
 
 [node name="Main" type="Node"]
-script = ExtResource("1_b0jck")
 
 [node name="SceneManager" parent="." instance=ExtResource("2_uu6xs")]
 SceneManagerResource = SubResource("Resource_j4qnp")
