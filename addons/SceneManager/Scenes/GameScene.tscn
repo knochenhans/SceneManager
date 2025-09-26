@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://7a0i5aulc65b"]
+[gd_scene load_steps=3 format=3 uid="uid://7a0i5aulc65b"]
 
 [ext_resource type="PackedScene" uid="uid://bawrmdt67ohun" path="res://addons/SceneManager/Scenes/Scene.tscn" id="1_vvakc"]
+[ext_resource type="Script" uid="uid://c2bwou7hd0o8q" path="res://addons/SceneManager/BaseGame.cs" id="2_ps33h"]
 
 [node name="GameScene" instance=ExtResource("1_vvakc")]
-DefaultNextScene = "menu"
+script = ExtResource("2_ps33h")
