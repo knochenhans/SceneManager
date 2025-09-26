@@ -128,8 +128,6 @@ public partial class BaseGame : Scene
         if (CurrentGameState == GameState.Paused)
             Resume();
 
-        var initialState = StageManager.Instance.GetSaveData();
-        SaveStateManager.SaveGameState(initialState, saveGameName);
         NotificationManager.ShowNotification($"Game saved as {saveGameName}.");
     }
 
