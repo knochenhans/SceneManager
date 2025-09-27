@@ -141,6 +141,8 @@ public partial class SceneManager : Node
 			var inner = packedScene.Instantiate<OverlayInner>();
 			await OverlayMenuNode.ShowMenu(inner);
 		}
+		else
+			LogError($"Overlay menu with id '{id}' not found.", "SceneManager", LogTypeEnum.Framework);
 
 		EmitSignal(SignalName.OverlayMenuOpened);
 	}
