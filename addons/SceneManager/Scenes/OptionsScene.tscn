@@ -9,23 +9,23 @@
 script = ExtResource("2_0pr02")
 DefaultNextScene = "menu"
 
-[node name="Label" type="Label" parent="SceneBackground/MarginContainer/CenterContainer/Buttons" index="0"]
+[node name="Label" type="Label" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons" index="0"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Options"
 
-[node name="HSeparator" type="HSeparator" parent="SceneBackground/MarginContainer/CenterContainer/Buttons" index="1"]
+[node name="HSeparator" type="HSeparator" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons" index="1"]
 layout_mode = 2
 
-[node name="OptionGrid" parent="SceneBackground/MarginContainer/CenterContainer/Buttons" index="2" instance=ExtResource("2_is1yg")]
+[node name="OptionGrid" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons" index="2" instance=ExtResource("2_is1yg")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="ExitButton" type="Button" parent="SceneBackground/MarginContainer/CenterContainer/Buttons" index="3"]
+[node name="ExitButton" type="Button" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons" index="3"]
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 20
 text = "Exit"
 script = ExtResource("2_prjpf")
 
-[connection signal="pressed" from="SceneBackground/MarginContainer/CenterContainer/Buttons/ExitButton" to="." method="OnExitButtonPressed"]
+[connection signal="pressed" from="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons/ExitButton" to="." method="OnExitButtonPressed"]

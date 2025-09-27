@@ -8,35 +8,35 @@
 script = ExtResource("2_ypgv0")
 DefaultNextScene = "game"
 
-[node name="Label" type="Label" parent="SceneBackground/MarginContainer/CenterContainer/Buttons" index="0"]
+[node name="Label" type="Label" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons" index="0"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Menu"
 
-[node name="HSeparator" type="HSeparator" parent="SceneBackground/MarginContainer/CenterContainer/Buttons" index="1"]
+[node name="HSeparator" type="HSeparator" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons" index="1"]
 layout_mode = 2
 
-[node name="StartButton" type="Button" parent="SceneBackground/MarginContainer/CenterContainer/Buttons" index="2"]
+[node name="StartButton" type="Button" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons" index="2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Start"
 alignment = 0
 script = ExtResource("5_3un2h")
 
-[node name="OptionsButton" type="Button" parent="SceneBackground/MarginContainer/CenterContainer/Buttons" index="3"]
+[node name="OptionsButton" type="Button" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons" index="3"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Options"
 alignment = 0
 script = ExtResource("5_3un2h")
 
-[node name="ExitButton" type="Button" parent="SceneBackground/MarginContainer/CenterContainer/Buttons" index="4"]
+[node name="ExitButton" type="Button" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons" index="4"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Exit"
 alignment = 0
 script = ExtResource("5_3un2h")
 
-[connection signal="pressed" from="SceneBackground/MarginContainer/CenterContainer/Buttons/StartButton" to="." method="OnStartButtonPressed"]
-[connection signal="pressed" from="SceneBackground/MarginContainer/CenterContainer/Buttons/OptionsButton" to="." method="OnOptionsButtonPressed"]
-[connection signal="pressed" from="SceneBackground/MarginContainer/CenterContainer/Buttons/ExitButton" to="." method="OnExitButtonPressed"]
+[connection signal="pressed" from="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons/StartButton" to="." method="OnStartButtonPressed"]
+[connection signal="pressed" from="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons/OptionsButton" to="." method="OnOptionsButtonPressed"]
+[connection signal="pressed" from="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons/ExitButton" to="." method="OnExitButtonPressed"]
