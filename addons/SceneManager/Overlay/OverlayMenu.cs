@@ -46,7 +46,8 @@ public partial class OverlayMenu : ColorRect
         OptionGridNode?.DisableInput();
         await FadeHelper.TweenFadeModulate(this, FadeHelper.FadeDirectionEnum.In, SceneManager.Instance.OverlayMenuFadeTime, fadeProperty: "self_modulate", transitionType: Tween.TransitionType.Cubic);
 
-        InnerNode.EntrySelected -= (entryName) => EmitSignal(SignalName.EntrySelected, entryName);
+        if (InnerNode != null)
+            InnerNode.EntrySelected -= (entryName) => EmitSignal(SignalName.EntrySelected, entryName);
 
         OptionGridNode?.Clear();
 
