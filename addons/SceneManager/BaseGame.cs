@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Godot;
 using MenuEntryData = Godot.Collections.Dictionary<string, Godot.Variant>;
+using GameStateData = Godot.Collections.Dictionary<string, Godot.Variant>;
 
 using static Logger;
 
@@ -57,11 +58,18 @@ public partial class BaseGame : Scene
 
         InitGame();
         SaveStateManager = new SaveStateManager(this);
-        // SaveStateManager.SaveGameState(initialState, "init");
+
+        var initialState = new GameStateData
+        {
+            { "gameVersion", gameVersion },
+        };
+        SaveStateManager.SaveGameState(initialState, "init");
 
         Input.MouseMode = DefaultMouseMode;
 
         CurrentGameState = GameState.Running;
+
+        Log("Game initialized.", "Game", LogTypeEnum.Framework);
     }
 
 
