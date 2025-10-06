@@ -66,6 +66,8 @@ public partial class BaseGame : Scene
     {
         CurrentGameState = GameState.Loading;
 
+        Input.SetCustomMouseCursor(DefaultCursorTexture, Input.CursorShape.Arrow, DefaultCursorHotspot);
+
         InitGame();
         SaveStateManager = new SaveStateManager(this);
 
