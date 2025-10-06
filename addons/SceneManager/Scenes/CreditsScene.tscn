@@ -3,3 +3,4 @@
 [ext_resource type="PackedScene" uid="uid://e3yjqqcvdjy" path="res://addons/SceneManager/Scenes/CentralLayoutScene.tscn" id="1_6a2qp"]
 
 [node name="CreditsScene" instance=ExtResource("1_6a2qp")]
+PlayUIMusic = true

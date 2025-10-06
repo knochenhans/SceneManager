@@ -68,6 +68,8 @@ public partial class BaseGame : Scene
 
         Input.SetCustomMouseCursor(DefaultCursorTexture, Input.CursorShape.Arrow, DefaultCursorHotspot);
 
+        UISoundPlayer.Instance?.StopMusic();
+
         InitGame();
         SaveStateManager = new SaveStateManager(this);
 

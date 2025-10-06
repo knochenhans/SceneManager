@@ -8,6 +8,7 @@
 [node name="OptionsScene" instance=ExtResource("1_t1ptt")]
 script = ExtResource("2_0pr02")
 DefaultNextScene = "menu"
+PlayUIMusic = true
 
 [node name="Label" type="Label" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons" index="0"]
 layout_mode = 2
