@@ -71,6 +71,12 @@ public partial class SceneManager : Node
 		sceneName = sceneName.ToLower();
 		Log($"Starting scene {sceneName}", "SceneManager", LogTypeEnum.Framework);
 
+		if (ScenesPackedScenes.Count == 0)
+		{
+			LogError("No scenes available to load. Please check the SceneManagerResource.", "SceneManager", LogTypeEnum.Framework);
+			return;
+		}
+
 		CurrentSceneName = sceneName;
 		CurrentScene = ScenesPackedScenes.TryGetValue(CurrentSceneName, out var packedScene) ? packedScene.Instantiate() as Scene : null;
 
