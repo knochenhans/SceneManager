@@ -11,6 +11,7 @@ public partial class SceneManager : Node
 	[Export] public SceneManagerResource SceneManagerResource;
 	[Export] public PackedScene OverlayMenuFramePackedScene;
 	[Export] public Dictionary<string, PackedScene> OverlayMenusInnerPackedScenes = [];
+	[Export] public AudioBusLayout AudioBusLayout;
 
 	[Signal] public delegate void OverlayMenuOpenedEventHandler();
 	[Signal] public delegate void OverlayMenuClosedEventHandler();
@@ -51,6 +52,8 @@ public partial class SceneManager : Node
 		foreach (var scene in ScenesPackedScenes)
 			Log($"Scene: {scene.Key}", "SceneManager", LogTypeEnum.Framework);
 		Log($"Initial scene: {InitialSceneName}", "SceneManager", LogTypeEnum.Framework);
+
+		AudioServer.SetBusLayout(AudioBusLayout);
 
 		CallDeferred(MethodName.ChangeToScene, InitialSceneName);
 	}
