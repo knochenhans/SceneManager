@@ -21,12 +21,12 @@ public partial class OverlayMenu : ColorRect
         SelfModulate = new Color(0, 0, 0, SceneManager.Instance.OverlayMenuOpacity);
     }
 
-    public async Task ShowMenu(OverlayInner inner)
+    public async void ShowMenu(OverlayInner inner)
     {
         InnerNode = inner;
         InnerContainerNode.AddChild(InnerNode);
         InnerNode.EntrySelected += (entry) => EmitSignal(SignalName.EntrySelected, entry);
-        InnerNode.BackButtonPressed += async () => await HideMenu();
+        InnerNode.BackButtonPressed += HideMenu;
         InnerNode.QuitButtonPressed += SceneManager.Instance.Quit;
 
         Visible = true;
@@ -40,7 +40,7 @@ public partial class OverlayMenu : ColorRect
         await FadeHelper.TweenFadeModulate(this, FadeHelper.FadeDirectionEnum.Out, SceneManager.Instance.OverlayMenuFadeTime, SceneManager.Instance.OverlayMenuOpacity, "self_modulate", transitionType: Tween.TransitionType.Cubic);
     }
 
-    public async Task HideMenu()
+    public async void HideMenu()
     {
         Visible = false;
         OptionGridNode?.DisableInput();
@@ -52,11 +52,17 @@ public partial class OverlayMenu : ColorRect
         OptionGridNode?.Clear();
 
         if (BackButtonNode != null)
-            BackButtonNode.Pressed -= async () => await HideMenu();
+            BackButtonNode.Pressed -= HideMenu;
 
         if (QuitButtonNode != null)
-            QuitButtonNode.Pressed -= async () => await HideMenu();
+            QuitButtonNode.Pressed -= HideMenu;
 
         EmitSignal(SignalName.Closed);
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventKey keyEvent && keyEvent.IsPressed() && keyEvent.Keycode == Key.Escape)
+            HideMenu();
     }
 }

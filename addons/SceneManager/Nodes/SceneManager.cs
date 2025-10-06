@@ -128,7 +128,7 @@ public partial class SceneManager : Node
 		GetTree().Quit();
 	}
 
-	public async Task ShowOverlayMenu(string id = "options")
+	public void ShowOverlayMenu(string id = "options")
 	{
 		OverlayMenuNode = OverlayMenuFramePackedScene.Instantiate<OverlayMenu>();
 		CanvasLayer.AddChild(OverlayMenuNode);
@@ -139,7 +139,7 @@ public partial class SceneManager : Node
 		if (OverlayMenusInnerPackedScenes.TryGetValue(id, out var packedScene))
 		{
 			var inner = packedScene.Instantiate<OverlayInner>();
-			await OverlayMenuNode.ShowMenu(inner);
+			OverlayMenuNode.ShowMenu(inner);
 		}
 		else
 			LogError($"Overlay menu with id '{id}' not found.", "SceneManager", LogTypeEnum.Framework);
@@ -147,9 +147,9 @@ public partial class SceneManager : Node
 		EmitSignal(SignalName.OverlayMenuOpened);
 	}
 
-	public async void HideOverlayMenu()
+	public void HideOverlayMenu()
 	{
-		await OverlayMenuNode.HideMenu();
+		OverlayMenuNode.HideMenu();
 		OverlayMenuNode.Closed -= HideOverlayMenu;
 		OverlayMenuNode.QueueFree();
 

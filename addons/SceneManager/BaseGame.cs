@@ -43,6 +43,16 @@ public partial class BaseGame : Scene
         }
     }
 
+    public enum OverlayMenuState
+    {
+        Closed,
+        Opening,
+        Open,
+        Closing,
+    }
+
+    protected OverlayMenuState CurrentOverlayMenuState = OverlayMenuState.Closed;
+
     public enum ControlState
     {
         None,
@@ -79,8 +89,11 @@ public partial class BaseGame : Scene
             return;
     }
 
-    public override async void _Input(InputEvent @event)
+    public override void _Input(InputEvent @event)
     {
+        if (CurrentOverlayMenuState == OverlayMenuState.Open)
+            return;
+
         if (@event is InputEventKey keyEvent && keyEvent.IsPressed())
         {
             switch (keyEvent.Keycode)
@@ -92,13 +105,13 @@ public partial class BaseGame : Scene
                     LoadGame();
                     break;
                 case Key.F11:
-                    await ToggleOverlayMenu("load");
+                    ShowOverlayMenu("load");
                     break;
                 case Key.F12:
-                    await ToggleOverlayMenu("save");
+                    ShowOverlayMenu("save");
                     break;
                 case Key.Escape:
-                    await ToggleOverlayMenu("options");
+                    ShowOverlayMenu("options");
                     break;
             }
         }
@@ -111,15 +124,15 @@ public partial class BaseGame : Scene
     {
     }
 
-    protected async Task ToggleOverlayMenu(string overlayMenuName = "")
+    protected void ShowOverlayMenu(string overlayMenuName = "")
     {
         if (CurrentGameState == GameState.Running)
         {
             Pause();
-            await SceneManager.Instance.ShowOverlayMenu(overlayMenuName);
+            CurrentOverlayMenuState = OverlayMenuState.Opening;
+            SceneManager.Instance.ShowOverlayMenu(overlayMenuName);
+            CurrentOverlayMenuState = OverlayMenuState.Open;
         }
-        else if (CurrentGameState == GameState.Paused)
-            Resume();
     }
 
     protected virtual async void LoadGame(string saveGameName = "savegame")
@@ -150,8 +163,6 @@ public partial class BaseGame : Scene
 
     protected virtual void Resume()
     {
-        SceneManager.Instance.HideOverlayMenu();
-
         Input.MouseMode = DefaultMouseMode;
 
         CurrentGameState = GameState.Running;
@@ -172,5 +183,15 @@ public partial class BaseGame : Scene
             LoadGame((string)entryName);
         else if (entryData.TryGetValue("save", out var entryName2))
             SaveGame((string)entryName2);
+    }
+
+    public void OnOverlayMenuClosed()
+    {
+        if (CurrentOverlayMenuState == OverlayMenuState.Open)
+        {
+            CurrentOverlayMenuState = OverlayMenuState.Closing;
+            CurrentOverlayMenuState = OverlayMenuState.Closed;
+        }
+        Resume();
     }
 }
