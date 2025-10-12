@@ -53,7 +53,8 @@ public partial class SceneManager : Node
 			Log($"Scene: {scene.Key}", "SceneManager", LogTypeEnum.Framework);
 		Log($"Initial scene: {InitialSceneName}", "SceneManager", LogTypeEnum.Framework);
 
-		AudioServer.SetBusLayout(AudioBusLayout);
+		if (AudioBusLayout != null)
+			AudioServer.SetBusLayout(AudioBusLayout);
 
 		CallDeferred(MethodName.ChangeToScene, InitialSceneName);
 	}

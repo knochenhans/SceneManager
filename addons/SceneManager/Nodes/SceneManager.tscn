@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://b2l6ex2ecglbl"]
+[gd_scene load_steps=6 format=3 uid="uid://b2l6ex2ecglbl"]
 
 [ext_resource type="Script" uid="uid://dr8iqvwfbflh5" path="res://addons/SceneManager/Nodes/SceneManager.cs" id="1_s6e5y"]
 [ext_resource type="PackedScene" uid="uid://bgxv68cqebiib" path="res://addons/SceneManager/Overlay/LoadOverlayInner.tscn" id="2_mwrw3"]
 [ext_resource type="PackedScene" uid="uid://bm0fjsc7g35pm" path="res://addons/SceneManager/Overlay/SaveOverlayInner.tscn" id="3_yw25f"]
 [ext_resource type="PackedScene" uid="uid://dxtei7po7k5xx" path="res://addons/SceneManager/Overlay/OptionsOverlayInner.tscn" id="4_m074f"]
+[ext_resource type="AudioBusLayout" uid="uid://tmc7045duu8c" path="res://addons/GameUtils/AudioBusLayout.tres" id="5_yw25f"]
 
 [node name="SceneManager" type="Node"]
 script = ExtResource("1_s6e5y")
@@ -12,6 +13,7 @@ OverlayMenusInnerPackedScenes = Dictionary[String, PackedScene]({
 "options": ExtResource("4_m074f"),
 "save": ExtResource("3_yw25f")
 })
+AudioBusLayout = ExtResource("5_yw25f")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2
