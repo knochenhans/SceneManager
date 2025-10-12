@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dx71q56o5biur"]
+[gd_scene load_steps=12 format=3 uid="uid://o7bwrmiamxyq"]
 
 [ext_resource type="PackedScene" uid="uid://b2l6ex2ecglbl" path="res://addons/SceneManager/Nodes/SceneManager.tscn" id="2_uu6xs"]
 [ext_resource type="PackedScene" uid="uid://dm6frlk3i0bo8" path="res://addons/SceneManager/Scenes/CreditsScene.tscn" id="3_03owx"]
@@ -26,10 +26,10 @@ metadata/_custom_type_script = "uid://q5kvegfjxjon"
 
 [node name="Main" type="Node"]
 
+[node name="GameOptions" parent="." instance=ExtResource("10_wkp8b")]
+
 [node name="SceneManager" parent="." instance=ExtResource("2_uu6xs")]
 SceneManagerResource = SubResource("Resource_j4qnp")
 OverlayMenuFramePackedScene = ExtResource("9_dkiu0")
 
 [node name="UISoundManager" parent="." instance=ExtResource("3_r0du0")]
-
-[node name="GameOptions" parent="." instance=ExtResource("10_wkp8b")]
