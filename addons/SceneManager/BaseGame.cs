@@ -11,8 +11,7 @@ public partial class BaseGame : Scene
     [Export] public int gameVersion = 1;
 
     [ExportGroup("Mouse")]
-    [Export] public Texture2D DefaultCursorTexture = null!;
-    [Export] public Vector2 DefaultCursorHotspot = new(0, 0);
+    [Export] public CursorSetResource DefaultCursor;
     [Export] public Input.MouseModeEnum DefaultMouseMode = Input.MouseModeEnum.Visible;
 
     public Camera2D Camera => GetViewport().GetCamera2D();
@@ -66,7 +65,7 @@ public partial class BaseGame : Scene
     {
         CurrentGameState = GameState.Loading;
 
-        Input.SetCustomMouseCursor(DefaultCursorTexture, Input.CursorShape.Arrow, DefaultCursorHotspot);
+        Input.SetCustomMouseCursor(DefaultCursor.Texture, hotspot: DefaultCursor.Hotspot);
 
         UISoundPlayer.Instance?.StopMusic();
 

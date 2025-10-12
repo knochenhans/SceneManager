@@ -5,3 +5,7 @@
 
 [node name="GameScene" instance=ExtResource("1_vvakc")]
 script = ExtResource("2_ps33h")
+gameVersion = 1
+DefaultCursor = null
+DefaultMouseMode = 0
+
