@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Godot;
+using Godot.Collections;
 using MenuEntryData = Godot.Collections.Dictionary<string, Godot.Variant>;
 using GameStateData = Godot.Collections.Dictionary<string, Godot.Variant>;
 
@@ -134,6 +135,37 @@ public partial class BaseGame : Scene
         }
     }
 
+    public virtual void OnOverlayMenuEntrySelected(MenuEntryData entryData)
+    {
+        if (entryData.TryGetValue("load", out var entryName))
+            LoadGame((string)entryName);
+        else if (entryData.TryGetValue("save", out var entryName2))
+            SaveGame((string)entryName2);
+    }
+
+    protected virtual void OnOverlayMenuButtonPressed(string buttonID)
+    {
+        switch (buttonID)
+        {
+            case "quit":
+                GetTree().Quit();
+                break;
+            case "back":
+                OnOverlayMenuClosed();
+                break;
+        }
+    }
+
+    public void OnOverlayMenuClosed()
+    {
+        if (CurrentOverlayMenuState == OverlayMenuState.Open)
+        {
+            CurrentOverlayMenuState = OverlayMenuState.Closing;
+            CurrentOverlayMenuState = OverlayMenuState.Closed;
+        }
+        Resume();
+    }
+
     protected virtual async void LoadGame(string saveGameName = "savegame")
     {
         await SaveStateManager.LoadGameState(saveGameName);
@@ -174,23 +206,5 @@ public partial class BaseGame : Scene
         Input.MouseMode = Input.MouseModeEnum.Visible;
 
         await base.Close();
-    }
-
-    public void OnOverlayMenuEntrySelected(MenuEntryData entryData)
-    {
-        if (entryData.TryGetValue("load", out var entryName))
-            LoadGame((string)entryName);
-        else if (entryData.TryGetValue("save", out var entryName2))
-            SaveGame((string)entryName2);
-    }
-
-    public void OnOverlayMenuClosed()
-    {
-        if (CurrentOverlayMenuState == OverlayMenuState.Open)
-        {
-            CurrentOverlayMenuState = OverlayMenuState.Closing;
-            CurrentOverlayMenuState = OverlayMenuState.Closed;
-        }
-        Resume();
     }
 }

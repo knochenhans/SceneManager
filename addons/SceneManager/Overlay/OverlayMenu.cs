@@ -26,8 +26,13 @@ public partial class OverlayMenu : ColorRect
         InnerNode = inner;
         InnerContainerNode.AddChild(InnerNode);
         InnerNode.EntrySelected += (entry) => EmitSignal(SignalName.EntrySelected, entry);
-        InnerNode.BackButtonPressed += HideMenu;
-        InnerNode.QuitButtonPressed += SceneManager.Instance.Quit;
+        InnerNode.ButtonPressed += (buttonID) =>
+        {
+            if (buttonID == "back")
+                HideMenu();
+            else if (buttonID == "quit")
+                SceneManager.Instance.Quit();
+        };
 
         Visible = true;
 
