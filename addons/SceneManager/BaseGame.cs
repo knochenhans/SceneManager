@@ -10,10 +10,6 @@ public partial class BaseGame : Scene
     [ExportGroup("Game Settings")]
     [Export] public int gameVersion = 1;
 
-    [ExportGroup("Mouse")]
-    [Export] public CursorSetResource DefaultCursor;
-    [Export] public Input.MouseModeEnum DefaultMouseMode = Input.MouseModeEnum.Visible;
-
     public Camera2D Camera => GetViewport().GetCamera2D();
 
     protected NotificationManager NotificationManager => GetNodeOrNull<NotificationManager>("%NotificationManager");
@@ -65,7 +61,7 @@ public partial class BaseGame : Scene
     {
         CurrentGameState = GameState.Loading;
 
-        Input.SetCustomMouseCursor(DefaultCursor.Texture, hotspot: DefaultCursor.Hotspot);
+        SetMouseCursor("default");
 
         UISoundPlayer.Instance?.StopMusic();
 
