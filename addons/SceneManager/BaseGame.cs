@@ -124,6 +124,10 @@ public partial class BaseGame : Scene
     {
     }
 
+    protected virtual void InitStageNodes()
+    {
+    }
+
     protected void ShowOverlayMenu(string overlayMenuName = "")
     {
         if (CurrentGameState == GameState.Running)

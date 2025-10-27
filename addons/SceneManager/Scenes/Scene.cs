@@ -25,8 +25,6 @@ public partial class Scene : Node
 	[Export] public float FadeInTime = 0.5f;
 	[Export] public float FadeOutTime = 0.5f;
 	[Export] public float LifeTime = 0.0f;
-	[Export] public string DefaultNextScene = "";
-	[Export] bool PlayUIMusic = false;
 
 	protected ColorRect BackgroundNode => GetNodeOrNull<ColorRect>("SceneBackground");
 	protected VBoxContainer ButtonsNode => GetNodeOrNull<VBoxContainer>("%Buttons");
