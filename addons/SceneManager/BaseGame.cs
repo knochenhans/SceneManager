@@ -12,6 +12,9 @@ public partial class BaseGame : Scene
     [Export] public int gameVersion = 1;
 
     public Camera2D Camera => GetViewport().GetCamera2D();
+    public Control WidgetsNode => GetNode<Control>("%Widgets");
+
+    protected WidgetManager WidgetManager;
 
     protected NotificationManager NotificationManager => GetNodeOrNull<NotificationManager>("%NotificationManager");
     protected SaveStateManager SaveStateManager;
@@ -122,6 +125,7 @@ public partial class BaseGame : Scene
 
     public virtual void InitGame(bool loadGame = false)
     {
+        WidgetManager = new WidgetManager(this, WidgetsNode, WidgetScenes);
     }
 
     protected virtual void InitStageNodes()
@@ -210,5 +214,14 @@ public partial class BaseGame : Scene
         Input.MouseMode = Input.MouseModeEnum.Visible;
 
         await base.Close();
+    }
+    public virtual void OnWidgetOpened(string widgetName, Widget widgetInstance)
+    {
+        Log($"Widget opened: {widgetName}", LogTypeEnum.UI);
+    }
+
+    public virtual void OnWidgetClosed(string widgetName)
+    {
+        Log($"Widget closed: {widgetName}", LogTypeEnum.UI);
     }
 }
