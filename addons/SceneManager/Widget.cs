@@ -3,14 +3,18 @@ using Godot;
 
 public partial class Widget : Control
 {
+	[Signal] public delegate void CloseButtonPressedEventHandler();
+
 	[Export] public string WidgetTitle = "Widget";
 	[Export] public bool EnableDragging = true;
+	[Export] public bool EnableCloseButton = true;
 	
 	[Export] public float FadeInDuration = 0.2f;
 	[Export] public float FadeOutDuration = 0.1f;
 	[Export] public float Opacity = 1;
 
 	Label TitleLabel => GetNode<Label>("%WidgetTitleLabel");
+	Button CloseButton => GetNode<Button>("%CloseButton");
 
 	private bool isDragging = false;
 	private bool movedToTop = false;
@@ -21,6 +25,10 @@ public partial class Widget : Control
 	{
 		parentControl = GetParent() as Control;
 		Modulate = new Color(1, 1, 1, 0f);
+
+		TitleLabel.Text = WidgetTitle;
+		CloseButton.Visible = EnableCloseButton;
+		CloseButton.Pressed += OnCloseButtonPressed;
 
 		await FadeHelper.TweenFadeModulate(this, FadeHelper.FadeDirectionEnum.In, FadeInDuration, Opacity);
 	}
@@ -45,6 +53,9 @@ public partial class Widget : Control
 
 	public override void _Process(double delta)
 	{
+		if (!EnableDragging)
+			return;
+
 		if (!isDragging)
 			return;
 
@@ -72,12 +83,12 @@ public partial class Widget : Control
 
 	public async void OnCloseButtonPressed()
     {
-        await Close();
+		await Close();
+		EmitSignal(SignalName.CloseButtonPressed);
     }
 
     public async System.Threading.Tasks.Task Close()
     {
         await FadeHelper.TweenFadeModulate(this, FadeHelper.FadeDirectionEnum.Out, FadeOutDuration, Opacity);
-        QueueFree();
     }
 }

@@ -21,7 +21,7 @@ public partial class BaseGame : Scene
     public Camera2D Camera => GetViewport().GetCamera2D();
     public Control WidgetsNode => GetNode<Control>("%Widgets");
 
-    protected WidgetManager WidgetManager;
+    public WidgetManager WidgetManager;
 
     protected SaveStateManager SaveStateManager;
 
@@ -134,6 +134,13 @@ public partial class BaseGame : Scene
         WidgetManager = new WidgetManager(this, WidgetsNode, WidgetScenes);
     }
 
+    public virtual void UninitGame()
+    {
+        UninitStageNodes();
+
+        WidgetManager = null;
+    }
+
     protected virtual void InitStageNodes()
     {
         foreach (var stageNode in CurrentStageNodes)
@@ -243,6 +250,7 @@ public partial class BaseGame : Scene
 
         await base.Close();
     }
+
     public virtual void OnWidgetOpened(string widgetName, Widget widgetInstance)
     {
         Log($"Widget opened: {widgetName}", LogTypeEnum.UI);

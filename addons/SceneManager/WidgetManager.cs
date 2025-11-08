@@ -22,6 +22,7 @@ public class WidgetManager(BaseGame game, Control widgetsNode, Dictionary<string
 			{
 				Callable.From(() => widgetInstance.GlobalPosition = savedPosition).CallDeferred();
 			}
+			widgetInstance.CloseButtonPressed += () => CloseWidget(widgetName);
 
 			widgetsNode.AddChild(widgetInstance);
 			ActiveWidgets[widgetName] = widgetInstance;
@@ -40,9 +41,9 @@ public class WidgetManager(BaseGame game, Control widgetsNode, Dictionary<string
 	{
 		if (ActiveWidgets.TryGetValue(widgetName, out var widgetToClose))
 		{
+			ActiveWidgets.Remove(widgetName);
 			widgetPositions[widgetName] = widgetToClose.GlobalPosition;
 			await widgetToClose.Close();
-			ActiveWidgets.Remove(widgetName);
 
 			game.OnWidgetClosed(widgetName);
 		}
