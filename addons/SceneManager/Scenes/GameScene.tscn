@@ -2,23 +2,36 @@
 
 [ext_resource type="PackedScene" uid="uid://bawrmdt67ohun" path="res://addons/SceneManager/Scenes/Scene.tscn" id="1_vvakc"]
 [ext_resource type="Script" uid="uid://c2bwou7hd0o8q" path="res://addons/SceneManager/BaseGame.cs" id="2_ps33h"]
-[ext_resource type="Texture2D" uid="uid://dr0mw8vc8elbk" path="res://Resources/Images/Cursors/arrow.png" id="3_46g7r"]
-[ext_resource type="Script" uid="uid://bqak1oe3ef0rw" path="res://addons/GameUtils/CursorSetResource.cs" id="4_1b7hr"]
+[ext_resource type="PackedScene" uid="uid://cgkwkjn6c4t5u" path="res://NotificationLabel.tscn" id="4_1b7hr"]
 [ext_resource type="PackedScene" uid="uid://ddfbn05780mqq" path="res://addons/SceneManager/Nodes/Hud.tscn" id="4_46g7r"]
+[ext_resource type="PackedScene" uid="uid://ckeidvpi72g3b" path="res://addons/NotificationsManager/NotificationManager.tscn" id="4_cgfhn"]
+[ext_resource type="PackedScene" uid="uid://dhmwany3iqrlm" path="res://addons/SceneManager/Widget.tscn" id="5_1b7hr"]
 
-[sub_resource type="Resource" id="Resource_k1b3t"]
-script = ExtResource("4_1b7hr")
-Texture = ExtResource("3_46g7r")
-Hotspot = Vector2(24, 24)
-metadata/_custom_type_script = "uid://bqak1oe3ef0rw"
-
-[node name="GameScene" instance=ExtResource("1_vvakc")]
+[node name="GameScene" node_paths=PackedStringArray("NotificationManager") instance=ExtResource("1_vvakc")]
 script = ExtResource("2_ps33h")
+NotificationManager = NodePath("FixedCanvas/NotificationManager")
+WidgetScene = ExtResource("5_1b7hr")
+WidgetInnerScenes = null
 gameVersion = 1
-DefaultCursor = SubResource("Resource_k1b3t")
-DefaultMouseMode = 0
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." index="3"]
+[node name="FixedCanvas" type="CanvasLayer" parent="." index="3"]
+layer = 2
+
+[node name="Widgets" type="Control" parent="FixedCanvas" index="0"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NotificationManager" parent="FixedCanvas" index="1" instance=ExtResource("4_cgfhn")]
+unique_name_in_owner = true
+NotificationScene = ExtResource("4_1b7hr")
+NotificationOffset = Vector2(5, 5)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="4"]
 
 [node name="UIContainer" type="MarginContainer" parent="CanvasLayer" index="0"]
 unique_name_in_owner = true
@@ -36,7 +49,7 @@ size_flags_vertical = 0
 [node name="HUD" parent="CanvasLayer/UIContainer/Container" index="0" instance=ExtResource("4_46g7r")]
 unique_name_in_owner = true
 
-[node name="Camera2D" type="Camera2D" parent="." index="4"]
+[node name="Camera2D" type="Camera2D" parent="." index="5"]
 position = Vector2(256, 168)
 zoom = Vector2(3, 3)
 limit_enabled = false

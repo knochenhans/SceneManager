@@ -4,8 +4,6 @@ using Godot.Collections;
 using MenuEntryData = Godot.Collections.Dictionary<string, Godot.Variant>;
 using static Logger;
 
-
-
 public partial class SceneManager : Node
 {
 	[Export] public SceneManagerResource SceneManagerResource;
@@ -89,7 +87,8 @@ public partial class SceneManager : Node
 
 		AddChild(CurrentScene);
 
-		await FadeHelper.TweenFadeModulate(FadeScene, FadeHelper.FadeDirectionEnum.In, CurrentScene.FadeInTime, transitionType: Tween.TransitionType.Cubic);
+		// Use fadeout as direction because we are fading from black to the scene
+		await FadeHelper.TweenFadeModulate(FadeScene, FadeHelper.FadeDirectionEnum.Out, CurrentScene.FadeInTime, transitionType: Tween.TransitionType.Cubic);
 	}
 
 	private async Task ExitCurrentScene()
@@ -104,7 +103,8 @@ public partial class SceneManager : Node
 
 		CurrentScene.DisableInput();
 
-		await FadeHelper.TweenFadeModulate(FadeScene, FadeHelper.FadeDirectionEnum.Out, CurrentScene.FadeOutTime, transitionType: Tween.TransitionType.Cubic);
+		// Use fadeout as direction because we are fading from black to the scene
+		await FadeHelper.TweenFadeModulate(FadeScene, FadeHelper.FadeDirectionEnum.In, CurrentScene.FadeOutTime, transitionType: Tween.TransitionType.Cubic);
 
 		await CurrentScene.Close();
 		CurrentScene.QueueFree();

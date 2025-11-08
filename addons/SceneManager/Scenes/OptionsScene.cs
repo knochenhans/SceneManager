@@ -6,7 +6,7 @@ public partial class OptionsScene : Scene
 
     public override void _Ready() => OptionGridNode.Init();
 
-    public async void OnExitButtonPressed() => await SceneManager.Instance.ChangeToDefaultNextScene();
+    public static async void OnExitButtonPressed() => await SceneManager.Instance.ChangeToDefaultNextScene();
 
     protected override void OnBackgroundClicked(InputEvent @event)
     { }

@@ -8,15 +8,21 @@ using static Logger;
 
 public partial class BaseGame : Scene
 {
+    [Export] public NotificationManager NotificationManager;
+
+    [ExportGroup("Widgets")]
+    [Export] public Dictionary<string, PackedScene> WidgetScenes;
+
     [ExportGroup("Game Settings")]
     [Export] public int gameVersion = 1;
+
+    protected Array<StageNode> CurrentStageNodes = [];
 
     public Camera2D Camera => GetViewport().GetCamera2D();
     public Control WidgetsNode => GetNode<Control>("%Widgets");
 
     protected WidgetManager WidgetManager;
 
-    protected NotificationManager NotificationManager => GetNodeOrNull<NotificationManager>("%NotificationManager");
     protected SaveStateManager SaveStateManager;
 
     public enum GameState
@@ -65,7 +71,7 @@ public partial class BaseGame : Scene
     {
         CurrentGameState = GameState.Loading;
 
-        SetMouseCursor("default");
+        CursorManager = new CursorManager(CursorSets, ScaleFactor);
 
         UISoundPlayer.Instance?.StopMusic();
 
@@ -130,9 +136,31 @@ public partial class BaseGame : Scene
 
     protected virtual void InitStageNodes()
     {
+        foreach (var stageNode in CurrentStageNodes)
+            InitStageNode(stageNode);
     }
 
-    protected void ShowOverlayMenu(string overlayMenuName = "")
+    protected virtual void InitStageNode(StageNode stageNode)
+    {
+        stageNode.Unpause();
+
+        Log($"StageNode {stageNode.ID} has been initialized.", "Game", LogTypeEnum.EnterTree);
+    }
+
+    protected virtual void UninitStageNodes()
+    {
+        foreach (var stageNode in CurrentStageNodes)
+            UninitStageNode(stageNode);
+    }
+
+    protected virtual void UninitStageNode(StageNode stageNode)
+    {
+        stageNode.Pause();
+
+        Log($"StageNode {stageNode.ID} has been uninitialized.", "Game", LogTypeEnum.ExitTree);
+    }
+
+    public void ShowOverlayMenu(string overlayMenuName = "")
     {
         if (CurrentGameState == GameState.Running)
         {
@@ -174,21 +202,21 @@ public partial class BaseGame : Scene
         Resume();
     }
 
-    protected virtual async void LoadGame(string saveGameName = "savegame")
+    public virtual async void LoadGame(string saveGameName = "savegame")
     {
         await SaveStateManager.LoadGameState(saveGameName);
-        NotificationManager.ShowNotification($"Game loaded from {saveGameName}.");
+        NotificationManager?.ShowNotification($"Game loaded from {saveGameName}.");
 
         if (CurrentGameState == GameState.Paused)
             Resume();
     }
 
-    protected virtual void SaveGame(string saveGameName = "savegame")
+    public virtual void SaveGame(string saveGameName = "savegame")
     {
         if (CurrentGameState == GameState.Paused)
             Resume();
 
-        NotificationManager.ShowNotification($"Game saved as {saveGameName}.");
+        NotificationManager?.ShowNotification($"Game saved as {saveGameName}.");
     }
 
     protected virtual void Pause()

@@ -20,6 +20,7 @@ public partial class Scene : Node
 	[ExportGroup("Mouse")]
 	[Export] public Dictionary<string, CursorSetResource> CursorSets = [];
 	[Export] public Input.MouseModeEnum DefaultMouseMode = Input.MouseModeEnum.Visible;
+	[Export] public int ScaleFactor = 1;
 
 	[ExportGroup("Fade Settings")]
 	[Export] public float FadeInTime = 0.5f;
@@ -33,11 +34,13 @@ public partial class Scene : Node
 
 	Timer LifeTimerNode => GetNode<Timer>("LifeTimer");
 
-	System.Collections.Generic.Stack<CursorSetResource> CursorStack = new();
+	public CursorManager CursorManager = null!;
 
 	public override void _Ready()
 	{
 		Log($"Starting scene {SceneFilePath}", "SceneManager", LogTypeEnum.Framework);
+
+		CursorManager = new CursorManager(CursorSets, ScaleFactor);
 
 		if (UISoundPlayer.Instance == null)
 			LogError("UISoundPlayer instance is null!", "SceneManager", LogTypeEnum.Framework);
@@ -100,32 +103,5 @@ public partial class Scene : Node
 	public async virtual Task Close()
 	{
 	}
-
-	public virtual void SetMouseCursor(string cursorSetKey = "default")
-	{
-		if (CursorSets.TryGetValue(cursorSetKey, out CursorSetResource cursorSet))
-		{
-			// apply and push onto stack
-			Input.SetCustomMouseCursor(cursorSet.Texture, hotspot: cursorSet.Hotspot);
-			CursorStack.Push(cursorSet);
-		}
-	}
-
-	public virtual void ResetMouseCursor()
-	{
-		// pop current cursor
-		if (CursorStack.Count > 0)
-			CursorStack.Pop();
-
-		// restore previous cursor if any, otherwise clear custom cursor
-		if (CursorStack.Count > 0)
-		{
-			var last = CursorStack.Peek();
-			Input.SetCustomMouseCursor(last.Texture, hotspot: last.Hotspot);
-		}
-		else
-		{
-			Input.SetCustomMouseCursor(null);
-		}
-	}
 }
+
