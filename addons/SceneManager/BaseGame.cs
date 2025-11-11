@@ -173,18 +173,22 @@ public partial class BaseGame : Scene
         NotificationManager?.ShowNotification($"Game saved as {saveGameName}.");
     }
 
-    protected virtual void Pause()
+    public virtual void Pause()
     {
         CurrentGameState = GameState.Paused;
 
+        LastMouseMode = Input.MouseMode;
         Input.MouseMode = Input.MouseModeEnum.Visible;
 
         Log("Game paused.", "Game", LogTypeEnum.Framework);
     }
 
-    protected virtual void Resume()
+    public virtual void Resume()
     {
-        Input.MouseMode = DefaultMouseMode;
+        if (CurrentGameState != GameState.Paused)
+            return;
+
+        Input.MouseMode = LastMouseMode;
 
         CurrentGameState = GameState.Running;
 

@@ -35,6 +35,7 @@ public partial class Scene : Node
 	Timer LifeTimerNode => GetNode<Timer>("LifeTimer");
 
 	public CursorManager CursorManager = null!;
+	protected Input.MouseModeEnum LastMouseMode;
 
 	public override void _Ready()
 	{
@@ -63,6 +64,8 @@ public partial class Scene : Node
 			UISoundPlayer.Instance.StartOrKeepMusic();
 		else
 			UISoundPlayer.Instance.StopMusic();
+
+		LastMouseMode = Input.MouseMode;
 
 		SceneState = SceneStateEnum.Idle;
 	}
