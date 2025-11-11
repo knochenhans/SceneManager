@@ -7,21 +7,12 @@ using static Logger;
 public partial class SceneManager : Node
 {
 	[Export] public SceneManagerResource SceneManagerResource;
-	[Export] public PackedScene OverlayMenuFramePackedScene;
-	[Export] public Dictionary<string, PackedScene> OverlayMenusInnerPackedScenes = [];
 	[Export] public AudioBusLayout AudioBusLayout;
-
-	[Signal] public delegate void OverlayMenuOpenedEventHandler();
-	[Signal] public delegate void OverlayMenuClosedEventHandler();
-	[Signal] public delegate void OverlayMenuEntrySelectedEventHandler(MenuEntryData entryData);
 
 	public Dictionary<string, PackedScene> ScenesPackedScenes => SceneManagerResource.ScenesPackedScenes;
 	public string InitialSceneName => SceneManagerResource.initialSceneName;
-	public float OverlayMenuOpacity => SceneManagerResource.OverlayMenuOpacity;
-	public float OverlayMenuFadeTime => SceneManagerResource.OverlayMenuFadeTime;
 
 	public static SceneManager Instance { get; private set; }
-	public OverlayMenu OverlayMenuNode;
 
 	public Array<string> SceneNames { get; set; }
 	string CurrentSceneName { get; set; }
@@ -136,33 +127,5 @@ public partial class SceneManager : Node
 		await ExitCurrentScene();
 
 		GetTree().Quit();
-	}
-
-	public void ShowOverlayMenu(string id = "options")
-	{
-		OverlayMenuNode = OverlayMenuFramePackedScene.Instantiate<OverlayMenu>();
-		CanvasLayer.AddChild(OverlayMenuNode);
-
-		OverlayMenuNode.Closed += HideOverlayMenu;
-		OverlayMenuNode.EntrySelected += (entryName) => EmitSignal(SignalName.OverlayMenuEntrySelected, entryName);
-
-		if (OverlayMenusInnerPackedScenes.TryGetValue(id, out var packedScene))
-		{
-			var inner = packedScene.Instantiate<OverlayInner>();
-			OverlayMenuNode.ShowMenu(inner);
-		}
-		else
-			LogError($"Overlay menu with id '{id}' not found.", "SceneManager", LogTypeEnum.Framework);
-
-		EmitSignal(SignalName.OverlayMenuOpened);
-	}
-
-	public void HideOverlayMenu()
-	{
-		OverlayMenuNode.HideMenu();
-		OverlayMenuNode.Closed -= HideOverlayMenu;
-		OverlayMenuNode.QueueFree();
-
-		EmitSignal(SignalName.OverlayMenuClosed);
 	}
 }

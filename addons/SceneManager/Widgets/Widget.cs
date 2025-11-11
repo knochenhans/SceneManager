@@ -6,6 +6,7 @@ public partial class Widget : Control
 	[Signal] public delegate void CloseButtonPressedEventHandler();
 
 	[Export] public string WidgetTitle = "Widget";
+	[Export] public bool ShowTitleBar = true;
 	[Export] public bool EnableDragging = true;
 	[Export] public bool EnableCloseButton = true;
 	
@@ -14,6 +15,7 @@ public partial class Widget : Control
 	[Export] public float Opacity = 1;
 
 	Label TitleLabel => GetNode<Label>("%WidgetTitleLabel");
+	Panel TitleBar => GetNode<Panel>("%TitleBar");
 	Button CloseButton => GetNode<Button>("%CloseButton");
 
 	private bool isDragging = false;
@@ -27,6 +29,7 @@ public partial class Widget : Control
 		Modulate = new Color(1, 1, 1, 0f);
 
 		TitleLabel.Text = WidgetTitle;
+		TitleBar.Visible = ShowTitleBar;
 		CloseButton.Visible = EnableCloseButton;
 		CloseButton.Pressed += OnCloseButtonPressed;
 

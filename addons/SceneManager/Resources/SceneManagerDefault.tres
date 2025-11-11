@@ -16,5 +16,4 @@ ScenesPackedScenes = Dictionary[String, PackedScene]({
 "menu": ExtResource("2_yehpw"),
 "options": ExtResource("3_qbvvx")
 })
-OverlayMenuFadeTime = 0.3
 metadata/_custom_type_script = "uid://q5kvegfjxjon"

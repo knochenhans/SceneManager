@@ -1,17 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://7a0i5aulc65b"]
+[gd_scene load_steps=5 format=3 uid="uid://7a0i5aulc65b"]
 
 [ext_resource type="PackedScene" uid="uid://bawrmdt67ohun" path="res://addons/SceneManager/Scenes/Scene.tscn" id="1_vvakc"]
 [ext_resource type="Script" uid="uid://c2bwou7hd0o8q" path="res://addons/SceneManager/BaseGame.cs" id="2_ps33h"]
-[ext_resource type="PackedScene" uid="uid://cgkwkjn6c4t5u" path="res://NotificationLabel.tscn" id="4_1b7hr"]
 [ext_resource type="PackedScene" uid="uid://ddfbn05780mqq" path="res://addons/SceneManager/Nodes/Hud.tscn" id="4_46g7r"]
 [ext_resource type="PackedScene" uid="uid://ckeidvpi72g3b" path="res://addons/NotificationsManager/NotificationManager.tscn" id="4_cgfhn"]
-[ext_resource type="PackedScene" uid="uid://dhmwany3iqrlm" path="res://addons/SceneManager/Widget.tscn" id="5_1b7hr"]
 
 [node name="GameScene" node_paths=PackedStringArray("NotificationManager") instance=ExtResource("1_vvakc")]
 script = ExtResource("2_ps33h")
 NotificationManager = NodePath("FixedCanvas/NotificationManager")
-WidgetScene = ExtResource("5_1b7hr")
-WidgetInnerScenes = null
+WidgetScenes = null
 gameVersion = 1
 
 [node name="FixedCanvas" type="CanvasLayer" parent="." index="3"]
@@ -28,7 +25,6 @@ grow_vertical = 2
 
 [node name="NotificationManager" parent="FixedCanvas" index="1" instance=ExtResource("4_cgfhn")]
 unique_name_in_owner = true
-NotificationScene = ExtResource("4_1b7hr")
 NotificationOffset = Vector2(5, 5)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." index="4"]

@@ -1,0 +1,59 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://brtgrar0mlv5t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ce1d4"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.19076243, 0.19076231, 0.19076231, 1)
+border_color = Color(0.4857039, 0.4857034, 0.4857034, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mv3ey"]
+bg_color = Color(0.060530342, 0.060530365, 0.060530297, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q1iic"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cqvjm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cqvjm"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qjurm"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 1)
+
+[resource]
+Button/font_sizes/font_size = 8
+Button/styles/focus = SubResource("StyleBoxFlat_ce1d4")
+Button/styles/hover = SubResource("StyleBoxFlat_ce1d4")
+Button/styles/normal = SubResource("StyleBoxFlat_ce1d4")
+Button/styles/pressed = SubResource("StyleBoxFlat_ce1d4")
+Label/constants/line_spacing = 5
+Label/font_sizes/font_size = 8
+LineEdit/styles/focus = null
+LineEdit/styles/normal = null
+MarginContainer/constants/margin_bottom = 4
+MarginContainer/constants/margin_left = 2
+MarginContainer/constants/margin_right = 2
+MarginContainer/constants/margin_top = 4
+Panel/styles/panel = SubResource("StyleBoxFlat_mv3ey")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_q1iic")
+ProgressBar/styles/background = SubResource("StyleBoxEmpty_cqvjm")
+RichTextLabel/constants/line_separation = 5
+RichTextLabel/styles/normal = SubResource("StyleBoxFlat_cqvjm")
+TextEdit/styles/focus = null
+TextEdit/styles/normal = null
+TooltipPanel/styles/panel = SubResource("StyleBoxFlat_qjurm")
+VBoxContainer/constants/separation = 15

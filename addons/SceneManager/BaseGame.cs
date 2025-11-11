@@ -48,16 +48,6 @@ public partial class BaseGame : Scene
         }
     }
 
-    public enum OverlayMenuState
-    {
-        Closed,
-        Opening,
-        Open,
-        Closing,
-    }
-
-    protected OverlayMenuState CurrentOverlayMenuState = OverlayMenuState.Closed;
-
     public enum ControlState
     {
         None,
@@ -91,7 +81,6 @@ public partial class BaseGame : Scene
         Log("Game initialized.", "Game", LogTypeEnum.Framework);
     }
 
-
     public override void _Process(double delta)
     {
         if (CurrentGameState != GameState.Running)
@@ -100,7 +89,7 @@ public partial class BaseGame : Scene
 
     public override void _Input(InputEvent @event)
     {
-        if (CurrentOverlayMenuState == OverlayMenuState.Open)
+        if (CurrentGameState == GameState.Paused)
             return;
 
         if (@event is InputEventKey keyEvent && keyEvent.IsPressed())
@@ -114,13 +103,13 @@ public partial class BaseGame : Scene
                     LoadGame();
                     break;
                 case Key.F11:
-                    ShowOverlayMenu("load");
+                    WidgetManager.ToggleWidget("load", pauseGame: true);
                     break;
                 case Key.F12:
-                    ShowOverlayMenu("save");
+                    WidgetManager.ToggleWidget("save", pauseGame: true);
                     break;
                 case Key.Escape:
-                    ShowOverlayMenu("options");
+                    WidgetManager.ToggleWidget("options", pauseGame: true);
                     break;
             }
         }
@@ -165,48 +154,6 @@ public partial class BaseGame : Scene
         stageNode.Pause();
 
         Log($"StageNode {stageNode.ID} has been uninitialized.", "Game", LogTypeEnum.ExitTree);
-    }
-
-    public void ShowOverlayMenu(string overlayMenuName = "")
-    {
-        if (CurrentGameState == GameState.Running)
-        {
-            Pause();
-            CurrentOverlayMenuState = OverlayMenuState.Opening;
-            SceneManager.Instance.ShowOverlayMenu(overlayMenuName);
-            CurrentOverlayMenuState = OverlayMenuState.Open;
-        }
-    }
-
-    public virtual void OnOverlayMenuEntrySelected(MenuEntryData entryData)
-    {
-        if (entryData.TryGetValue("load", out var entryName))
-            LoadGame((string)entryName);
-        else if (entryData.TryGetValue("save", out var entryName2))
-            SaveGame((string)entryName2);
-    }
-
-    protected virtual void OnOverlayMenuButtonPressed(string buttonID)
-    {
-        switch (buttonID)
-        {
-            case "quit":
-                GetTree().Quit();
-                break;
-            case "back":
-                OnOverlayMenuClosed();
-                break;
-        }
-    }
-
-    public void OnOverlayMenuClosed()
-    {
-        if (CurrentOverlayMenuState == OverlayMenuState.Open)
-        {
-            CurrentOverlayMenuState = OverlayMenuState.Closing;
-            CurrentOverlayMenuState = OverlayMenuState.Closed;
-        }
-        Resume();
     }
 
     public virtual async void LoadGame(string saveGameName = "savegame")

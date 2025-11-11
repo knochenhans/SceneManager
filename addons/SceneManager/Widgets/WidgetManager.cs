@@ -11,10 +11,13 @@ public class WidgetManager(BaseGame game, Control widgetsNode, Dictionary<string
 
 	public Dictionary<string, Widget> ActiveWidgets = [];
 
-    public void OpenWidget(string widgetName, string widgetTitle = "Widget")
+    public void OpenWidget(string widgetName, string widgetTitle = "Widget", bool pauseGame = false)
 	{
 		if (widgetScenes != null && widgetScenes.TryGetValue(widgetName, out var widgetScene))
 		{
+			if (pauseGame)
+				game.Pause();
+
 			var widgetInstance = widgetScene.Instantiate<Widget>();
 			widgetInstance.Name = widgetName;
 			widgetInstance.WidgetTitle = widgetTitle;
@@ -46,14 +49,15 @@ public class WidgetManager(BaseGame game, Control widgetsNode, Dictionary<string
 			await widgetToClose.Close();
 
 			game.OnWidgetClosed(widgetName);
+			game.Resume();
 		}
 	}
 
-	public void ToggleWidget(string widgetName, string widgetTitle = "Widget")
+	public void ToggleWidget(string widgetName, string widgetTitle = "Widget", bool pauseGame = false)
 	{
 		if (ActiveWidgets.ContainsKey(widgetName))
 			CloseWidget(widgetName);
 		else
-			OpenWidget(widgetName, widgetTitle);
+			OpenWidget(widgetName, widgetTitle, pauseGame);
 	}
 }

@@ -1,0 +1,65 @@
+[gd_scene load_steps=5 format=3 uid="uid://3dyfxoyhxipj"]
+
+[ext_resource type="PackedScene" uid="uid://dhmwany3iqrlm" path="res://addons/SceneManager/Widgets/Widget.tscn" id="1_r771i"]
+[ext_resource type="Script" uid="uid://j47av6156b4g" path="res://addons/SceneManager/Widgets/OptionsWidget.cs" id="2_4sdhu"]
+[ext_resource type="PackedScene" uid="uid://bf1cf06vio4fu" path="res://addons/GameOptions/OptionsContainer.tscn" id="3_021rp"]
+[ext_resource type="Script" uid="uid://d1l22qsiuoe6n" path="res://addons/SceneManager/Nodes/SceneButton.cs" id="4_uqv4n"]
+
+[node name="OptionsWidget" instance=ExtResource("1_r771i")]
+custom_minimum_size = Vector2(500, 300)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_4sdhu")
+WidgetTitle = "Widget"
+ShowTitleBar = false
+EnableDragging = false
+EnableCloseButton = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/Panel/WidgetContent" index="0"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/PanelContainer/Panel/WidgetContent/VBoxContainer" index="0"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Options"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/PanelContainer/Panel/WidgetContent/VBoxContainer" index="1"]
+layout_mode = 2
+
+[node name="OptionsContainer" parent="VBoxContainer/PanelContainer/Panel/WidgetContent/VBoxContainer" index="2" instance=ExtResource("3_021rp")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/PanelContainer/Panel/WidgetContent/VBoxContainer" index="3"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer/Panel/WidgetContent/VBoxContainer" index="4"]
+layout_mode = 2
+alignment = 1
+
+[node name="QuitButton" type="Button" parent="VBoxContainer/PanelContainer/Panel/WidgetContent/VBoxContainer/HBoxContainer" index="0"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "Quit	"
+script = ExtResource("4_uqv4n")
+
+[node name="BackButton" type="Button" parent="VBoxContainer/PanelContainer/Panel/WidgetContent/VBoxContainer/HBoxContainer" index="1"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "Back	"
+script = ExtResource("4_uqv4n")
