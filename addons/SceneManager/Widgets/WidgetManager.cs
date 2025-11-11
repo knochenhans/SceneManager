@@ -11,7 +11,9 @@ public class WidgetManager(BaseGame game, Control widgetsNode, Dictionary<string
 
 	public Dictionary<string, Widget> ActiveWidgets = [];
 
-    public void OpenWidget(string widgetName, string widgetTitle = "Widget", bool pauseGame = false)
+	public void OpenWidget(string widgetName, string widgetTitle = "Widget", bool pauseGame = false) => _ = OpenWidgetAsync(widgetName, widgetTitle, pauseGame);
+
+	public async Task OpenWidgetAsync(string widgetName, string widgetTitle = "Widget", bool pauseGame = false)
 	{
 		if (widgetScenes != null && widgetScenes.TryGetValue(widgetName, out var widgetScene))
 		{
@@ -28,6 +30,7 @@ public class WidgetManager(BaseGame game, Control widgetsNode, Dictionary<string
 			widgetInstance.CloseButtonPressed += () => CloseWidget(widgetName);
 
 			widgetsNode.AddChild(widgetInstance);
+			await widgetInstance.Open();
 			ActiveWidgets[widgetName] = widgetInstance;
 
 			game.OnWidgetOpened(widgetName, widgetInstance);
@@ -53,10 +56,10 @@ public class WidgetManager(BaseGame game, Control widgetsNode, Dictionary<string
 		}
 	}
 
-	public void ToggleWidget(string widgetName, string widgetTitle = "Widget", bool pauseGame = false)
+	public async Task ToggleWidget(string widgetName, string widgetTitle = "Widget", bool pauseGame = false)
 	{
 		if (ActiveWidgets.ContainsKey(widgetName))
-			CloseWidget(widgetName);
+			await CloseWidgetAsync(widgetName);
 		else
 			OpenWidget(widgetName, widgetTitle, pauseGame);
 	}

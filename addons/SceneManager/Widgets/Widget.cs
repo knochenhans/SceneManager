@@ -1,5 +1,6 @@
 using Game.Utils;
 using Godot;
+using System.Threading.Tasks;
 
 public partial class Widget : Control
 {
@@ -32,8 +33,6 @@ public partial class Widget : Control
 		TitleBar.Visible = ShowTitleBar;
 		CloseButton.Visible = EnableCloseButton;
 		CloseButton.Pressed += OnCloseButtonPressed;
-
-		await FadeHelper.TweenFadeModulate(this, FadeHelper.FadeDirectionEnum.In, FadeInDuration, Opacity);
 	}
 
 	public override void _GuiInput(InputEvent @event)
@@ -85,12 +84,17 @@ public partial class Widget : Control
 	}
 
 	public async void OnCloseButtonPressed()
-    {
+	{
 		await Close();
 		EmitSignal(SignalName.CloseButtonPressed);
-    }
+	}
+	
+	public async Task Open()
+	{
+		await FadeHelper.TweenFadeModulate(this, FadeHelper.FadeDirectionEnum.In, FadeInDuration, Opacity);
+	}
 
-    public async System.Threading.Tasks.Task Close()
+    public async Task Close()
     {
         await FadeHelper.TweenFadeModulate(this, FadeHelper.FadeDirectionEnum.Out, FadeOutDuration, Opacity);
     }

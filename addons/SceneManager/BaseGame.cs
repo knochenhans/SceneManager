@@ -108,13 +108,13 @@ public partial class BaseGame : Scene
                     LoadGame();
                     break;
                 case Key.F11:
-                    WidgetManager.ToggleWidget("load", pauseGame: true);
+                    _ = WidgetManager.ToggleWidget("load", pauseGame: true);
                     break;
                 case Key.F12:
-                    WidgetManager.ToggleWidget("save", pauseGame: true);
+                    _ = WidgetManager.ToggleWidget("save", pauseGame: true);
                     break;
                 case Key.Escape:
-                    WidgetManager.ToggleWidget("options", pauseGame: true);
+                    _ = WidgetManager.ToggleWidget("options", pauseGame: true);
                     break;
             }
         }
