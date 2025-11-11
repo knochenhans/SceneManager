@@ -20,10 +20,15 @@ public partial class BaseGame : Scene
 
     public Camera2D Camera => GetViewport().GetCamera2D();
     public Control WidgetsNode => GetNode<Control>("%Widgets");
+    protected CanvasLayer CanvasLayer => GetNodeOrNull<CanvasLayer>("CanvasLayer");
 
     public WidgetManager WidgetManager;
-
     protected SaveStateManager SaveStateManager;
+
+    public SelectionManager SelectionManager => GetNodeOrNull<SelectionManager>("SelectionManager");
+    protected TooltipManager TooltipManager => GetNodeOrNull<TooltipManager>("TooltipManager");
+    protected MiniMap MiniMap => CanvasLayer.GetNodeOrNull<MiniMap>("%MiniMap");
+    protected NavigationRegion2D NavigationRegion;
 
     public enum GameState
     {
@@ -121,6 +126,7 @@ public partial class BaseGame : Scene
     public virtual void InitGame(bool loadGame = false)
     {
         WidgetManager = new WidgetManager(this, WidgetsNode, WidgetScenes);
+        NavigationRegion = StageManager.Instance.CurrentStageScene.GetNodeOrNull<NavigationRegion2D>("NavigationRegion2D");
     }
 
     public virtual void UninitGame()
