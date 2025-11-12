@@ -12,6 +12,7 @@ WidgetScenes = null
 gameVersion = 1
 
 [node name="FixedCanvas" type="CanvasLayer" parent="." index="3"]
+unique_name_in_owner = true
 layer = 2
 
 [node name="Widgets" type="Control" parent="FixedCanvas" index="0"]

@@ -21,6 +21,7 @@ public partial class BaseGame : Scene
     public Camera2D Camera => GetViewport().GetCamera2D();
     public Control WidgetsNode => GetNode<Control>("%Widgets");
     protected CanvasLayer CanvasLayer => GetNodeOrNull<CanvasLayer>("CanvasLayer");
+    protected CanvasLayer FixedCanvasLayer => GetNodeOrNull<CanvasLayer>("%FixedCanvas");
 
     public WidgetManager WidgetManager;
     protected SaveStateManager SaveStateManager;
@@ -125,7 +126,7 @@ public partial class BaseGame : Scene
 
     public virtual void InitGame(bool loadGame = false)
     {
-        WidgetManager = new WidgetManager(this, WidgetsNode, WidgetScenes);
+        WidgetManager = new WidgetManager(this, WidgetsNode, WidgetScenes, FixedCanvasLayer.Scale.X);
         NavigationRegion = StageManager.Instance.CurrentStageScene.GetNodeOrNull<NavigationRegion2D>("NavigationRegion2D");
     }
 

@@ -2,18 +2,19 @@ using System.Threading.Tasks;
 using Godot;
 using Godot.Collections;
 
-public class WidgetManager(BaseGame game, Control widgetsNode, Dictionary<string, PackedScene> widgetScenes)
+public class WidgetManager(BaseGame game, Control widgetsNode, Dictionary<string, PackedScene> widgetScenes, float scaleFactor = 1.0f)
 {
-	private readonly BaseGame game = game;
-	private readonly Control widgetsNode = widgetsNode;
-	private readonly Dictionary<string, PackedScene> widgetScenes = widgetScenes;
-	private readonly Dictionary<string, Vector2> widgetPositions = [];
+	readonly BaseGame game = game;
+	readonly Control widgetsNode = widgetsNode;
+	readonly Dictionary<string, PackedScene> widgetScenes = widgetScenes;
+	readonly Dictionary<string, Vector2> widgetPositions = [];
+	readonly float scaleFactor = scaleFactor;
 
 	public Dictionary<string, Widget> ActiveWidgets = [];
 
 	public void OpenWidget(string widgetName, string widgetTitle = "Widget", bool pauseGame = false) => _ = OpenWidgetAsync(widgetName, widgetTitle, pauseGame);
 
-	public async Task OpenWidgetAsync(string widgetName, string widgetTitle = "Widget", bool pauseGame = false)
+	public async Task OpenWidgetAsync(string widgetName, string widgetTitle = "", bool pauseGame = false)
 	{
 		if (widgetScenes != null && widgetScenes.TryGetValue(widgetName, out var widgetScene))
 		{
@@ -22,12 +23,21 @@ public class WidgetManager(BaseGame game, Control widgetsNode, Dictionary<string
 
 			var widgetInstance = widgetScene.Instantiate<Widget>();
 			widgetInstance.Name = widgetName;
-			widgetInstance.WidgetTitle = widgetTitle;
+
+			if (!string.IsNullOrEmpty(widgetTitle))
+				widgetInstance.WidgetTitle = widgetTitle;
+
 			if (widgetPositions.TryGetValue(widgetName, out var savedPosition))
-			{
 				Callable.From(() => widgetInstance.GlobalPosition = savedPosition).CallDeferred();
-			}
+
 			widgetInstance.CloseButtonPressed += () => CloseWidget(widgetName);
+
+			if (widgetInstance.Center)
+			{
+				widgetsNode.Size = widgetsNode.GetViewport().GetVisibleRect().Size / scaleFactor;
+				widgetInstance.SetAnchorsPreset(Control.LayoutPreset.Center);
+				widgetInstance.SetOffsetsPreset(Control.LayoutPreset.Center);
+			}
 
 			widgetsNode.AddChild(widgetInstance);
 			await widgetInstance.Open();
@@ -56,7 +66,7 @@ public class WidgetManager(BaseGame game, Control widgetsNode, Dictionary<string
 		}
 	}
 
-	public async Task ToggleWidget(string widgetName, string widgetTitle = "Widget", bool pauseGame = false)
+	public async Task ToggleWidget(string widgetName, string widgetTitle = "", bool pauseGame = false)
 	{
 		if (ActiveWidgets.ContainsKey(widgetName))
 			await CloseWidgetAsync(widgetName);

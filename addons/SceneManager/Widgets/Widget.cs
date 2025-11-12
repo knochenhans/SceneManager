@@ -10,7 +10,9 @@ public partial class Widget : Control
 	[Export] public bool ShowTitleBar = true;
 	[Export] public bool EnableDragging = true;
 	[Export] public bool EnableCloseButton = true;
-	
+
+	[ExportCategory("Visual Settings")]
+	[Export] public bool Center = false;
 	[Export] public float FadeInDuration = 0.2f;
 	[Export] public float FadeOutDuration = 0.1f;
 	[Export] public float Opacity = 1;
@@ -26,7 +28,7 @@ public partial class Widget : Control
 
 	public async override void _Ready()
 	{
-		parentControl = GetParent() as Control;
+		parentControl = GetParentOrNull<Control>();
 		Modulate = new Color(1, 1, 1, 0f);
 
 		TitleLabel.Text = WidgetTitle;
@@ -50,6 +52,13 @@ public partial class Widget : Control
 				isDragging = false;
 				movedToTop = false;
 			}
+		}
+		else if (@event is InputEventKey keyEvent
+			&& keyEvent.Keycode == Key.Escape
+			&& keyEvent.Pressed
+			&& !keyEvent.Echo)
+		{
+			OnCloseButtonPressed();
 		}
 	}
 
@@ -88,15 +97,15 @@ public partial class Widget : Control
 		await Close();
 		EmitSignal(SignalName.CloseButtonPressed);
 	}
-	
+
 	public async Task Open()
 	{
 		await FadeHelper.TweenFadeModulate(this, FadeHelper.FadeDirectionEnum.In, FadeInDuration, Opacity);
 	}
 
-    public async Task Close()
-    {
+	public async Task Close()
+	{
 		await FadeHelper.TweenFadeModulate(this, FadeHelper.FadeDirectionEnum.Out, FadeOutDuration, Opacity);
 		QueueFree();
-    }
+	}
 }
