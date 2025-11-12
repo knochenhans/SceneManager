@@ -96,6 +96,7 @@ public partial class Widget : Control
 
     public async Task Close()
     {
-        await FadeHelper.TweenFadeModulate(this, FadeHelper.FadeDirectionEnum.Out, FadeOutDuration, Opacity);
+		await FadeHelper.TweenFadeModulate(this, FadeHelper.FadeDirectionEnum.Out, FadeOutDuration, Opacity);
+		QueueFree();
     }
 }
