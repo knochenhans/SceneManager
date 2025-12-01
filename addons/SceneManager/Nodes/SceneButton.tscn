@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bd78gd1foc61m"]
+
+[ext_resource type="Script" uid="uid://d1l22qsiuoe6n" path="res://addons/SceneManager/Nodes/SceneButton.cs" id="1_r6xlt"]
+
+[node name="SceneButton" type="Button"]
+theme_override_font_sizes/font_size = 20
+text = "Button"
+alignment = 0
+script = ExtResource("1_r6xlt")

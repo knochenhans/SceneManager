@@ -1,76 +1,95 @@
 using System.Threading.Tasks;
+
 using Godot;
 using Godot.Collections;
 
-public class WidgetManager(BaseGame game, Control widgetsNode, Dictionary<string, PackedScene> widgetScenes, float scaleFactor = 1.0f)
+public class WidgetManager
 {
-	readonly BaseGame game = game;
-	readonly Control widgetsNode = widgetsNode;
-	readonly Dictionary<string, PackedScene> widgetScenes = widgetScenes;
-	readonly Dictionary<string, Vector2> widgetPositions = [];
-	readonly float scaleFactor = scaleFactor;
+    #region [Fields and Properties]
+    readonly Scene game;
+    readonly Control widgetsNode;
+    readonly Dictionary<string, PackedScene> widgetScenes;
+    readonly Dictionary<string, Vector2> widgetPositions = [];
+    readonly float scaleFactor;
 
-	public Dictionary<string, Widget> ActiveWidgets = [];
+    public Dictionary<string, Widget> ActiveWidgets = [];
 
-	public void OpenWidget(string widgetName, string widgetTitle = "Widget", bool pauseGame = false) => _ = OpenWidgetAsync(widgetName, widgetTitle, pauseGame);
+    public WidgetManager(Scene game, Control widgetsNode, Dictionary<string, PackedScene> widgetScenes, float scaleFactor = 1.0f)
+    {
+        this.game = game;
+        this.widgetsNode = widgetsNode;
+        this.widgetScenes = widgetScenes;
+        this.scaleFactor = scaleFactor;
 
-	public async Task OpenWidgetAsync(string widgetName, string widgetTitle = "", bool pauseGame = false)
-	{
-		if (widgetScenes != null && widgetScenes.TryGetValue(widgetName, out var widgetScene))
-		{
-			if (pauseGame)
-				game.Pause();
+        widgetsNode.MouseFilter = Control.MouseFilterEnum.Ignore;
+    }
+    #endregion
 
-			var widgetInstance = widgetScene.Instantiate<Widget>();
-			widgetInstance.Name = widgetName;
+    //TODO: Game-Verweis entfernen und stattdessen von Game selbst übernehmen lassen
 
-			if (!string.IsNullOrEmpty(widgetTitle))
-				widgetInstance.WidgetTitle = widgetTitle;
+    #region [Lifecycle]
+    public void OpenWidget(string widgetName, string widgetTitle = "Widget", bool pauseGame = false) => _ = OpenWidgetAsync(widgetName, widgetTitle, pauseGame);
 
-			if (widgetPositions.TryGetValue(widgetName, out var savedPosition))
-				Callable.From(() => widgetInstance.GlobalPosition = savedPosition).CallDeferred();
+    public async Task OpenWidgetAsync(string widgetName, string widgetTitle = "", bool pauseGame = false)
+    {
+        if (widgetScenes != null && widgetScenes.TryGetValue(widgetName, out var widgetScene))
+        {
+            if (pauseGame)
+                game.Pause();
 
-			widgetInstance.CloseButtonPressed += () => CloseWidget(widgetName);
+            var widgetInstance = widgetScene.Instantiate<Widget>();
+            ActiveWidgets[widgetName] = widgetInstance;
+            widgetInstance.Name = widgetName;
 
-			if (widgetInstance.Center)
-			{
-				widgetsNode.Size = widgetsNode.GetViewport().GetVisibleRect().Size / scaleFactor;
-				widgetInstance.SetAnchorsPreset(Control.LayoutPreset.Center);
-				widgetInstance.SetOffsetsPreset(Control.LayoutPreset.Center);
-			}
+            if (!string.IsNullOrEmpty(widgetTitle))
+                widgetInstance.WidgetTitle = widgetTitle;
 
-			widgetsNode.AddChild(widgetInstance);
-			await widgetInstance.Open();
-			ActiveWidgets[widgetName] = widgetInstance;
+            if (widgetPositions.TryGetValue(widgetName, out var savedPosition))
+                Callable.From(() => widgetInstance.GlobalPosition = savedPosition).CallDeferred();
 
-			game.OnWidgetOpened(widgetName, widgetInstance);
-		}
-		else
-		{
-			Logger.LogError($"Widget scene '{widgetName}' not found.", "WidgetManager", Logger.LogTypeEnum.UI);
-		}
-	}
+            widgetInstance.CloseButtonPressed += () => CloseWidget(widgetName);
 
-	public void CloseWidget(string widgetName) => _ = CloseWidgetAsync(widgetName);
+            if (widgetInstance.Center)
+            {
+                widgetsNode.Size = widgetsNode.GetViewport().GetVisibleRect().Size / scaleFactor;
+                widgetInstance.SetAnchorsPreset(Control.LayoutPreset.Center);
+                widgetInstance.SetOffsetsPreset(Control.LayoutPreset.Center);
+            }
 
-	public async Task CloseWidgetAsync(string widgetName)
-	{
-		if (ActiveWidgets.TryGetValue(widgetName, out var widgetToClose))
-		{
-			ActiveWidgets.Remove(widgetName);
-			widgetPositions[widgetName] = widgetToClose.GlobalPosition;
-			await widgetToClose.Close();
+            widgetsNode.AddChild(widgetInstance);
+            await widgetInstance.Open();
 
-			game.OnWidgetClosed(widgetName);
-			game.Resume();
-		}
-	}
+            game.OnWidgetOpened(widgetName, widgetInstance);
+            widgetsNode.MouseFilter = Control.MouseFilterEnum.Stop;
+        }
+        else
+        {
+            Logger.LogError($"Widget scene '{widgetName}' not found.", "WidgetManager", Logger.LogTypeEnum.UI);
+        }
+    }
 
-	public async Task ToggleWidget(string widgetName, string widgetTitle = "", bool pauseGame = false)
-	{
-		if (ActiveWidgets.ContainsKey(widgetName))
-			await CloseWidgetAsync(widgetName);
-		else
-			OpenWidget(widgetName, widgetTitle, pauseGame);
-	}
+    public void CloseWidget(string widgetName) => _ = CloseWidgetAsync(widgetName);
+
+    public async Task CloseWidgetAsync(string widgetName)
+    {
+        if (ActiveWidgets.TryGetValue(widgetName, out var widgetToClose))
+        {
+            ActiveWidgets.Remove(widgetName);
+            widgetPositions[widgetName] = widgetToClose.GlobalPosition;
+            await widgetToClose.Close();
+
+            game.OnWidgetClosed(widgetName);
+            game.Resume();
+            widgetsNode.MouseFilter = Control.MouseFilterEnum.Ignore;
+        }
+    }
+
+    public async Task ToggleWidget(string widgetName, string widgetTitle = "", bool pauseGame = false)
+    {
+        if (ActiveWidgets.ContainsKey(widgetName))
+            await CloseWidgetAsync(widgetName);
+        else
+            OpenWidget(widgetName, widgetTitle, pauseGame);
+    }
+    #endregion
 }

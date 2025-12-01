@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class OptionsScene : Scene
+public partial class OptionsScene : CentralLayoutScene
 {
     OptionsContainer OptionGridNode => GetNode<OptionsContainer>("%OptionGrid");
 

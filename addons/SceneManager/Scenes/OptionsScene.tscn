@@ -12,7 +12,6 @@ PlayUIMusic = true
 
 [node name="Label" type="Label" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons" index="0"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
 text = "Options"
 
 [node name="HSeparator" type="HSeparator" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons" index="1"]
@@ -25,7 +24,6 @@ layout_mode = 2
 [node name="ExitButton" type="Button" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons" index="3"]
 layout_mode = 2
 size_flags_horizontal = 8
-theme_override_font_sizes/font_size = 20
 text = "Exit"
 script = ExtResource("2_prjpf")
 

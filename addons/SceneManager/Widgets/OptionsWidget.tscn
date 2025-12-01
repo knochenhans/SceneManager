@@ -18,42 +18,33 @@ EnableDragging = false
 EnableCloseButton = false
 Center = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/Panel/WidgetContent" index="0"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/Panel/VBoxContainer/WidgetContent" index="0"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/PanelContainer/Panel/WidgetContent/VBoxContainer" index="0"]
+[node name="Label" type="Label" parent="VBoxContainer/PanelContainer/Panel/VBoxContainer/WidgetContent/VBoxContainer" index="0"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Options"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer/PanelContainer/Panel/WidgetContent/VBoxContainer" index="1"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/PanelContainer/Panel/VBoxContainer/WidgetContent/VBoxContainer" index="1"]
 layout_mode = 2
 
-[node name="OptionsContainer" parent="VBoxContainer/PanelContainer/Panel/WidgetContent/VBoxContainer" index="2" instance=ExtResource("3_021rp")]
+[node name="OptionsContainer" parent="VBoxContainer/PanelContainer/Panel/VBoxContainer/WidgetContent/VBoxContainer" index="2" instance=ExtResource("3_021rp")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/PanelContainer/Panel/WidgetContent/VBoxContainer" index="3"]
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/PanelContainer/Panel/VBoxContainer/WidgetContent/VBoxContainer" index="3"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer/Panel/WidgetContent/VBoxContainer" index="4"]
-layout_mode = 2
-alignment = 1
-
-[node name="QuitButton" type="Button" parent="VBoxContainer/PanelContainer/Panel/WidgetContent/VBoxContainer/HBoxContainer" index="0"]
+[node name="QuitButton" type="Button" parent="VBoxContainer/PanelContainer/Panel/VBoxContainer/HBoxContainer" index="0"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
+size_flags_horizontal = 3
 text = "Quit	"
 script = ExtResource("4_uqv4n")
 
-[node name="BackButton" type="Button" parent="VBoxContainer/PanelContainer/Panel/WidgetContent/VBoxContainer/HBoxContainer" index="1"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 8
-text = "Back	"
-script = ExtResource("4_uqv4n")
+[node name="CloseButton" parent="VBoxContainer/PanelContainer/Panel/VBoxContainer/HBoxContainer" index="1"]
+size_flags_horizontal = 3
+text = "Back"

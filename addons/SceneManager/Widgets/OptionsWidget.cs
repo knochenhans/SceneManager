@@ -1,17 +1,14 @@
-using Game.Utils;
 using Godot;
 
 public partial class OptionsWidget : Widget
 {
     OptionsContainer OptionsContainer => GetNodeOrNull<OptionsContainer>("%OptionsContainer");
-    Button BackButtonNode => GetNodeOrNull<Button>("%BackButton");
     Button QuitButtonNode => GetNodeOrNull<Button>("%QuitButton");
 
     public override void _Ready()
     {
         base._Ready();
 
-        BackButtonNode.Pressed += OnCloseButtonPressed;
         QuitButtonNode.Pressed += () =>
         {
             OnCloseButtonPressed();

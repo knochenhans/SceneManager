@@ -6,14 +6,24 @@ public class CursorManager
     readonly Dictionary<string, CursorSetResource> cursorSets;
     readonly System.Collections.Generic.Stack<CursorSetResource> cursorStack = new();
 
+    private readonly int scaleFactor = 1;
+
     public CursorManager(Dictionary<string, CursorSetResource> cursorSets, int scaleFactor = 1)
     {
         this.cursorSets = cursorSets ?? [];
+        this.scaleFactor = scaleFactor;
 
-		if (scaleFactor > 1)
-			ScaleCursors(cursorSets, scaleFactor);
+        if (this.scaleFactor > 1)
+            ScaleCursors(cursorSets, this.scaleFactor);
 
         SetMouseCursor();
+    }
+
+    public void Uninit()
+    {
+        Input.SetCustomMouseCursor(null);
+        if (scaleFactor > 1)
+            ScaleCursors(cursorSets, 1);
     }
 
     private static void ScaleCursors(Dictionary<string, CursorSetResource> cursorSets, int scaleFactor)
@@ -31,37 +41,24 @@ public class CursorManager
                 if (img.Duplicate() is Image scaledImage)
                 {
                     scaledImage.Resize(scaledImage.GetWidth() * scaleFactor, scaledImage.GetHeight() * scaleFactor, Image.Interpolation.Nearest);
-                    var scaledTexture = ImageTexture.CreateFromImage(scaledImage);
-					cursorSet.Texture = scaledTexture;
-					cursorSet.Hotspot *= scaleFactor;
+                    cursorSet.Texture = ImageTexture.CreateFromImage(scaledImage);
+                    cursorSet.Hotspot *= scaleFactor;
                 }
             }
         }
     }
 
     public void SetMouseCursor(string cursorSetKey = "default")
-	{
-		if (cursorSets.TryGetValue(cursorSetKey, out CursorSetResource cursorSet))
-		{
-			Input.SetCustomMouseCursor(cursorSet.Texture, hotspot: cursorSet.Hotspot);
-			cursorStack.Push(cursorSet);
-		}
-	}
-
-	public void ResetMouseCursor()
     {
-		// if (cursorStack.Count > 0)
-		// 	cursorStack.Pop();
+        if (cursorSets.TryGetValue(cursorSetKey, out CursorSetResource cursorSet))
+        {
+            Input.SetCustomMouseCursor(cursorSet.Texture, hotspot: cursorSet.Hotspot);
+            cursorStack.Push(cursorSet);
+        }
+    }
 
-		// if (cursorStack.Count > 0)
-		// {
-		// 	var last = cursorStack.Peek();
-		// 	Input.SetCustomMouseCursor(last.Texture, hotspot: last.Hotspot);
-		// }
-		// else
-		// {
-		// 	Input.SetCustomMouseCursor(null);
-		// }
+    public void ResetMouseCursor()
+    {
         SetMouseCursor("default");
-	}
+    }
 }

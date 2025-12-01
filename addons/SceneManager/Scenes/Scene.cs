@@ -1,110 +1,130 @@
 using System.Linq;
 using System.Threading.Tasks;
+
 using Godot;
 using Godot.Collections;
+
 using static Logger;
+
+using InitData = Godot.Collections.Dictionary<string, Godot.Variant>;
+
 
 [GlobalClass]
 public partial class Scene : Node
 {
-	public enum SceneStateEnum
-	{
-		Idle,
-		TransitioningIn,
-		TransitioningOut
-	}
+    #region [Fields and Properties]
+    public enum SceneStateEnum
+    {
+        Idle,
+        TransitioningIn,
+        TransitioningOut
+    }
 
-	[Export] public string DefaultNextScene = "";
-	[Export] bool PlayUIMusic = false;
+    [Export] public string DefaultNextScene = "";
+    [Export] bool PlayUIMusic = false;
 
-	[ExportGroup("Mouse")]
-	[Export] public Dictionary<string, CursorSetResource> CursorSets = [];
-	[Export] public Input.MouseModeEnum DefaultMouseMode = Input.MouseModeEnum.Visible;
-	[Export] public int ScaleFactor = 1;
+    [ExportGroup("Mouse")]
+    [Export] public Dictionary<string, CursorSetResource> CursorSets = [];
+    [Export] public Input.MouseModeEnum DefaultMouseMode = Input.MouseModeEnum.Visible;
+    [Export] public int ScaleFactor = 1;
 
-	[ExportGroup("Fade Settings")]
-	[Export] public float FadeInTime = 0.5f;
-	[Export] public float FadeOutTime = 0.5f;
-	[Export] public float LifeTime = 0.0f;
+    [ExportGroup("Fade Settings")]
+    [Export] public float FadeInTime = 0.5f;
+    [Export] public float FadeOutTime = 0.5f;
+    [Export] public float LifeTime = 0.0f;
 
-	protected ColorRect BackgroundNode => GetNodeOrNull<ColorRect>("SceneBackground");
-	protected VBoxContainer ButtonsNode => GetNodeOrNull<VBoxContainer>("%Buttons");
-	protected Array<SceneButton> SceneButtons;
-	protected SceneStateEnum SceneState = SceneStateEnum.TransitioningIn;
+    protected ColorRect BackgroundNode => GetNodeOrNull<ColorRect>("SceneBackground");
+    protected SceneStateEnum SceneState = SceneStateEnum.TransitioningIn;
 
-	Timer LifeTimerNode => GetNode<Timer>("LifeTimer");
+    Timer LifeTimerNode => GetNode<Timer>("LifeTimer");
 
-	public CursorManager CursorManager = null!;
-	protected Input.MouseModeEnum LastMouseMode;
+    public CursorManager CursorManager = null!;
+    protected Input.MouseModeEnum LastMouseMode;
+    public InitData InitData;
+    #endregion
 
-	public override void _Ready()
-	{
-		Log($"Starting scene {SceneFilePath}", "SceneManager", LogTypeEnum.Framework);
+    #region [Godot]
+    public override void _Ready()
+    {
+        Log($"Starting scene {SceneFilePath}", "SceneManager", LogTypeEnum.Framework);
+    }
 
-		CursorManager = new CursorManager(CursorSets, ScaleFactor);
+    public override void _Input(InputEvent @event)
+    {
+        if (SceneState != SceneStateEnum.Idle)
+            return;
 
-		if (UISoundPlayer.Instance == null)
-			LogError("UISoundPlayer instance is null!", "SceneManager", LogTypeEnum.Framework);
+        base._Input(@event);
+    }
+    #endregion
 
-		if (ButtonsNode != null)
-			SceneButtons = [.. ButtonsNode.GetChildren().Where(node => node is SceneButton).Cast<SceneButton>()];
+    #region [Events]
+    protected virtual void OnBackgroundClicked(InputEvent @event)
+    {
+        if (@event is InputEventMouseButton mouseButtonEvent && mouseButtonEvent.Pressed)
+        {
+            UISoundPlayer.Instance.PlaySound("click1");
+            ChangeToNextScene();
+        }
+    }
 
-		if (BackgroundNode != null)
-			BackgroundNode.GuiInput += OnBackgroundClicked;
+    public virtual void OnWidgetOpened(string widgetName, Widget widgetInstance)
+    {
+    }
 
-		if (LifeTime > 0)
-		{
-			LifeTimerNode.WaitTime = LifeTime;
-			LifeTimerNode.Start();
-			LifeTimerNode.Timeout += ChangeToNextScene;
-			Log($"Scene {Name} will change to next scene after {LifeTime} seconds.", "Scene", LogTypeEnum.Framework);
-		}
+    public virtual void OnWidgetClosed(string widgetName)
+    {
+    }
+    #endregion
 
-		if (PlayUIMusic)
-			UISoundPlayer.Instance.StartOrKeepMusic();
-		else
-			UISoundPlayer.Instance.StopMusic();
+    #region [Lifecycle]
+    public virtual void Init()
+    {
+        if (UISoundPlayer.Instance == null)
+            LogError("UISoundPlayer instance is null!", "SceneManager", LogTypeEnum.Framework);
 
-		LastMouseMode = Input.MouseMode;
+        if (BackgroundNode != null)
+            BackgroundNode.GuiInput += OnBackgroundClicked;
 
-		SceneState = SceneStateEnum.Idle;
-	}
+        if (LifeTime > 0)
+        {
+            LifeTimerNode.WaitTime = LifeTime;
+            LifeTimerNode.Start();
+            LifeTimerNode.Timeout += ChangeToNextScene;
+            Log($"Scene {Name} will change to next scene after {LifeTime} seconds.", "Scene", LogTypeEnum.Framework);
+        }
 
-	protected virtual void OnBackgroundClicked(InputEvent @event)
-	{
-		if (@event is InputEventMouseButton mouseButtonEvent && mouseButtonEvent.Pressed)
-		{
-			UISoundPlayer.Instance.PlaySound("click1");
-			ChangeToNextScene();
-		}
-	}
+        if (PlayUIMusic)
+            UISoundPlayer.Instance.StartOrKeepMusic();
+        else
+            UISoundPlayer.Instance.StopMusic();
 
-	protected async void ChangeToNextScene()
-	{
-		SceneState = SceneStateEnum.TransitioningOut;
-		await SceneManager.Instance.ChangeToDefaultNextScene();
-	}
+        LastMouseMode = Input.MouseMode;
 
-	public override void _Input(InputEvent @event)
-	{
-		if (SceneState != SceneStateEnum.Idle)
-			return;
+        SceneState = SceneStateEnum.Idle;
+    }
 
-		base._Input(@event);
-	}
+    protected async void ChangeToNextScene()
+    {
+        SceneState = SceneStateEnum.TransitioningOut;
+        await SceneManager.Instance.ChangeToDefaultNextScene();
+    }
 
-	public virtual void DisableInput()
-	{
-		BackgroundNode.SetBlockSignals(true);
-		if (SceneButtons != null)
-		{
-			foreach (var button in SceneButtons)
-				button.SetBlockSignals(true);
-		}
-	}
+    public virtual void Pause()
+    {
+    }
 
-	public async virtual Task Close()
-	{
-	}
+    public virtual void Resume()
+    {
+    }
+
+    public async virtual Task Close()
+    {
+    }
+    #endregion
+
+    #region [Utility]
+    public virtual void DisableInput() => BackgroundNode.SetBlockSignals(true);
+    #endregion
 }
 

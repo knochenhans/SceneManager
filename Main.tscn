@@ -1,9 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://cpe6iiaq8xigt"]
+[gd_scene load_steps=9 format=3 uid="uid://cpe6iiaq8xigt"]
 
-[ext_resource type="PackedScene" uid="uid://dx71q56o5biur" path="res://addons/SceneManager/Main.tscn" id="1_glv2v"]
-[ext_resource type="PackedScene" uid="uid://ba8uv7k72mxv" path="res://addons/SceneManager/Overlay/OverlayMenuFrame.tscn" id="2_uu6xs"]
+[ext_resource type="PackedScene" uid="uid://dqtp44bncs881" path="res://addons/SceneManager/Main.tscn" id="1_glv2v"]
+[ext_resource type="PackedScene" uid="uid://dm6frlk3i0bo8" path="res://addons/SceneManager/Scenes/CreditsScene.tscn" id="2_lgr22"]
+[ext_resource type="PackedScene" uid="uid://b46xhre03dhm8" path="res://Scenes/CustomGameScene.tscn" id="3_trn2v"]
+[ext_resource type="PackedScene" uid="uid://b4hulv2gjask8" path="res://addons/SceneManager/Scenes/IntroScene.tscn" id="4_03owx"]
+[ext_resource type="PackedScene" uid="uid://dw38qbbkyxh35" path="res://addons/SceneManager/Scenes/MenuScene.tscn" id="5_wkp8b"]
+[ext_resource type="PackedScene" uid="uid://dc14s1yyhr3yu" path="res://addons/SceneManager/Scenes/OptionsScene.tscn" id="6_20pc6"]
+[ext_resource type="Script" uid="uid://q5kvegfjxjon" path="res://addons/SceneManager/Nodes/SceneManagerResource.cs" id="7_5vvyt"]
+
+[sub_resource type="Resource" id="Resource_c6i3y"]
+script = ExtResource("7_5vvyt")
+ScenesPackedScenes = Dictionary[String, PackedScene]({
+"credits": ExtResource("2_lgr22"),
+"game": ExtResource("3_trn2v"),
+"intro": ExtResource("4_03owx"),
+"menu": ExtResource("5_wkp8b"),
+"options": ExtResource("6_20pc6")
+})
+initialSceneName = "intro"
+metadata/_custom_type_script = "uid://q5kvegfjxjon"
 
 [node name="Main" instance=ExtResource("1_glv2v")]
 
-[node name="SceneManager" parent="." index="0"]
-OverlayMenuFramePackedScene = ExtResource("2_uu6xs")
+[node name="SceneManager" parent="." index="1"]
+SceneManagerResource = SubResource("Resource_c6i3y")

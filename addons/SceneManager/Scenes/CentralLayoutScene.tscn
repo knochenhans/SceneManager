@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://e3yjqqcvdjy"]
+[gd_scene load_steps=4 format=3 uid="uid://e3yjqqcvdjy"]
 
 [ext_resource type="PackedScene" uid="uid://bawrmdt67ohun" path="res://addons/SceneManager/Scenes/Scene.tscn" id="1_uog43"]
+[ext_resource type="Script" uid="uid://c3p7h03s2fvx4" path="res://addons/SceneManager/Scenes/CentralLayoutScene.cs" id="2_bpmi6"]
 [ext_resource type="Texture2D" uid="uid://0qd8ow0yt416" path="res://addons/SceneManager/Resources/struktstudios_logo.jpg" id="2_qnh4y"]
 
-[node name="Scene" instance=ExtResource("1_uog43")]
+[node name="CentralLayoutScene" instance=ExtResource("1_uog43")]
+script = ExtResource("2_bpmi6")
 
 [node name="MarginContainer" type="MarginContainer" parent="SceneBackground" index="0"]
 layout_mode = 1
@@ -43,6 +45,7 @@ size_flags_vertical = 8
 theme_override_constants/separation = 10
 
 [node name="TextureRect" type="TextureRect" parent="SceneBackground/MarginContainer/HBoxContainer" index="0"]
+texture_filter = 2
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -52,5 +55,4 @@ stretch_mode = 4
 
 [node name="Label" type="Label" parent="SceneBackground/MarginContainer/HBoxContainer" index="1"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
 text = "2025 by Strukt Studios"
