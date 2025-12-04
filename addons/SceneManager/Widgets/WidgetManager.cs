@@ -6,7 +6,7 @@ using Godot.Collections;
 public class WidgetManager
 {
     #region [Fields and Properties]
-    readonly Scene game;
+    readonly Scene Game;
     readonly Control widgetsNode;
     readonly Dictionary<string, PackedScene> widgetScenes;
     readonly Dictionary<string, Vector2> widgetPositions = [];
@@ -16,7 +16,7 @@ public class WidgetManager
 
     public WidgetManager(Scene game, Control widgetsNode, Dictionary<string, PackedScene> widgetScenes, float scaleFactor = 1.0f)
     {
-        this.game = game;
+        this.Game = game;
         this.widgetsNode = widgetsNode;
         this.widgetScenes = widgetScenes;
         this.scaleFactor = scaleFactor;
@@ -32,10 +32,12 @@ public class WidgetManager
 
     public async Task OpenWidgetAsync(string widgetName, string widgetTitle = "", bool pauseGame = false)
     {
+        Game.CursorManager.ResetMouseCursor();
+
         if (widgetScenes != null && widgetScenes.TryGetValue(widgetName, out var widgetScene))
         {
             if (pauseGame)
-                game.Pause();
+                Game.Pause();
 
             var widgetInstance = widgetScene.Instantiate<Widget>();
             ActiveWidgets[widgetName] = widgetInstance;
@@ -59,7 +61,7 @@ public class WidgetManager
             widgetsNode.AddChild(widgetInstance);
             await widgetInstance.Open();
 
-            game.OnWidgetOpened(widgetName, widgetInstance);
+            Game.OnWidgetOpened(widgetName, widgetInstance);
             widgetsNode.MouseFilter = Control.MouseFilterEnum.Stop;
         }
         else
@@ -78,10 +80,12 @@ public class WidgetManager
             widgetPositions[widgetName] = widgetToClose.GlobalPosition;
             await widgetToClose.Close();
 
-            game.OnWidgetClosed(widgetName);
-            game.Resume();
+            Game.OnWidgetClosed(widgetName);
+            Game.Resume();
             widgetsNode.MouseFilter = Control.MouseFilterEnum.Ignore;
         }
+
+        Game.CursorManager.RestorePreviousMouseCursor();
     }
 
     public async Task ToggleWidget(string widgetName, string widgetTitle = "", bool pauseGame = false)

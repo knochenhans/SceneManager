@@ -57,6 +57,20 @@ public class CursorManager
         }
     }
 
+    public void RestorePreviousMouseCursor()
+    {
+        if (cursorStack.Count > 1)
+        {
+            cursorStack.Pop();
+            var previousCursorSet = cursorStack.Peek();
+            Input.SetCustomMouseCursor(previousCursorSet.Texture, hotspot: previousCursorSet.Hotspot);
+        }
+        else
+        {
+            ResetMouseCursor();
+        }
+    }
+
     public void ResetMouseCursor()
     {
         SetMouseCursor("default");
