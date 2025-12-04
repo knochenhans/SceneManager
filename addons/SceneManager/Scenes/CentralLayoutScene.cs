@@ -18,18 +18,6 @@ public partial class CentralLayoutScene : Scene
     }
     #endregion
 
-    #region [Lifecycle]
-
-    #endregion
-
-    #region [Public]
-
-    #endregion
-
-    #region [Events]
-
-    #endregion
-
     #region [Utility]
     public override void DisableInput()
     {
@@ -40,9 +28,5 @@ public partial class CentralLayoutScene : Scene
                 button.SetBlockSignals(true);
         }
     }
-    #endregion
-
-    #region [Saving and Loading]
-
     #endregion
 }
