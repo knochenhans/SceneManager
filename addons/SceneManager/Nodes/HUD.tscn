@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddfbn05780mqq"]
+
+[ext_resource type="Script" uid="uid://cu36gdgsv4jf2" path="res://addons/SceneManager/Nodes/HUD.cs" id="1_60nkw"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_60nkw")
+
+[node name="UIMarginContainer" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

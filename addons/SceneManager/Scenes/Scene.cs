@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -59,7 +60,7 @@ public partial class Scene : Node
     #endregion
 
     #region [Events]
-    protected virtual void OnBackgroundClicked(InputEvent @event)
+    protected virtual void OnBackgroundInput(InputEvent @event)
     {
         if (@event is InputEventMouseButton mouseButtonEvent && mouseButtonEvent.Pressed)
         {
@@ -84,7 +85,7 @@ public partial class Scene : Node
             LogError("UISoundPlayer instance is null!", "SceneManager", LogTypeEnum.Framework);
 
         if (BackgroundNode != null)
-            BackgroundNode.GuiInput += OnBackgroundClicked;
+            BackgroundNode.GuiInput += OnBackgroundInput;
 
         if (LifeTime > 0)
         {
@@ -120,6 +121,7 @@ public partial class Scene : Node
 
     public async virtual Task Close()
     {
+        CursorManager?.Uninit();
     }
     #endregion
 

@@ -6,7 +6,7 @@ public partial class MenuScene : CentralLayoutScene
     public static void OnOptionsButtonPressed() => SceneManager.Instance.ChangeToScene("options");
     public static void OnExitButtonPressed() => SceneManager.Instance.ChangeToScene("credits");
 
-    protected override void OnBackgroundClicked(InputEvent @event)
+    protected override void OnBackgroundInput(InputEvent @event)
     {
     }
 }

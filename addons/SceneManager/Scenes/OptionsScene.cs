@@ -8,6 +8,6 @@ public partial class OptionsScene : CentralLayoutScene
 
     public static async void OnExitButtonPressed() => await SceneManager.Instance.ChangeToDefaultNextScene();
 
-    protected override void OnBackgroundClicked(InputEvent @event)
+    protected override void OnBackgroundInput(InputEvent @event)
     { }
 }
