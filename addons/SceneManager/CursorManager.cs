@@ -6,15 +6,15 @@ public class CursorManager
     readonly Dictionary<string, CursorSetResource> cursorSets;
     readonly System.Collections.Generic.Stack<CursorSetResource> cursorStack = new();
 
-    private readonly int scaleFactor = 1;
+    private readonly float scaleFactor = 1;
 
-    public CursorManager(Dictionary<string, CursorSetResource> cursorSets, int scaleFactor = 1)
+    public CursorManager(Dictionary<string, CursorSetResource> cursorSets, float scaleFactor = 1)
     {
         this.cursorSets = cursorSets ?? [];
         this.scaleFactor = scaleFactor;
 
         if (this.scaleFactor > 1)
-            ScaleCursors(cursorSets, this.scaleFactor);
+            ScaleCursorsBy(cursorSets, this.scaleFactor);
 
         SetMouseCursor();
     }
@@ -23,10 +23,10 @@ public class CursorManager
     {
         Input.SetCustomMouseCursor(null);
         if (scaleFactor > 1)
-            ScaleCursors(cursorSets, 1);
+            ScaleCursorsBy(cursorSets, 1 / scaleFactor);
     }
 
-    private static void ScaleCursors(Dictionary<string, CursorSetResource> cursorSets, int scaleFactor)
+    private static void ScaleCursorsBy(Dictionary<string, CursorSetResource> cursorSets, float scaleFactor)
     {
         foreach (var cursorSet in cursorSets.Values)
         {
@@ -40,7 +40,7 @@ public class CursorManager
             {
                 if (img.Duplicate() is Image scaledImage)
                 {
-                    scaledImage.Resize(scaledImage.GetWidth() * scaleFactor, scaledImage.GetHeight() * scaleFactor, Image.Interpolation.Nearest);
+                    scaledImage.Resize((int)(scaledImage.GetWidth() * scaleFactor), (int)(scaledImage.GetHeight() * scaleFactor), Image.Interpolation.Nearest);
                     cursorSet.Texture = ImageTexture.CreateFromImage(scaledImage);
                     cursorSet.Hotspot *= scaleFactor;
                 }

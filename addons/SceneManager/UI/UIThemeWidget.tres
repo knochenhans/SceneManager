@@ -1,4 +1,6 @@
-[gd_resource type="Theme" load_steps=7 format=3 uid="uid://brtgrar0mlv5t"]
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://brtgrar0mlv5t"]
+
+[ext_resource type="FontFile" uid="uid://b58hs4rucgneh" path="res://Resources/Fonts/monogram-extended.ttf" id="1_meqtl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ce1d4"]
 content_margin_left = 10.0
@@ -35,13 +37,13 @@ content_margin_bottom = 10.0
 bg_color = Color(0, 0, 0, 1)
 
 [resource]
-Button/font_sizes/font_size = 8
+default_font = ExtResource("1_meqtl")
+default_font_size = 32
 Button/styles/focus = SubResource("StyleBoxFlat_ce1d4")
 Button/styles/hover = SubResource("StyleBoxFlat_ce1d4")
 Button/styles/normal = SubResource("StyleBoxFlat_ce1d4")
 Button/styles/pressed = SubResource("StyleBoxFlat_ce1d4")
 Label/constants/line_spacing = 5
-Label/font_sizes/font_size = 8
 LineEdit/styles/focus = null
 LineEdit/styles/normal = null
 MarginContainer/constants/margin_bottom = 4

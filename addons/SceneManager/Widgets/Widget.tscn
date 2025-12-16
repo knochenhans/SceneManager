@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dhmwany3iqrlm"]
+[gd_scene load_steps=7 format=3 uid="uid://dhmwany3iqrlm"]
 
 [ext_resource type="Script" uid="uid://fu1wrypyifo0" path="res://addons/SceneManager/Widgets/Widget.cs" id="1_3y5e2"]
 [ext_resource type="Texture2D" uid="uid://bwt7a7v53mn3w" path="res://addons/SceneManager/Resources/close_button.png" id="3_cajur"]
 [ext_resource type="StyleBox" uid="uid://dntxsxgjtl5y7" path="res://addons/SceneManager/UI/WidgetTitleBarButton.tres" id="3_ob4t7"]
+[ext_resource type="Script" uid="uid://d1l22qsiuoe6n" path="res://addons/SceneManager/Nodes/SceneButton.cs" id="4_evc6s"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_elddf"]
 bg_color = Color(0.16565639, 0.16565642, 0.1656563, 1)
@@ -107,3 +108,4 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
 text = "Okay"
+script = ExtResource("4_evc6s")

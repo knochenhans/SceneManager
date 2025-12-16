@@ -12,7 +12,7 @@ public partial class Widget : Control
     [Export] public bool EnableDragging = true;
     [Export] public bool EnableCloseButton = true;
 
-    [ExportCategory("Visual Settings")]
+    [ExportGroup("Visual Settings")]
     [Export] public bool Center = false;
     [Export] public float FadeInDuration = 0.2f;
     [Export] public float FadeOutDuration = 0.1f;

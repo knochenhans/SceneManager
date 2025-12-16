@@ -48,3 +48,4 @@ script = ExtResource("4_uqv4n")
 [node name="CloseButton" parent="VBoxContainer/PanelContainer/Panel/VBoxContainer/HBoxContainer" index="1"]
 size_flags_horizontal = 3
 text = "Back"
+script = ExtResource("4_uqv4n")

@@ -6,7 +6,7 @@ using Godot.Collections;
 public class WidgetManager
 {
     #region [Fields and Properties]
-    readonly Scene Game;
+    readonly BaseGame Game;
     readonly Control widgetsNode;
     readonly Dictionary<string, PackedScene> widgetScenes;
     readonly Dictionary<string, Vector2> widgetPositions = [];
@@ -14,7 +14,7 @@ public class WidgetManager
 
     public Dictionary<string, Widget> ActiveWidgets = [];
 
-    public WidgetManager(Scene game, Control widgetsNode, Dictionary<string, PackedScene> widgetScenes, float scaleFactor = 1.0f)
+    public WidgetManager(BaseGame game, Control widgetsNode, Dictionary<string, PackedScene> widgetScenes, float scaleFactor = 1.0f)
     {
         this.Game = game;
         this.widgetsNode = widgetsNode;
@@ -27,15 +27,21 @@ public class WidgetManager
 
     //TODO: Game-Verweis entfernen und stattdessen von Game selbst übernehmen lassen
 
+    #region [Public]
+    public bool IsWidgetOpen(string widgetName) => ActiveWidgets.ContainsKey(widgetName);
+    public Widget GetOpenWidget(string widgetName) => ActiveWidgets.TryGetValue(widgetName, out var widget) ? widget : null;
+    #endregion
+
     #region [Lifecycle]
     public void OpenWidget(string widgetName, string widgetTitle = "Widget", bool pauseGame = false) => _ = OpenWidgetAsync(widgetName, widgetTitle, pauseGame);
 
     public async Task OpenWidgetAsync(string widgetName, string widgetTitle = "", bool pauseGame = false)
     {
-        Game.CursorManager.ResetMouseCursor();
-
         if (widgetScenes != null && widgetScenes.TryGetValue(widgetName, out var widgetScene))
         {
+            Game.CursorManager.ResetMouseCursor();
+            Game.DisableUInput();
+
             if (pauseGame)
                 Game.Pause();
 
@@ -83,9 +89,11 @@ public class WidgetManager
             Game.OnWidgetClosed(widgetName);
             Game.Resume();
             widgetsNode.MouseFilter = Control.MouseFilterEnum.Ignore;
+
+            Game.CursorManager.RestorePreviousMouseCursor();
+            Game.EnableUIInput();
         }
 
-        Game.CursorManager.RestorePreviousMouseCursor();
     }
 
     public async Task ToggleWidget(string widgetName, string widgetTitle = "", bool pauseGame = false)
