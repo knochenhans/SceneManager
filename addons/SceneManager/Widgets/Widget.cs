@@ -23,10 +23,17 @@ public partial class Widget : Control
     Button CloseButtonTitleBar => GetNode<Button>("%CloseButtonTitleBar");
     Button CloseButton => GetNode<Button>("%CloseButton");
 
-    private bool isDragging = false;
-    private bool movedToTop = false;
-    private Control parentControl = null;
-    private Vector2 offset;
+
+    public enum OpeningState
+    {
+        Opening,
+        Opened,
+        Closing,
+        Closed
+    }
+
+    public OpeningState CurrentOpeningState = OpeningState.Closed;
+
     #endregion
 
     #region [Godot]
@@ -44,6 +51,9 @@ public partial class Widget : Control
 
     public override void _GuiInput(InputEvent @event)
     {
+        if (CurrentOpeningState != OpeningState.Opened)
+            return;
+
         base._GuiInput(@event);
 
         if (@event is InputEventMouseButton mouseEvent
@@ -110,12 +120,16 @@ public partial class Widget : Control
     #region [Lifecycle]
     public async Task Open()
     {
+        CurrentOpeningState = OpeningState.Opening;
         await FadeHelper.TweenFadeModulate(this, FadeHelper.FadeDirectionEnum.In, FadeInDuration, Opacity);
+        CurrentOpeningState = OpeningState.Opened;
     }
 
     public async Task Close()
     {
+        CurrentOpeningState = OpeningState.Closing;
         await FadeHelper.TweenFadeModulate(this, FadeHelper.FadeDirectionEnum.Out, FadeOutDuration, Opacity);
+        CurrentOpeningState = OpeningState.Closed;
         QueueFree();
     }
     #endregion
