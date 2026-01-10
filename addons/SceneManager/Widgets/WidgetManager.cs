@@ -30,6 +30,7 @@ public class WidgetManager
     #region [Public]
     public bool IsWidgetOpen(string widgetName) => ActiveWidgets.ContainsKey(widgetName);
     public Widget GetOpenWidget(string widgetName) => ActiveWidgets.TryGetValue(widgetName, out var widget) ? widget : null;
+    public bool IsAnyWidgetOpen() => ActiveWidgets.Count > 0;
     #endregion
 
     #region [Lifecycle]
