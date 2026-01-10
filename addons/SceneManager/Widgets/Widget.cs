@@ -7,7 +7,7 @@ public partial class Widget : Control
     #region [Fields and Properties]
     [Signal] public delegate void CloseButtonPressedEventHandler();
 
-    [Export] public string WidgetTitle = "Widget";
+    [Export] public string WidgetTitle;
     [Export] public bool ShowTitleBar = true;
     [Export] public bool EnableDragging = true;
     [Export] public bool EnableCloseButton = true;
