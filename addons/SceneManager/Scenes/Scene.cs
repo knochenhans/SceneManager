@@ -29,6 +29,7 @@ public partial class Scene : Node
     [Export] public int ScaleFactor = 1;
 
     [ExportGroup("Fade Settings")]
+    [Export] public bool DontFadeInOnStart = false;
     [Export] public float FadeInTime = 0.5f;
     [Export] public float FadeOutTime = 0.5f;
     [Export] public float LifeTime = 0.0f;

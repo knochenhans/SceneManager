@@ -95,8 +95,10 @@ public partial class SceneManager : Node
         CurrentScene.CursorManager = CursorManager;
         AddChild(CurrentScene);
 
-        await FadeIn(CurrentScene.FadeInTime);
         CurrentScene.Init();
+
+        if (!CurrentScene.DontFadeInOnStart)
+            await FadeIn(CurrentScene.FadeInTime);
     }
 
     private async Task ExitCurrentScene()
@@ -150,5 +152,7 @@ public partial class SceneManager : Node
     // Use fadeout as direction because we are fading from black to the scene
     public async Task FadeIn(float duration) => await FadeHelper.TweenFadeModulate(FadeScene, FadeHelper.FadeDirectionEnum.Out, duration, transitionType: Tween.TransitionType.Cubic);
     public async Task FadeOut(float duration) => await FadeHelper.TweenFadeModulate(FadeScene, FadeHelper.FadeDirectionEnum.In, duration, transitionType: Tween.TransitionType.Cubic);
+    public void SetFadeColor(Color color) => FadeScene.Color = color;
+    public void SetFadeModulate(Color color) => FadeScene.Modulate = color;
     #endregion
 }
