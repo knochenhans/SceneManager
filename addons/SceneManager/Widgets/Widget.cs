@@ -23,6 +23,10 @@ public partial class Widget : Control
     Button CloseButtonTitleBar => GetNode<Button>("%CloseButtonTitleBar");
     Button CloseButton => GetNode<Button>("%CloseButton");
 
+    bool isDragging = false;
+    bool movedToTop = false;
+    Control parentControl = null;
+    Vector2 offset;
 
     public enum OpeningState
     {
@@ -47,6 +51,8 @@ public partial class Widget : Control
         CloseButtonTitleBar.Visible = EnableCloseButton;
         CloseButtonTitleBar.Pressed += OnCloseButtonPressed;
         CloseButton.Pressed += OnCloseButtonPressed;
+
+        GrabFocus();
     }
 
     public override void _GuiInput(InputEvent @event)
@@ -111,10 +117,7 @@ public partial class Widget : Control
     #endregion
 
     #region [Events]
-    public void OnCloseButtonPressed()
-    {
-        EmitSignal(SignalName.CloseButtonPressed);
-    }
+    public void OnCloseButtonPressed() => EmitSignal(SignalName.CloseButtonPressed);
     #endregion
 
     #region [Lifecycle]

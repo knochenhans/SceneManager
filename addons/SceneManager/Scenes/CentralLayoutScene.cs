@@ -1,6 +1,8 @@
 using System.Linq;
+
 using Godot;
 using Godot.Collections;
+
 using static Logger;
 
 public partial class CentralLayoutScene : Scene
@@ -14,7 +16,9 @@ public partial class CentralLayoutScene : Scene
     public override void _Ready()
     {
         base._Ready();
-        SceneButtons = [.. ButtonsNode.GetChildren().OfType<SceneButton>()];
+
+        if (ButtonsNode != null)
+            SceneButtons = [.. ButtonsNode.GetChildren().OfType<SceneButton>()];
     }
     #endregion
 

@@ -26,7 +26,6 @@ public partial class Scene : Node
 
     [ExportGroup("Mouse")]
     [Export] public Input.MouseModeEnum DefaultMouseMode = Input.MouseModeEnum.Visible;
-    [Export] public int ScaleFactor = 1;
 
     [ExportGroup("Fade Settings")]
     [Export] public bool DontFadeInOnStart = false;

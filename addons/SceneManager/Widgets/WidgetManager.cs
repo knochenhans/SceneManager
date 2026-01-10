@@ -7,21 +7,21 @@ public class WidgetManager
 {
     #region [Fields and Properties]
     readonly BaseGame Game;
-    readonly Control widgetsNode;
-    readonly Dictionary<string, PackedScene> widgetScenes;
-    readonly Dictionary<string, Vector2> widgetPositions = [];
-    readonly float scaleFactor;
+    readonly Control WidgetsNode;
+    readonly Dictionary<string, PackedScene> WidgetScenes;
+    readonly Dictionary<string, Vector2> WidgetPositions = [];
+    readonly float ScaleFactor;
 
     public Dictionary<string, Widget> ActiveWidgets = [];
 
     public WidgetManager(BaseGame game, Control widgetsNode, Dictionary<string, PackedScene> widgetScenes, float scaleFactor = 1.0f)
     {
-        this.Game = game;
-        this.widgetsNode = widgetsNode;
-        this.widgetScenes = widgetScenes;
-        this.scaleFactor = scaleFactor;
+        Game = game;
+        WidgetsNode = widgetsNode;
+        WidgetScenes = widgetScenes;
+        ScaleFactor = scaleFactor;
 
-        widgetsNode.MouseFilter = Control.MouseFilterEnum.Ignore;
+        WidgetsNode.MouseFilter = Control.MouseFilterEnum.Ignore;
     }
     #endregion
 
@@ -34,11 +34,11 @@ public class WidgetManager
     #endregion
 
     #region [Lifecycle]
-    public void OpenWidget(string widgetName, string widgetTitle = "Widget", bool pauseGame = false) => _ = OpenWidgetAsync(widgetName, widgetTitle, pauseGame);
+    public void OpenWidget(string widgetName, string widgetTitle = "", bool pauseGame = false) => _ = OpenWidgetAsync(widgetName, widgetTitle, pauseGame);
 
     public async Task OpenWidgetAsync(string widgetName, string widgetTitle = "", bool pauseGame = false)
     {
-        if (widgetScenes != null && widgetScenes.TryGetValue(widgetName, out var widgetScene))
+        if (WidgetScenes != null && WidgetScenes.TryGetValue(widgetName, out var widgetScene))
         {
             Game.CursorManager.ResetMouseCursor();
             Game.DisableUInput();
@@ -53,23 +53,23 @@ public class WidgetManager
             if (!string.IsNullOrEmpty(widgetTitle))
                 widgetInstance.WidgetTitle = widgetTitle;
 
-            if (widgetPositions.TryGetValue(widgetName, out var savedPosition))
+            if (WidgetPositions.TryGetValue(widgetName, out var savedPosition))
                 Callable.From(() => widgetInstance.GlobalPosition = savedPosition).CallDeferred();
 
             widgetInstance.CloseButtonPressed += () => CloseWidget(widgetName);
 
             if (widgetInstance.Center)
             {
-                widgetsNode.Size = widgetsNode.GetViewport().GetVisibleRect().Size / scaleFactor;
+                WidgetsNode.Size = WidgetsNode.GetViewport().GetVisibleRect().Size / ScaleFactor;
                 widgetInstance.SetAnchorsPreset(Control.LayoutPreset.Center);
                 widgetInstance.SetOffsetsPreset(Control.LayoutPreset.Center);
             }
 
-            widgetsNode.AddChild(widgetInstance);
+            WidgetsNode.AddChild(widgetInstance);
             await widgetInstance.Open();
 
             Game.OnWidgetOpened(widgetName, widgetInstance);
-            widgetsNode.MouseFilter = Control.MouseFilterEnum.Stop;
+            WidgetsNode.MouseFilter = Control.MouseFilterEnum.Stop;
         }
         else
         {
@@ -84,17 +84,16 @@ public class WidgetManager
         if (ActiveWidgets.TryGetValue(widgetName, out var widgetToClose))
         {
             ActiveWidgets.Remove(widgetName);
-            widgetPositions[widgetName] = widgetToClose.GlobalPosition;
+            WidgetPositions[widgetName] = widgetToClose.GlobalPosition;
             await widgetToClose.Close();
 
             Game.OnWidgetClosed(widgetName);
             Game.Resume();
-            widgetsNode.MouseFilter = Control.MouseFilterEnum.Ignore;
+            WidgetsNode.MouseFilter = Control.MouseFilterEnum.Ignore;
 
             Game.CursorManager.RestorePreviousMouseCursor();
             Game.EnableUIInput();
         }
-
     }
 
     public async Task ToggleWidget(string widgetName, string widgetTitle = "", bool pauseGame = false)
