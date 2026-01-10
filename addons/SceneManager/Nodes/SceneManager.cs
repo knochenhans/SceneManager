@@ -13,6 +13,10 @@ public partial class SceneManager : Node
     [Export] public SceneManagerResource SceneManagerResource;
     [Export] public AudioBusLayout AudioBusLayout;
 
+    [ExportCategory("Mouse")]
+    [Export] public Dictionary<string, CursorSetResource> CursorSets = [];
+    [Export] public int MouseScaleFactor = 1;
+
     public Dictionary<string, PackedScene> ScenesPackedScenes => SceneManagerResource.ScenesPackedScenes;
     public string InitialSceneName => SceneManagerResource.initialSceneName;
 
@@ -24,6 +28,7 @@ public partial class SceneManager : Node
 
     ColorRect FadeScene => GetNode<ColorRect>("%Fade");
     CanvasLayer CanvasLayer => GetNode<CanvasLayer>("CanvasLayer");
+    CursorManager CursorManager;
     #endregion
 
     #region [Godot]
@@ -51,7 +56,8 @@ public partial class SceneManager : Node
         if (AudioBusLayout != null)
             AudioServer.SetBusLayout(AudioBusLayout);
 
-        // CallDeferred(MethodName.ChangeToScene, InitialSceneName);
+        CursorManager = new CursorManager(CursorSets, MouseScaleFactor);
+
         await ChangeToScene(InitialSceneName);
     }
     #endregion
@@ -86,6 +92,7 @@ public partial class SceneManager : Node
         }
 
         CurrentScene.InitData = initData;
+        CurrentScene.CursorManager = CursorManager;
         AddChild(CurrentScene);
 
         await FadeIn(CurrentScene.FadeInTime);

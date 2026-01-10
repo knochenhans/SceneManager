@@ -25,7 +25,6 @@ public partial class Scene : Node
     [Export] bool PlayUIMusic = false;
 
     [ExportGroup("Mouse")]
-    [Export] public Dictionary<string, CursorSetResource> CursorSets = [];
     [Export] public Input.MouseModeEnum DefaultMouseMode = Input.MouseModeEnum.Visible;
     [Export] public int ScaleFactor = 1;
 
@@ -121,7 +120,6 @@ public partial class Scene : Node
 
     public async virtual Task Close()
     {
-        CursorManager?.Uninit();
     }
     #endregion
 
