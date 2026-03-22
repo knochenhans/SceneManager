@@ -1,29 +1,33 @@
 using Godot;
-
-public partial class OptionsWidget : Widget
+namespace CoreSystems.GameOptions
 {
-    OptionsContainer OptionsContainer => GetNodeOrNull<OptionsContainer>("%OptionsContainer");
-    Button QuitButtonNode => GetNodeOrNull<Button>("%QuitButton");
-
-    public override void _Ready()
+    public partial class OptionsWidget : Widget
     {
-        base._Ready();
+        OptionsContainer OptionsContainer => GetNodeOrNull<OptionsContainer>("%OptionsContainer");
+        Button QuitButtonNode => GetNodeOrNull<Button>("%QuitButton");
 
-        QuitButtonNode.Pressed += () =>
+        public override void _Ready()
         {
-            OnCloseButtonPressed();
-            SceneManager.Instance.Quit();
-        };
+            base._Ready();
 
-        OptionsContainer?.Init();
-    }
-
-    public override void _Input(InputEvent @event)
-    {
-        base._Input(@event);
-
-        if (@event is InputEventKey keyEvent && keyEvent.IsPressed())
-            if (keyEvent.Keycode == Key.Escape)
+            QuitButtonNode.Pressed += () =>
+            {
                 OnCloseButtonPressed();
+                SceneManager.Instance.Quit();
+            };
+
+            OptionsContainer?.Init();
+        }
+
+        public override void _Input(InputEvent @event)
+        {
+            base._Input(@event);
+
+            if (@event is InputEventKey keyEvent && keyEvent.IsPressed())
+            {
+                if (keyEvent.Keycode == Key.Escape)
+                    OnCloseButtonPressed();
+            }
+        }
     }
 }

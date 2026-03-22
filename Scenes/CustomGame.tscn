@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://b46xhre03dhm8"]
+
+[ext_resource type="PackedScene" uid="uid://bvqfhvj8n4khq" path="res://addons/SceneManager/Scenes/GameScene.tscn" id="1_c1plg"]
+[ext_resource type="Script" uid="uid://y3mca5ug3oee" path="res://Scenes/CustomGame.cs" id="2_7cnhq"]
+
+[node name="CustomGame" unique_id=1439412117 node_paths=PackedStringArray("NotificationManager", "Camera") instance=ExtResource("1_c1plg")]
+script = ExtResource("2_7cnhq")
+NotificationManager = NodePath("FixedCanvasLayer/NotificationManager")
+Camera = NodePath("Camera2D")
+WidgetScenes = null
+gameVersion = 1
+LoadingFadeDuration = 1.0

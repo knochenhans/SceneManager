@@ -1,4 +1,4 @@
-public partial class CustomGame : Scene
+public partial class CustomGame : BaseGame
 {
     public void OnButtonPressed() => SceneManager.Instance.ChangeToScene("Menu");
 }

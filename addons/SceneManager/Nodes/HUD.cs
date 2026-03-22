@@ -1,14 +1,17 @@
+using CoreSystems;
 using Godot;
 
 public partial class HUD : CanvasLayer
 {
     #region [Fields and Properties]
     protected Control HUDMarginContainer => GetNode<Control>("%HUDMarginContainer");
+    protected GameContext GameContext;
     #endregion
 
     #region [Lifecycle]
-    public virtual void Init()
+    public virtual void Init(GameContext gameContext)
     {
+        GameContext = gameContext;
     }
     #endregion
 

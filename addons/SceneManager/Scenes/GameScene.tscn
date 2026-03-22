@@ -1,16 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://bvqfhvj8n4khq"]
+[gd_scene format=3 uid="uid://bvqfhvj8n4khq"]
 
 [ext_resource type="PackedScene" uid="uid://bawrmdt67ohun" path="res://addons/SceneManager/Scenes/Scene.tscn" id="1_vvakc"]
 [ext_resource type="PackedScene" uid="uid://ddfbn05780mqq" path="res://addons/SceneManager/Nodes/HUD.tscn" id="4_46g7r"]
-[ext_resource type="PackedScene" uid="uid://ckeidvpi72g3b" path="res://addons/NotificationsManager/NotificationManager.tscn" id="4_cgfhn"]
+[ext_resource type="PackedScene" uid="uid://ckeidvpi72g3b" path="res://CoreSystems/NotificationsManager/NotificationManager.tscn" id="4_cgfhn"]
 
-[node name="GameScene" instance=ExtResource("1_vvakc")]
+[node name="GameScene" unique_id=1463222585 instance=ExtResource("1_vvakc")]
 
-[node name="FixedCanvasLayer" type="CanvasLayer" parent="." index="3"]
+[node name="FixedCanvasLayer" type="CanvasLayer" parent="." index="3" unique_id=1434869405]
 unique_name_in_owner = true
 layer = 2
 
-[node name="Widgets" type="Control" parent="FixedCanvasLayer" index="0"]
+[node name="Widgets" type="Control" parent="FixedCanvasLayer" index="0" unique_id=1173655450]
 unique_name_in_owner = true
 z_index = 100
 layout_mode = 3
@@ -20,14 +20,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NotificationManager" parent="FixedCanvasLayer" index="1" instance=ExtResource("4_cgfhn")]
+[node name="NotificationManager" parent="FixedCanvasLayer" index="1" unique_id=839796179 instance=ExtResource("4_cgfhn")]
 unique_name_in_owner = true
 NotificationOffset = Vector2(5, 5)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." index="4"]
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="4" unique_id=60658868]
 unique_name_in_owner = true
 
-[node name="UIContainer" type="MarginContainer" parent="CanvasLayer" index="0"]
+[node name="UIContainer" type="MarginContainer" parent="CanvasLayer" index="0" unique_id=1178176889]
 unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,15 +35,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Container" type="VBoxContainer" parent="CanvasLayer/UIContainer" index="0"]
+[node name="Container" type="VBoxContainer" parent="CanvasLayer/UIContainer" index="0" unique_id=827895187]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="HUD" parent="CanvasLayer/UIContainer/Container" index="0" instance=ExtResource("4_46g7r")]
+[node name="HUD" parent="CanvasLayer/UIContainer/Container" index="0" unique_id=1380709030 instance=ExtResource("4_46g7r")]
 unique_name_in_owner = true
 
-[node name="Camera2D" type="Camera2D" parent="." index="5"]
-position = Vector2(256, 168)
-zoom = Vector2(3, 3)
+[node name="Camera2D" type="Camera2D" parent="." index="5" unique_id=1489725566]
+anchor_mode = 0
 limit_enabled = false

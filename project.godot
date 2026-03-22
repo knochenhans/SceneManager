@@ -8,11 +8,15 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="SceneManager"
 run/main_scene="uid://cpe6iiaq8xigt"
-config/features=PackedStringArray("4.5", "C#", "Mobile")
+config/features=PackedStringArray("4.6", "C#", "Mobile")
 config/icon="res://icon.svg"
 
 [dotnet]
@@ -21,7 +25,7 @@ project/assembly_name="SceneManager"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/Logger/plugin.cfg", "res://addons/SceneManager/plugin.cfg")
+enabled=PackedStringArray("res://addons/SceneManager/plugin.cfg")
 
 [rendering]
 
