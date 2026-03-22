@@ -2,11 +2,17 @@
 
 [ext_resource type="PackedScene" uid="uid://bvqfhvj8n4khq" path="res://addons/SceneManager/Scenes/GameScene.tscn" id="1_c1plg"]
 [ext_resource type="Script" uid="uid://y3mca5ug3oee" path="res://Scenes/CustomGame.cs" id="2_7cnhq"]
+[ext_resource type="PackedScene" uid="uid://rpn4smawx6f6" path="res://TestWidget.tscn" id="3_7cnhq"]
 
 [node name="CustomGame" unique_id=1439412117 node_paths=PackedStringArray("NotificationManager", "Camera") instance=ExtResource("1_c1plg")]
 script = ExtResource("2_7cnhq")
 NotificationManager = NodePath("FixedCanvasLayer/NotificationManager")
 Camera = NodePath("Camera2D")
-WidgetScenes = null
+WidgetScenes = Dictionary[String, PackedScene]({
+"test": ExtResource("3_7cnhq")
+})
 gameVersion = 1
 LoadingFadeDuration = 1.0
+
+[node name="WidgetManager" parent="FixedCanvasLayer" parent_id_path=PackedInt32Array(1434869405) index="0" unique_id=1173655450]
+ScaleFactor = 2.0

@@ -68,7 +68,7 @@ public partial class Scene : Node
         }
     }
 
-    public virtual void OnWidgetOpened(string widgetName, Widget widgetInstance)
+    public virtual void OnWidgetOpened(string widgetName, Widget widgetInstance, bool pauseGame = false)
     {
     }
 

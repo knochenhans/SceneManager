@@ -3,25 +3,24 @@ using System.Threading.Tasks;
 using Godot;
 using Godot.Collections;
 
-public class WidgetManager
+public partial class WidgetManager : Control
 {
     #region [Fields and Properties]
-    readonly BaseGame Game;
-    readonly Control WidgetsNode;
-    readonly Dictionary<string, PackedScene> WidgetScenes;
+    [Signal] public delegate void WidgetOpenedEventHandler(string widgetName, Widget widgetInstance, bool pauseGame);
+    [Signal] public delegate void WidgetClosedEventHandler(string widgetName);
+
+    [Export] public float ScaleFactor = 1.0f;
+
+    Dictionary<string, PackedScene> WidgetScenes;
     readonly Dictionary<string, Vector2> WidgetPositions = [];
-    readonly float ScaleFactor;
 
     public Dictionary<string, Widget> ActiveWidgets = [];
 
-    public WidgetManager(BaseGame game, Control widgetsNode, Dictionary<string, PackedScene> widgetScenes, float scaleFactor = 1.0f)
+    public void Init(Dictionary<string, PackedScene> widgetScenes)
     {
-        Game = game;
-        WidgetsNode = widgetsNode;
         WidgetScenes = widgetScenes;
-        ScaleFactor = scaleFactor;
 
-        WidgetsNode.MouseFilter = Control.MouseFilterEnum.Ignore;
+        MouseFilter = MouseFilterEnum.Ignore;
     }
     #endregion
 
@@ -34,19 +33,14 @@ public class WidgetManager
     #endregion
 
     #region [Lifecycle]
-    public void OpenWidget(string widgetName, string widgetTitle = "", bool pauseGame = false) => _ = OpenWidgetAsync(widgetName, widgetTitle, pauseGame);
+    public void OpenWidget(string widgetName, string widgetTitle = "") => _ = OpenWidgetAsync(widgetName, widgetTitle);
 
-    public async Task OpenWidgetAsync(string widgetName, string widgetTitle = "", bool pauseGame = false)
+    public async Task OpenWidgetAsync(string widgetName, string widgetTitle = "")
     {
         if (WidgetScenes != null && WidgetScenes.TryGetValue(widgetName, out var widgetScene))
         {
-            Game.CursorManager.ResetMouseCursor();
-            Game.DisableUInput();
-
-            if (pauseGame)
-                Game.Pause();
-
             var widgetInstance = widgetScene.Instantiate<Widget>();
+            EmitSignal(SignalName.WidgetOpened, widgetName, widgetInstance, widgetInstance.Modal);
             ActiveWidgets[widgetName] = widgetInstance;
             widgetInstance.Name = widgetName;
 
@@ -60,16 +54,15 @@ public class WidgetManager
 
             if (widgetInstance.Center)
             {
-                WidgetsNode.Size = WidgetsNode.GetViewport().GetVisibleRect().Size / ScaleFactor;
-                widgetInstance.SetAnchorsPreset(Control.LayoutPreset.Center);
-                widgetInstance.SetOffsetsPreset(Control.LayoutPreset.Center);
+                Size = GetViewport().GetVisibleRect().Size / ScaleFactor;
+                widgetInstance.SetAnchorsPreset(LayoutPreset.Center);
+                widgetInstance.SetOffsetsPreset(LayoutPreset.Center);
             }
 
-            WidgetsNode.AddChild(widgetInstance);
+            AddChild(widgetInstance);
             await widgetInstance.Open();
 
-            Game.OnWidgetOpened(widgetName, widgetInstance);
-            WidgetsNode.MouseFilter = Control.MouseFilterEnum.Stop;
+            MouseFilter = MouseFilterEnum.Stop;
         }
         else
         {
@@ -87,21 +80,17 @@ public class WidgetManager
             WidgetPositions[widgetName] = widgetToClose.GlobalPosition;
             await widgetToClose.Close();
 
-            Game.OnWidgetClosed(widgetName);
-            Game.Resume();
-            WidgetsNode.MouseFilter = Control.MouseFilterEnum.Ignore;
-
-            Game.CursorManager.RestorePreviousMouseCursor();
-            Game.EnableUIInput();
+            MouseFilter = MouseFilterEnum.Ignore;
+            EmitSignal(SignalName.WidgetClosed, widgetName);
         }
     }
 
-    public async Task ToggleWidget(string widgetName, string widgetTitle = "", bool pauseGame = false)
+    public async Task ToggleWidget(string widgetName, string widgetTitle = "")
     {
         if (ActiveWidgets.ContainsKey(widgetName))
             await CloseWidgetAsync(widgetName);
         else
-            OpenWidget(widgetName, widgetTitle, pauseGame);
+            OpenWidget(widgetName, widgetTitle);
     }
     #endregion
 }

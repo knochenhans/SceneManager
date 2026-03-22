@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bvqfhvj8n4khq"]
 
 [ext_resource type="PackedScene" uid="uid://bawrmdt67ohun" path="res://addons/SceneManager/Scenes/Scene.tscn" id="1_vvakc"]
+[ext_resource type="Script" uid="uid://x5yob0p0r4v" path="res://addons/SceneManager/Widgets/WidgetManager.cs" id="2_cgfhn"]
 [ext_resource type="PackedScene" uid="uid://ddfbn05780mqq" path="res://addons/SceneManager/Nodes/HUD.tscn" id="4_46g7r"]
 [ext_resource type="PackedScene" uid="uid://ckeidvpi72g3b" path="res://CoreSystems/NotificationsManager/NotificationManager.tscn" id="4_cgfhn"]
 
@@ -10,7 +11,7 @@
 unique_name_in_owner = true
 layer = 2
 
-[node name="Widgets" type="Control" parent="FixedCanvasLayer" index="0" unique_id=1173655450]
+[node name="WidgetManager" type="Control" parent="FixedCanvasLayer" index="0" unique_id=1173655450]
 unique_name_in_owner = true
 z_index = 100
 layout_mode = 3
@@ -19,6 +20,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("2_cgfhn")
 
 [node name="NotificationManager" parent="FixedCanvasLayer" index="1" unique_id=839796179 instance=ExtResource("4_cgfhn")]
 unique_name_in_owner = true

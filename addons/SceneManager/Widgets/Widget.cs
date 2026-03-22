@@ -11,6 +11,7 @@ public partial class Widget : Control
     [Export] public bool ShowTitleBar = true;
     [Export] public bool EnableDragging = true;
     [Export] public bool EnableCloseButton = true;
+    [Export] public bool Modal = false;
 
     [ExportGroup("Visual Settings")]
     [Export] public bool Center = false;
