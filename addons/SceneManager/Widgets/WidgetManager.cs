@@ -82,11 +82,12 @@ public partial class WidgetManager : Control
     {
         if (ActiveWidgets.TryGetValue(widgetName, out var widgetToClose))
         {
+            MouseFilter = MouseFilterEnum.Ignore;
+
             ActiveWidgets.Remove(widgetName);
             WidgetPositions[widgetName] = widgetToClose.GlobalPosition;
             await widgetToClose.Close();
 
-            MouseFilter = MouseFilterEnum.Ignore;
             EmitSignal(SignalName.WidgetClosed, widgetName);
         }
     }
