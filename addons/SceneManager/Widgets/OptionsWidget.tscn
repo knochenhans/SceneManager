@@ -1,11 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://3dyfxoyhxipj"]
+[gd_scene format=3 uid="uid://3dyfxoyhxipj"]
 
 [ext_resource type="PackedScene" uid="uid://dhmwany3iqrlm" path="res://addons/SceneManager/Widgets/Widget.tscn" id="1_r771i"]
 [ext_resource type="Script" uid="uid://j47av6156b4g" path="res://addons/SceneManager/Widgets/OptionsWidget.cs" id="2_4sdhu"]
-[ext_resource type="PackedScene" uid="uid://bf1cf06vio4fu" path="res://addons/GameOptions/OptionsContainer.tscn" id="3_021rp"]
+[ext_resource type="PackedScene" uid="uid://bf1cf06vio4fu" path="res://CoreSystems/GameOptions/OptionsContainer.tscn" id="3_021rp"]
 [ext_resource type="Script" uid="uid://d1l22qsiuoe6n" path="res://addons/SceneManager/Nodes/SceneButton.cs" id="4_uqv4n"]
 
-[node name="OptionsWidget" instance=ExtResource("1_r771i")]
+[node name="OptionsWidget" unique_id=1170729459 instance=ExtResource("1_r771i")]
 custom_minimum_size = Vector2(500, 300)
 offset_left = -576.0
 offset_top = -324.0
@@ -18,34 +18,33 @@ EnableDragging = false
 EnableCloseButton = false
 Center = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/Panel/VBoxContainer/WidgetContent" index="0"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/WidgetContent" parent_id_path=PackedInt32Array(106540290) index="0" unique_id=1693255518]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/PanelContainer/Panel/VBoxContainer/WidgetContent/VBoxContainer" index="0"]
+[node name="Label" type="Label" parent="VBoxContainer/PanelContainer/VBoxContainer/WidgetContent/VBoxContainer" index="0" unique_id=1887068666]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Options"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer/PanelContainer/Panel/VBoxContainer/WidgetContent/VBoxContainer" index="1"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/PanelContainer/VBoxContainer/WidgetContent/VBoxContainer" index="1" unique_id=1560020316]
 layout_mode = 2
 
-[node name="OptionsContainer" parent="VBoxContainer/PanelContainer/Panel/VBoxContainer/WidgetContent/VBoxContainer" index="2" instance=ExtResource("3_021rp")]
+[node name="OptionsContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/WidgetContent/VBoxContainer" index="2" unique_id=1498946995 instance=ExtResource("3_021rp")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/PanelContainer/Panel/VBoxContainer/WidgetContent/VBoxContainer" index="3"]
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/PanelContainer/VBoxContainer/WidgetContent/VBoxContainer" index="3" unique_id=1333038320]
 layout_mode = 2
 
-[node name="QuitButton" type="Button" parent="VBoxContainer/PanelContainer/Panel/VBoxContainer/HBoxContainer" index="0"]
+[node name="QuitButton" type="Button" parent="VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer" parent_id_path=PackedInt32Array(1963407777) index="0" unique_id=1180300696]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Quit	"
 script = ExtResource("4_uqv4n")
 
-[node name="CloseButton" parent="VBoxContainer/PanelContainer/Panel/VBoxContainer/HBoxContainer" index="1"]
+[node name="CloseButton" parent="VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer" parent_id_path=PackedInt32Array(1963407777) index="1" unique_id=145491358]
 size_flags_horizontal = 3
 text = "Back"
-script = ExtResource("4_uqv4n")

@@ -21,7 +21,7 @@ public partial class Widget : Control
     [Export] public float Opacity = 1;
 
     Label TitleLabel => GetNode<Label>("%WidgetTitleLabel");
-    Panel TitleBar => GetNode<Panel>("%TitleBar");
+    Control TitleBar => GetNode<Control>("%TitleBar");
     Button CloseButtonTitleBar => GetNode<Button>("%CloseButtonTitleBar");
     Button CloseButton => GetNode<Button>("%CloseButton");
 
