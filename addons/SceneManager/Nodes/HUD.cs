@@ -13,6 +13,10 @@ public partial class HUD : CanvasLayer
     {
         GameContext = gameContext;
     }
+
+    public virtual void Uninit()
+    {
+    }
     #endregion
 
     // #region [Public]

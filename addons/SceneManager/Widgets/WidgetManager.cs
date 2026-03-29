@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 
 using Godot;
@@ -19,8 +20,12 @@ public partial class WidgetManager : Control
     public void Init(Dictionary<string, PackedScene> widgetScenes)
     {
         WidgetScenes = widgetScenes;
+    }
 
-        MouseFilter = MouseFilterEnum.Ignore;
+    public void Uninit()
+    {
+        foreach (var widgetName in ActiveWidgets.Keys.ToList())
+            _ = CloseWidgetAsync(widgetName);
     }
     #endregion
 
