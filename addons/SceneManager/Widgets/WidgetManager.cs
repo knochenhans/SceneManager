@@ -59,7 +59,7 @@ public partial class WidgetManager : Control
 
             if (widgetInstance.Center)
             {
-                Size = GetViewport().GetVisibleRect().Size / ScaleFactor;
+                // Size = GetViewport().GetVisibleRect().Size / ScaleFactor;
                 widgetInstance.SetAnchorsPreset(LayoutPreset.Center);
                 widgetInstance.SetOffsetsPreset(LayoutPreset.Center);
             }
