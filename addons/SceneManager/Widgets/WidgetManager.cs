@@ -67,7 +67,8 @@ public partial class WidgetManager : Control
             AddChild(widgetInstance);
             await widgetInstance.Open();
 
-            MouseFilter = MouseFilterEnum.Stop;
+            if (widgetInstance.Modal)
+                MouseFilter = MouseFilterEnum.Stop;
         }
         else
         {

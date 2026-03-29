@@ -12,6 +12,7 @@ public partial class Widget : Control
     [Export] public bool EnableDragging = true;
     [Export] public bool EnableCloseButton = true;
     [Export] public bool Modal = false;
+    [Export] public bool ForceMouseCursor = false;
 
     [ExportGroup("Visual Settings")]
     [Export] public bool Center = false;
@@ -127,6 +128,9 @@ public partial class Widget : Control
         CurrentOpeningState = OpeningState.Opening;
         await FadeHelper.TweenFadeModulate(this, FadeHelper.FadeDirectionEnum.In, FadeInDuration, Opacity);
         CurrentOpeningState = OpeningState.Opened;
+
+        if (ForceMouseCursor)
+            Input.MouseMode = Input.MouseModeEnum.Visible;
     }
 
     public async Task Close()
