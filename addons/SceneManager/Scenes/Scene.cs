@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-
+using CoreSystems;
 using Godot;
 using Godot.Collections;
 
@@ -41,6 +41,8 @@ public partial class Scene : Node
     public CursorManager CursorManager = null!;
     protected Input.MouseModeEnum LastMouseMode;
     public InitData InitData;
+
+    public GameContext GameContext;
     #endregion
 
     #region [Godot]
@@ -78,8 +80,10 @@ public partial class Scene : Node
     #endregion
 
     #region [Lifecycle]
-    public virtual void Init()
+    public virtual void Init(GameContext gameContext)
     {
+        GameContext = gameContext;
+
         if (UISoundPlayer.Instance == null)
             LogError("UISoundPlayer instance is null!", "SceneManager", LogTypeEnum.Framework);
 

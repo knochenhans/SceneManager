@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-
+using CoreSystems;
 using Godot;
 using Godot.Collections;
 
@@ -28,6 +28,8 @@ public partial class SceneManager : Node
 
     ColorRect FadeScene => GetNode<ColorRect>("%Fade");
     CanvasLayer CanvasLayer => GetNode<CanvasLayer>("CanvasLayer");
+
+    GameContext GameContext;
     CursorManager CursorManager;
     #endregion
 
@@ -63,6 +65,11 @@ public partial class SceneManager : Node
     #endregion
 
     #region [Lifecycle]
+    public void Init(GameContext gameContext)
+    {
+        GameContext = gameContext;
+    }
+
     public async Task ChangeToScene(string sceneName, InitData initData = null)
     {
         if (CurrentScene != null)
@@ -93,9 +100,9 @@ public partial class SceneManager : Node
 
         CurrentScene.InitData = initData;
         CurrentScene.CursorManager = CursorManager;
-        AddChild(CurrentScene);
+        CurrentScene.Init(GameContext);
 
-        CurrentScene.Init();
+        AddChild(CurrentScene);
 
         if (!CurrentScene.DontFadeInOnStart)
             await FadeIn(CurrentScene.FadeInTime);

@@ -1,10 +1,12 @@
 [gd_scene format=3 uid="uid://dqtp44bncs881"]
 
+[ext_resource type="Script" uid="uid://cr3x3o8e4ooay" path="res://addons/SceneManager/Main.cs" id="1_a1fma"]
 [ext_resource type="PackedScene" uid="uid://b2l6ex2ecglbl" path="res://addons/SceneManager/Nodes/SceneManager.tscn" id="2_uu6xs"]
 [ext_resource type="PackedScene" uid="uid://dgbmno8m15yrd" path="res://addons/UISoundPlayer/UISoundPlayer.tscn" id="3_r0du0"]
 [ext_resource type="PackedScene" uid="uid://cfal58ed8k0u3" path="res://CoreSystems/GameOptions/GameOptions.tscn" id="10_wkp8b"]
 
 [node name="Main" type="Node" unique_id=663930859]
+script = ExtResource("1_a1fma")
 
 [node name="GameOptions" parent="." unique_id=46680679 instance=ExtResource("10_wkp8b")]
 
