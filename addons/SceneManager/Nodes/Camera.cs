@@ -16,7 +16,7 @@ public partial class Camera : Camera2D
 
     float Trauma = 0f;
     float TraumaPower = 2f;
-    FastNoiseLite noise = new();
+    FastNoiseLite Noise = new();
     float noiseY = 0f;
     #endregion
 
@@ -24,10 +24,10 @@ public partial class Camera : Camera2D
     public override void _Ready()
     {
         GD.Randomize();
-        noise.NoiseType = FastNoiseLite.NoiseTypeEnum.SimplexSmooth;
-        noise.Seed = (int)GD.Randi();
-        noise.FractalOctaves = 4;
-        noise.Frequency = 1.0f / 10.0f;
+        Noise.NoiseType = FastNoiseLite.NoiseTypeEnum.SimplexSmooth;
+        Noise.Seed = (int)GD.Randi();
+        Noise.FractalOctaves = 4;
+        Noise.Frequency = 1.0f / 10.0f;
     }
 
     public override void _Process(double delta)

@@ -27,7 +27,7 @@ public partial class SceneManager : Node
     Scene CurrentScene;
 
     ColorRect FadeScene => GetNode<ColorRect>("%Fade");
-    CanvasLayer CanvasLayer => GetNode<CanvasLayer>("CanvasLayer");
+    CanvasLayer UICanvasLayer => GetNode<CanvasLayer>("UICanvasLayer");
 
     GameContext GameContext;
     CursorManager CursorManager;
