@@ -38,10 +38,13 @@ public partial class WidgetManager : Control
     #endregion
 
     #region [Lifecycle]
-    public void OpenWidget(string widgetName, string widgetTitle = "") => _ = OpenWidgetAsync(widgetName, widgetTitle);
+    public void OpenWidget(string widgetName, string widgetTitle = "", Variant? data = null) => _ = OpenWidgetAsync(widgetName, widgetTitle, data);
 
-    public async Task OpenWidgetAsync(string widgetName, string widgetTitle = "")
+    public async Task OpenWidgetAsync(string widgetName, string widgetTitle = "", Variant? data = null)
     {
+        if (IsWidgetOpen(widgetName))
+            return;
+
         if (WidgetScenes != null && WidgetScenes.TryGetValue(widgetName, out var widgetScene))
         {
             var widgetInstance = widgetScene.Instantiate<Widget>();
@@ -65,7 +68,7 @@ public partial class WidgetManager : Control
             }
 
             AddChild(widgetInstance);
-            await widgetInstance.Open();
+            await widgetInstance.Open(data);
 
             if (widgetInstance.Modal)
                 MouseFilter = MouseFilterEnum.Stop;

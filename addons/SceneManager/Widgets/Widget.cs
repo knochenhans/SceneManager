@@ -13,6 +13,7 @@ public partial class Widget : Control
     [Export] public bool EnableCloseButton = true;
     [Export] public bool Modal = false;
     [Export] public bool ForceMouseCursor = false;
+    [Export] public Key CloseKey = Key.Escape;
 
     [ExportGroup("Visual Settings")]
     [Export] public bool Center = false;
@@ -57,6 +58,18 @@ public partial class Widget : Control
         GrabFocus();
     }
 
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (CurrentOpeningState != OpeningState.Opened)
+            return;
+
+        if (@event.IsActionPressed("ui_cancel"))
+        {
+            AcceptEvent();
+            OnCloseButtonPressed();
+        }
+    }
+
     public override void _GuiInput(InputEvent @event)
     {
         if (CurrentOpeningState != OpeningState.Opened)
@@ -77,13 +90,6 @@ public partial class Widget : Control
                 isDragging = false;
                 movedToTop = false;
             }
-        }
-        else if (@event is InputEventKey keyEvent
-            && keyEvent.Keycode == Key.Escape
-            && keyEvent.Pressed
-            && !keyEvent.Echo)
-        {
-            OnCloseButtonPressed();
         }
     }
 
@@ -123,7 +129,7 @@ public partial class Widget : Control
     #endregion
 
     #region [Lifecycle]
-    public async Task Open()
+    public virtual async Task Open(Variant? data = null)
     {
         CurrentOpeningState = OpeningState.Opening;
         await FadeHelper.TweenFadeModulate(this, FadeHelper.FadeDirectionEnum.In, FadeInDuration, Opacity);
@@ -139,6 +145,19 @@ public partial class Widget : Control
         await FadeHelper.TweenFadeModulate(this, FadeHelper.FadeDirectionEnum.Out, FadeOutDuration, Opacity);
         CurrentOpeningState = OpeningState.Closed;
         QueueFree();
+    }
+    #endregion
+
+    #region [Public Methods]
+    public void SetTitle(string title)
+    {
+        WidgetTitle = title;
+        TitleLabel.Text = title;
+    }
+
+    public void SetCloseKey(Key key)
+    {
+        CloseKey = key;
     }
     #endregion
 }
