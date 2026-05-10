@@ -6,7 +6,7 @@ using static Logger;
 public partial class Main : Node
 {
     protected GameContext GameContext;
-    protected SceneManager SceneManager => GetNodeOrNull<SceneManager>("SceneManager");
+    [Export] public SceneManager SceneManager;
 
     #region [Godot]
     public override void _EnterTree()
