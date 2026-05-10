@@ -65,7 +65,7 @@ public partial class Scene : Node
     {
         if (@event is InputEventMouseButton mouseButtonEvent && mouseButtonEvent.Pressed)
         {
-            UISoundPlayer.Instance.PlaySound("click1");
+            GameContext.UISoundPlayer.PlaySound("click1");
             ChangeToNextScene();
         }
     }
@@ -84,7 +84,7 @@ public partial class Scene : Node
     {
         GameContext = gameContext;
 
-        if (UISoundPlayer.Instance == null)
+        if (GameContext.UISoundPlayer == null)
             LogError("UISoundPlayer instance is null!", "SceneManager", LogTypeEnum.Framework);
 
         if (BackgroundNode != null)
@@ -99,9 +99,9 @@ public partial class Scene : Node
         }
 
         if (PlayUIMusic)
-            UISoundPlayer.Instance.StartOrKeepMusic();
+            GameContext.UISoundPlayer.StartOrKeepMusic();
         else
-            UISoundPlayer.Instance.StopMusic();
+            GameContext.UISoundPlayer.StopMusic();
 
         LastMouseMode = Input.MouseMode;
 

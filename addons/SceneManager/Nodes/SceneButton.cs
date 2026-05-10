@@ -1,10 +1,15 @@
+using CoreSystems;
 using Godot;
 
 public partial class SceneButton : Button
 {
-    public override void _Ready()
+    public GameContext GameContext;
+
+    public void Init(GameContext gameContext)
     {
-        Pressed += () => UISoundPlayer.Instance.PlaySound("click1");
-        MouseEntered += () => UISoundPlayer.Instance.PlaySound("hover");
+        GameContext = gameContext;
+
+        Pressed += () => GameContext.UISoundPlayer.PlaySound("click1");
+        MouseEntered += () => GameContext.UISoundPlayer.PlaySound("hover");
     }
 }
