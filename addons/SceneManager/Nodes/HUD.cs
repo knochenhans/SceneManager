@@ -4,7 +4,6 @@ using Godot;
 public partial class HUD : CanvasLayer
 {
     #region [Fields and Properties]
-    protected Control HUDMarginContainer => GetNode<Control>("%HUDMarginContainer");
     protected GameContext GameContext;
     protected Node2D Player;
     protected StatDefinitionDatabase StatDefinitionDatabase;
