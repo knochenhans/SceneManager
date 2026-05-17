@@ -7,6 +7,12 @@ public partial class Widget : Control
     #region [Fields and Properties]
     [Signal] public delegate void CloseButtonPressedEventHandler();
 
+    [Export] Label TitleLabel;
+    [Export] Control TitleBar;
+    [Export] Button CloseButtonTitleBar;
+    [Export] Button CloseButton;
+
+    [ExportCategory("Widget Settings")]
     [Export] public string WidgetTitle;
     [Export] public bool ShowTitleBar = true;
     [Export] public bool EnableDragging = true;
@@ -21,10 +27,6 @@ public partial class Widget : Control
     [Export] public float FadeOutDuration = 0.1f;
     [Export] public float Opacity = 1;
 
-    Label TitleLabel => GetNode<Label>("%WidgetTitleLabel");
-    Control TitleBar => GetNode<Control>("%TitleBar");
-    Button CloseButtonTitleBar => GetNode<Button>("%CloseButtonTitleBar");
-    Button CloseButton => GetNode<Button>("%CloseButton");
 
     bool isDragging = false;
     bool movedToTop = false;

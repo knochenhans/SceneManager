@@ -1,18 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://b2l6ex2ecglbl"]
+[gd_scene format=3 uid="uid://b2l6ex2ecglbl"]
 
 [ext_resource type="Script" uid="uid://dr8iqvwfbflh5" path="res://addons/SceneManager/Nodes/SceneManager.cs" id="1_s6e5y"]
 [ext_resource type="Resource" uid="uid://b18aenp3m56bn" path="res://addons/SceneManager/Resources/SceneManagerDefault.tres" id="2_mfvxm"]
-[ext_resource type="AudioBusLayout" uid="uid://tmc7045duu8c" path="res://addons/GameUtils/AudioBusLayout.tres" id="5_yw25f"]
+[ext_resource type="AudioBusLayout" uid="uid://tmc7045duu8c" path="res://CoreSystems/GameUtils/AudioBusLayout.tres" id="5_yw25f"]
 
-[node name="SceneManager" type="Node"]
+[node name="SceneManager" type="Node" unique_id=520819828]
 script = ExtResource("1_s6e5y")
 SceneManagerResource = ExtResource("2_mfvxm")
 AudioBusLayout = ExtResource("5_yw25f")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=452705641]
 layer = 2
 
-[node name="Fade" type="ColorRect" parent="CanvasLayer"]
+[node name="Fade" type="ColorRect" parent="CanvasLayer" unique_id=1067262739]
 unique_name_in_owner = true
 z_index = 1000
 z_as_relative = false
