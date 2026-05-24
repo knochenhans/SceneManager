@@ -1,13 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://e3yjqqcvdjy"]
+[gd_scene format=3 uid="uid://e3yjqqcvdjy"]
 
 [ext_resource type="PackedScene" uid="uid://bawrmdt67ohun" path="res://addons/SceneManager/Scenes/Scene.tscn" id="1_uog43"]
 [ext_resource type="Script" uid="uid://c3p7h03s2fvx4" path="res://addons/SceneManager/Scenes/CentralLayoutScene.cs" id="2_bpmi6"]
 [ext_resource type="Texture2D" uid="uid://0qd8ow0yt416" path="res://addons/SceneManager/Resources/struktstudios_logo.jpg" id="2_qnh4y"]
 
-[node name="CentralLayoutScene" instance=ExtResource("1_uog43")]
+[node name="CentralLayoutScene" unique_id=531400519 instance=ExtResource("1_uog43")]
 script = ExtResource("2_bpmi6")
 
-[node name="MarginContainer" type="MarginContainer" parent="SceneBackground" index="0"]
+[node name="MarginContainer" type="MarginContainer" parent="SceneBackground" index="0" unique_id=1833137048]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,31 +20,31 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="CenterContainer" type="CenterContainer" parent="SceneBackground/MarginContainer" index="0"]
+[node name="CenterContainer" type="CenterContainer" parent="SceneBackground/MarginContainer" index="0" unique_id=2049584031]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="SceneBackground/MarginContainer/CenterContainer" index="0"]
+[node name="PanelContainer" type="PanelContainer" parent="SceneBackground/MarginContainer/CenterContainer" index="0" unique_id=1270040115]
 layout_mode = 2
 
-[node name="ColorRect" type="ColorRect" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer" index="0"]
+[node name="ColorRect" type="ColorRect" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer" index="0" unique_id=1834089188]
 layout_mode = 2
 color = Color(0, 0, 0, 1)
 
-[node name="MarginContainer" type="MarginContainer" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer" index="1"]
+[node name="MarginContainer" type="MarginContainer" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer" index="1" unique_id=721018934]
 layout_mode = 2
 
-[node name="Buttons" type="VBoxContainer" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer" index="0"]
+[node name="Buttons" type="VBoxContainer" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer" index="0" unique_id=90973410]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="SceneBackground/MarginContainer" index="1"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SceneBackground/MarginContainer" index="1" unique_id=1286678437]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 theme_override_constants/separation = 10
 
-[node name="TextureRect" type="TextureRect" parent="SceneBackground/MarginContainer/HBoxContainer" index="0"]
+[node name="TextureRect" type="TextureRect" parent="SceneBackground/MarginContainer/HBoxContainer" index="0" unique_id=2093623136]
 texture_filter = 2
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
@@ -53,6 +53,6 @@ texture = ExtResource("2_qnh4y")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="Label" type="Label" parent="SceneBackground/MarginContainer/HBoxContainer" index="1"]
+[node name="Label" type="Label" parent="SceneBackground/MarginContainer/HBoxContainer" index="1" unique_id=1387624625]
 layout_mode = 2
-text = "2025 by Strukt Studios"
+text = "2026 by Strukt Studios"
