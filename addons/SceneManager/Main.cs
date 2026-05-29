@@ -1,7 +1,5 @@
 using CoreSystems;
 using Godot;
-using Godot.Collections;
-using static Logger;
 
 public partial class Main : Node
 {

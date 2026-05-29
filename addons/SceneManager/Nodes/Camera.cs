@@ -1,6 +1,4 @@
 using Godot;
-using Godot.Collections;
-using static Logger;
 
 public partial class Camera : Camera2D
 {
@@ -18,48 +16,5 @@ public partial class Camera : Camera2D
     float TraumaPower = 2f;
     FastNoiseLite Noise = new();
     float noiseY = 0f;
-    #endregion
-
-    #region [Godot]
-    public override void _Ready()
-    {
-        GD.Randomize();
-        Noise.NoiseType = FastNoiseLite.NoiseTypeEnum.SimplexSmooth;
-        Noise.Seed = (int)GD.Randi();
-        Noise.FractalOctaves = 4;
-        Noise.Frequency = 1.0f / 10.0f;
-    }
-
-    public override void _Process(double delta)
-    {
-        if (Trauma > 0f)
-        {
-            Shake();
-            Trauma = Mathf.Clamp(Trauma - ((float)delta * ShakeDecay), 0f, 1f);
-        }
-    }
-    #endregion
-
-    #region [Lifecycle]
-    private void Shake()
-    {
-        float amount = Mathf.Pow(Trauma, TraumaPower);
-        noiseY++;
-        // Rotation = ShakeMaxRoll * amount * noise.GetNoise2D(noise.Seed, noiseY);
-        Offset = new Vector2(
-            // ShakeMaxOffset.X * amount * noise.GetNoise2D((noise.Seed * 2) + 1, noiseY),
-            // ShakeMaxOffset.Y * amount * noise.GetNoise2D((noise.Seed * 3) + 2, noiseY)
-            ShakeMaxOffset.X * amount * GD.RandRange(-1, 1),
-            ShakeMaxOffset.Y * amount * GD.RandRange(-1, 1)
-        );
-        GD.Print($"Camera Shake - Trauma: {Trauma}, Amount: {amount}, Rotation: {Rotation}, Offset: {Offset}");
-    }
-    #endregion
-
-    #region [Public]
-    public void AddTrauma(float amount)
-    {
-        Trauma = Mathf.Clamp(Trauma + amount, 0f, 1f);
-    }
     #endregion
 }

@@ -1,9 +1,6 @@
-using System;
-using System.Linq;
 using System.Threading.Tasks;
 using CoreSystems;
 using Godot;
-using Godot.Collections;
 
 using static Logger;
 
@@ -65,7 +62,7 @@ public partial class Scene : Node
     {
         if (@event is InputEventMouseButton mouseButtonEvent && mouseButtonEvent.Pressed)
         {
-            GameContext.UISoundPlayer.PlaySound("click1");
+            GameContext.UISoundManager.PlaySound("click1");
             ChangeToNextScene();
         }
     }
@@ -84,7 +81,7 @@ public partial class Scene : Node
     {
         GameContext = gameContext;
 
-        if (GameContext.UISoundPlayer == null)
+        if (GameContext.UISoundManager == null)
             LogError("UISoundPlayer instance is null!", "SceneManager", LogTypeEnum.Framework);
 
         if (BackgroundNode != null)
@@ -99,9 +96,9 @@ public partial class Scene : Node
         }
 
         if (PlayUIMusic)
-            GameContext.UISoundPlayer.StartOrKeepMusic();
+            GameContext.UISoundManager.StartOrKeepMusic();
         else
-            GameContext.UISoundPlayer.StopMusic();
+            GameContext.UISoundManager.StopMusic();
 
         LastMouseMode = Input.MouseMode;
 

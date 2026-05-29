@@ -9,7 +9,7 @@ public partial class SceneButton : Button
     {
         GameContext = gameContext;
 
-        Pressed += () => GameContext.UISoundPlayer.PlaySound("click1");
-        MouseEntered += () => GameContext.UISoundPlayer.PlaySound("hover");
+        Pressed += () => GameContext.UISoundManager.PlaySound("click1");
+        MouseEntered += () => GameContext.UISoundManager.PlaySound("hover");
     }
 }

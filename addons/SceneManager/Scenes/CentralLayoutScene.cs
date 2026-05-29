@@ -3,8 +3,6 @@ using System.Linq;
 using Godot;
 using Godot.Collections;
 
-using static Logger;
-
 public partial class CentralLayoutScene : Scene
 {
     #region [Fields and Properties]

@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://d1l22qsiuoe6n" path="res://addons/SceneManager/Nodes/SceneButton.cs" id="4_uqv4n"]
 
 [node name="OptionsWidget" unique_id=1170729459 instance=ExtResource("1_r771i")]
-custom_minimum_size = Vector2(500, 300)
+custom_minimum_size = Vector2(700, 400)
 offset_left = -576.0
 offset_top = -324.0
 offset_right = -26.0
