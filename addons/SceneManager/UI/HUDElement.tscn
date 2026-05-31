@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dqueicag2d5ox"]
+
+[ext_resource type="Script" uid="uid://bla012s43lmb8" path="res://addons/SceneManager/UI/HUDElement.cs" id="1_de6fr"]
+
+[node name="HUDElement" type="PanelContainer" unique_id=1691014755]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_de6fr")
+
+[node name="Timer" type="Timer" parent="." unique_id=331014496]
