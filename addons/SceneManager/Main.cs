@@ -1,4 +1,5 @@
 using CoreSystems;
+
 using Godot;
 
 public partial class Main : Node
@@ -6,6 +7,7 @@ public partial class Main : Node
     [Export] public SceneManager SceneManager;
     [Export] public UISoundManager UISoundManager;
 
+    protected GameContext GameContext;
 
     #region [Godot]
     public override void _EnterTree()
