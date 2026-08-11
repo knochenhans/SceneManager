@@ -1,11 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://bawrmdt67ohun"]
+[gd_scene format=3 uid="uid://bawrmdt67ohun"]
 
 [ext_resource type="Script" uid="uid://cqv8itljttqqr" path="res://addons/SceneManager/Scenes/Scene.cs" id="1_ytdvc"]
 
-[node name="Scene" type="Node"]
+[node name="Scene" type="Node" unique_id=1430212249 node_paths=PackedStringArray("LifeTimerNode", "BackgroundNode")]
 script = ExtResource("1_ytdvc")
+LifeTimerNode = NodePath("LifeTimer")
+BackgroundNode = NodePath("SceneBackground")
 
-[node name="SceneBackground" type="ColorRect" parent="."]
+[node name="SceneBackground" type="ColorRect" parent="." unique_id=599526706]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -14,6 +16,6 @@ grow_vertical = 2
 mouse_filter = 1
 color = Color(0, 0, 0, 1)
 
-[node name="LifeTimer" type="Timer" parent="."]
+[node name="LifeTimer" type="Timer" parent="." unique_id=1483837195]
 
-[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=24449967]

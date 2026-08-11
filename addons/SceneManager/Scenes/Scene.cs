@@ -18,6 +18,9 @@ public partial class Scene : Node
         TransitioningOut
     }
 
+    [Export] Timer LifeTimerNode;
+    [Export] protected ColorRect BackgroundNode;
+
     [Export] public string DefaultNextScene = "";
     [Export] bool PlayUIMusic = false;
 
