@@ -3,8 +3,9 @@ using Godot;
 
 public partial class Main : Node
 {
-    protected GameContext GameContext;
     [Export] public SceneManager SceneManager;
+    [Export] public UISoundManager UISoundManager;
+
 
     #region [Godot]
     public override void _EnterTree()
@@ -13,6 +14,8 @@ public partial class Main : Node
 
         GameContext = new GameContext();
         SceneManager.Init(GameContext);
+
+        GameContext.UISoundManager = UISoundManager;
     }
     #endregion
 }
