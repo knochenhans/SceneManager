@@ -1,5 +1,7 @@
 using System.Threading.Tasks;
+
 using CoreSystems;
+
 using Godot;
 
 using static Logger;
@@ -33,14 +35,12 @@ public partial class Scene : Node
     [Export] public float FadeOutTime = 0.5f;
     [Export] public float LifeTime = 0.0f;
 
-    protected ColorRect BackgroundNode => GetNodeOrNull<ColorRect>("SceneBackground");
     protected SceneStateEnum SceneState = SceneStateEnum.TransitioningIn;
 
-    Timer LifeTimerNode => GetNode<Timer>("LifeTimer");
 
-    public CursorManager CursorManager = null!;
     protected Input.MouseModeEnum LastMouseMode;
-    public InitData InitData;
+    public CursorManager CursorManager { get; private set; }
+    public InitData InitData { get; private set; } = [];
 
     public GameContext GameContext;
     #endregion
@@ -80,9 +80,11 @@ public partial class Scene : Node
     #endregion
 
     #region [Lifecycle]
-    public virtual void Init(GameContext gameContext)
+    public virtual void Init(GameContext gameContext, InitData initData, CursorManager cursorManager)
     {
         GameContext = gameContext;
+        InitData = initData;
+        CursorManager = cursorManager;
 
         if (GameContext.UISoundManager == null)
             LogError("UISoundPlayer instance is null!", "SceneManager", LogTypeEnum.Framework);

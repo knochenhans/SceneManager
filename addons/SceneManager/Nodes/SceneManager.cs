@@ -1,5 +1,7 @@
 using System.Threading.Tasks;
+
 using CoreSystems;
+
 using Godot;
 using Godot.Collections;
 
@@ -75,6 +77,8 @@ public partial class SceneManager : Node
         if (CurrentScene != null)
             await ExitCurrentScene();
 
+        initData ??= [];
+
         await StartScene(sceneName, initData);
     }
 
@@ -98,9 +102,7 @@ public partial class SceneManager : Node
             return;
         }
 
-        CurrentScene.InitData = initData;
-        CurrentScene.CursorManager = CursorManager;
-        CurrentScene.Init(GameContext);
+        CurrentScene.Init(GameContext, initData, CursorManager);
 
         AddChild(CurrentScene);
 
