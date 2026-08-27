@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://dh7ruel65t2yx"]
+
+[ext_resource type="Script" uid="uid://64iwy74ph8y5" path="res://addons/SceneManager/Window/CustomWindowTitlePanel.cs" id="1_qfewx"]
+
+[node name="CustomWindowTitlePanel" type="Panel" unique_id=1403686925 node_paths=PackedStringArray("TitleLabel", "CloseButton")]
+custom_maximum_size = Vector2(-1, 35)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+script = ExtResource("1_qfewx")
+TitleLabel = NodePath("MarginContainer/Label")
+CloseButton = NodePath("MarginContainer/Button")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1922004050]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="MarginContainer" unique_id=1036196843]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Window"
+clip_text = true
+
+[node name="Button" type="Button" parent="MarginContainer" unique_id=1445087874]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "×"

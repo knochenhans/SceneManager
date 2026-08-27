@@ -14,6 +14,9 @@ public partial class Main : Node
     {
         base._EnterTree();
 
+        // if (DebugConfig.IsFlagActive(CustomMain.GameFlags.SkipIntro))
+        //     SceneManager.SceneManagerResource.initialSceneName = "game";
+
         GameContext = new GameContext();
         SceneManager.Init(GameContext);
 

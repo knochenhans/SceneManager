@@ -37,7 +37,6 @@ public partial class Scene : Node
 
     protected SceneStateEnum SceneState = SceneStateEnum.TransitioningIn;
 
-
     protected Input.MouseModeEnum LastMouseMode;
     public CursorManager CursorManager { get; private set; }
     public InitData InitData { get; private set; } = [];
@@ -70,11 +69,11 @@ public partial class Scene : Node
         }
     }
 
-    public virtual void OnWidgetOpened(string widgetName, Widget widgetInstance, bool modal = false)
+    public virtual void OnWindowOpened(string windowName, CustomWindow windowInstance, bool modal = false)
     {
     }
 
-    public virtual void OnWidgetClosed(string widgetName)
+    public virtual void OnWindowClosed(string windowName)
     {
     }
     #endregion

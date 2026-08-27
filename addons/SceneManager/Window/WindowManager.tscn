@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://csdvjc8wqof7m"]
+
+[ext_resource type="Script" uid="uid://df8ny6dnho0gt" path="res://addons/SceneManager/Window/WindowManager.cs" id="1_gsdrm"]
+
+[node name="WindowManager" type="Control" unique_id=1190808574]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gsdrm")
