@@ -22,13 +22,15 @@ public partial class WindowManager : Control
     private readonly System.Collections.Generic.HashSet<string> pendingWindows = [];
     private readonly Dictionary<string, WindowState> windowStates = [];
 
-    #region Window Queries
     public CustomWindow GetOpenWindow(string windowId) => activeWindows.TryGetValue(windowId, out var window) ? window : null;
     public System.Collections.Generic.IEnumerable<CustomWindow> GetOpenWindows() => activeWindows.Values;
     public bool IsWindowOpen(string windowId) => activeWindows.TryGetValue(windowId, out var window) && window.Visible;
     public bool IsAnyWindowOpen() => activeWindows.Values.Any(window => window.Visible);
     public bool IsAnyModalWindowOpen() => activeWindows.Values.Any(window => window.Visible && window.Modal);
     public CustomWindow GetTopmostVisibleWindow() => activeWindows.Values.LastOrDefault(window => window.Visible);
+
+    #region [Godot]
+    public override void _Ready() => ProcessMode = ProcessModeEnum.Always;
     #endregion
 
     #region Lifecycle Operations

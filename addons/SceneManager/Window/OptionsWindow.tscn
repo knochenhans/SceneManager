@@ -5,10 +5,12 @@
 [ext_resource type="Script" uid="uid://d1l22qsiuoe6n" path="res://addons/SceneManager/Nodes/SceneButton.cs" id="2_tyd0q"]
 [ext_resource type="PackedScene" uid="uid://bf1cf06vio4fu" path="res://CoreSystems/GameOptions/OptionsContainer.tscn" id="3_txlcq"]
 
-[node name="OptionsWindow" unique_id=1804733201 node_paths=PackedStringArray("OptionsContainer", "CloseButtonNode") instance=ExtResource("1_8ityn")]
+[node name="OptionsWindow" unique_id=1804733201 node_paths=PackedStringArray("OptionsContainer", "CloseButtonNode", "QuitButtonNode") instance=ExtResource("1_8ityn")]
 script = ExtResource("2_d762b")
 OptionsContainer = NodePath("VBoxContainer/Content/VBoxContainer/OptionsContainer")
 CloseButtonNode = NodePath("VBoxContainer/Content/VBoxContainer/HBoxContainer/CloseButton")
+QuitButtonNode = NodePath("VBoxContainer/Content/VBoxContainer/HBoxContainer/QuitButton")
+Modal = true
 Title = "Options"
 
 [node name="OptionsContainer" parent="VBoxContainer/Content/VBoxContainer" parent_id_path=PackedInt32Array(2050367388) index="0" unique_id=643155132 instance=ExtResource("3_txlcq")]
@@ -28,3 +30,5 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Back"
 script = ExtResource("2_tyd0q")
+
+[editable path="VBoxContainer/CustomWindowTitlePanel"]
