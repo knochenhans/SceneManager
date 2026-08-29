@@ -1,6 +1,6 @@
 using Godot;
 using Godot.Collections;
-
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,15 +8,15 @@ public partial class WindowManager : Control
 {
     [Signal] public delegate void WindowFocusedEventHandler(string windowId, CustomWindow windowInstance);
     [Signal] public delegate void WindowUnfocusedEventHandler(string windowId, CustomWindow windowInstance);
-
     [Signal] public delegate void WindowOpenedEventHandler(string windowId, CustomWindow windowInstance, bool modal);
     [Signal] public delegate void WindowClosedEventHandler(string windowId);
-
     [Signal] public delegate void PauseRequestedEventHandler();
     [Signal] public delegate void ResumeRequestedEventHandler();
 
     [Export] public Dictionary<string, PackedScene> WindowScenes;
     [Export] public float ScaleFactor = 1.0f;
+
+    Input.MouseModeEnum DefaultGameplayMouseMode = Input.MouseModeEnum.Captured;
 
     private sealed partial class WindowState : GodotObject
     {
@@ -35,8 +35,6 @@ public partial class WindowManager : Control
     public bool IsAnyModalWindowOpen() => activeWindows.Values.Any(window => window.Visible && window.Modal);
     public CustomWindow GetTopmostVisibleWindow() => activeWindows.Values.LastOrDefault(window => window.Visible);
 
-    Input.MouseModeEnum LastMouseMode;
-
     #region [Godot]
     public override void _Ready() => ProcessMode = ProcessModeEnum.Always;
     #endregion
@@ -48,8 +46,6 @@ public partial class WindowManager : Control
     {
         if (IsWindowOpen(windowId) || pendingWindows.Contains(windowId))
             return;
-
-        LastMouseMode = Input.MouseMode;
 
         pendingWindows.Add(windowId);
 
@@ -74,7 +70,7 @@ public partial class WindowManager : Control
 
             window.CloseRequested += () => CloseWindow(windowId);
 
-            UpdateInputState();
+            UpdateUIState();
             EmitSignal(SignalName.WindowOpened, windowId, window, window.Modal);
 
             if (!openInBackground)
@@ -86,8 +82,7 @@ public partial class WindowManager : Control
             if (window.Modal && activeWindows.Values.Count(w => w.Visible && w.Modal) == 1)
                 EmitSignal(SignalName.PauseRequested);
 
-            UpdateInputState();
-            Input.MouseMode = Input.MouseModeEnum.Visible;
+            UpdateUIState();
         }
         finally
         {
@@ -106,17 +101,15 @@ public partial class WindowManager : Control
             return;
 
         SaveWindowState(windowId, window);
-
         activeWindows.Remove(windowId);
 
         await window.CloseAsync();
-
         window.QueueFree();
 
         EmitSignal(SignalName.WindowUnfocused, windowId, window);
         EmitSignal(SignalName.WindowClosed, windowId);
-        UpdateInputState();
-        Input.MouseMode = LastMouseMode;
+
+        UpdateUIState();
 
         if (!IsAnyModalWindowOpen())
             EmitSignal(SignalName.ResumeRequested);
@@ -133,18 +126,21 @@ public partial class WindowManager : Control
     public void ToggleWindowVisibility(string windowId, string windowTitle = "")
     {
         var window = GetOpenWindow(windowId);
+        if (window == null)
+            return;
+
         if (window.Visible)
         {
             window.Hide();
             EmitSignal(SignalName.WindowUnfocused, windowId, window);
-            Input.MouseMode = LastMouseMode;
         }
         else
         {
             window.Show();
             EmitSignal(SignalName.WindowFocused, windowId, window);
-            Input.MouseMode = Input.MouseModeEnum.Visible;
         }
+
+        UpdateUIState();
     }
 
     public void Uninit()
@@ -174,19 +170,23 @@ public partial class WindowManager : Control
         }
     }
 
-    private void UpdateInputState()
+    private void UpdateUIState()
     {
+        bool anyWindowOpen = IsAnyWindowOpen();
+
         MouseFilter = IsAnyModalWindowOpen()
             ? MouseFilterEnum.Stop
             : MouseFilterEnum.Ignore;
+
+        Input.MouseMode = anyWindowOpen
+            ? Input.MouseModeEnum.Visible
+            : DefaultGameplayMouseMode;
     }
 
-    public void ToggleMouseVisibility()
+    public void SetDefaultGameplayMouseMode(Input.MouseModeEnum mode)
     {
-        LastMouseMode = Input.MouseMode;
-        Input.MouseMode = Input.MouseMode == Input.MouseModeEnum.Visible
-            ? Input.MouseModeEnum.Captured
-            : Input.MouseModeEnum.Visible;
+        DefaultGameplayMouseMode = mode;
+        UpdateUIState();
     }
     #endregion
 }
