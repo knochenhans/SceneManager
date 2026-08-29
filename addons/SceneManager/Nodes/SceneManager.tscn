@@ -4,10 +4,12 @@
 [ext_resource type="Resource" uid="uid://b18aenp3m56bn" path="res://addons/SceneManager/Resources/SceneManagerDefault.tres" id="2_mfvxm"]
 [ext_resource type="AudioBusLayout" uid="uid://tmc7045duu8c" path="res://CoreSystems/GameUtils/AudioBusLayout.tres" id="5_yw25f"]
 
-[node name="SceneManager" type="Node" unique_id=520819828]
+[node name="SceneManager" type="Node" unique_id=520819828 node_paths=PackedStringArray("FadeScene", "UICanvasLayer")]
 script = ExtResource("1_s6e5y")
 SceneManagerResource = ExtResource("2_mfvxm")
 AudioBusLayout = ExtResource("5_yw25f")
+FadeScene = NodePath("CanvasLayer/Fade")
+UICanvasLayer = NodePath("CanvasLayer")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=452705641]
 layer = 2

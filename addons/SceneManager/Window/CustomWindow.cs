@@ -8,7 +8,10 @@ public partial class CustomWindow : Control
     [Signal] public delegate void CloseRequestedEventHandler();
 
     [Export] public CustomWindowTitlePanel TitlePanel;
-    [Export] public bool Modal;
+    [Export] public bool Modal = false;
+    [Export] public bool Movable = true;
+    [Export] public bool Closable = true;
+    [Export] public bool HideTitleBar = false;
 
     private string title = "Custom Window";
 
@@ -31,10 +34,19 @@ public partial class CustomWindow : Control
             TitlePanel.Init(this);
             TitlePanel.CloseButtonPressed += OnCloseButtonPressed;
             TitlePanel.SetTitle(Title);
+
+            if (HideTitleBar)
+                TitlePanel.Hide();
+
+            if (!Movable)
+                TitlePanel.DisableMovement();
+
+            if (!Closable)
+                TitlePanel.HideCloseButton();
         }
     }
 
-    protected void OnCloseButtonPressed() => EmitSignal(SignalName.CloseRequested);
+    protected virtual void OnCloseButtonPressed() => EmitSignal(SignalName.CloseRequested);
 
     public void SetTitle(string newTitle) => Title = newTitle;
 
@@ -49,6 +61,4 @@ public partial class CustomWindow : Control
         Visible = false;
         await Task.CompletedTask;
     }
-
-    public void Toggle() => Visible = !Visible;
 }

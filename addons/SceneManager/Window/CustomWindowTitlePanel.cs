@@ -12,12 +12,17 @@ public partial class CustomWindowTitlePanel : Panel
     Vector2 dragOffset;
     Control windowControl;
 
+    bool movable = true;
+
     public override void _Ready() => CloseButton.Pressed += OnCloseButtonPressed;
 
     private void OnCloseButtonPressed() => EmitSignal(SignalName.CloseButtonPressed);
 
     public override void _GuiInput(InputEvent @event)
     {
+        if (!IsInstanceValid(windowControl))
+            return;
+
         if (@event is InputEventMouseButton mouseButton &&
             mouseButton.ButtonIndex == MouseButton.Left)
         {
@@ -33,7 +38,7 @@ public partial class CustomWindowTitlePanel : Panel
 
             AcceptEvent();
         }
-        else if (@event is InputEventMouseMotion motion && dragging)
+        else if (@event is InputEventMouseMotion motion && dragging && movable)
         {
             windowControl.GlobalPosition = motion.GlobalPosition + dragOffset;
             AcceptEvent();
@@ -54,4 +59,8 @@ public partial class CustomWindowTitlePanel : Panel
             }
         }
     }
+
+    public void DisableMovement() => movable = false;
+
+    public void HideCloseButton() => CloseButton.Visible = false;
 }

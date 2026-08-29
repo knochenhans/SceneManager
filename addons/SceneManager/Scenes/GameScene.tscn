@@ -2,8 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://bawrmdt67ohun" path="res://addons/SceneManager/Scenes/Scene.tscn" id="1_vvakc"]
 [ext_resource type="PackedScene" uid="uid://csdvjc8wqof7m" path="res://addons/SceneManager/Window/WindowManager.tscn" id="2_cgfhn"]
+[ext_resource type="PackedScene" uid="uid://blfsda8x30sos" path="res://CoreSystems/DebugTools/DebugWindow/DebugWindow.tscn" id="3_1b7hr"]
 [ext_resource type="PackedScene" uid="uid://ddfbn05780mqq" path="res://addons/SceneManager/Nodes/HUD.tscn" id="4_46g7r"]
 [ext_resource type="PackedScene" uid="uid://ckeidvpi72g3b" path="res://CoreSystems/NotificationsManager/NotificationManager.tscn" id="4_cgfhn"]
+[ext_resource type="PackedScene" uid="uid://c7spr5nib7d3k" path="res://addons/SceneManager/Window/OptionsWindow.tscn" id="4_k1b3t"]
 
 [node name="GameScene" unique_id=1463222585 instance=ExtResource("1_vvakc")]
 
@@ -12,6 +14,10 @@ unique_name_in_owner = true
 layer = 2
 
 [node name="WindowManager" parent="FixedCanvasLayer" index="0" unique_id=1190808574 instance=ExtResource("2_cgfhn")]
+WindowScenes = Dictionary[String, PackedScene]({
+"debug_window": ExtResource("3_1b7hr"),
+"options_window": ExtResource("4_k1b3t")
+})
 
 [node name="NotificationManager" parent="FixedCanvasLayer" index="1" unique_id=839796179 instance=ExtResource("4_cgfhn")]
 unique_name_in_owner = true

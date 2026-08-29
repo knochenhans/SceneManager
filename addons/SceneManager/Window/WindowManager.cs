@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 public partial class WindowManager : Control
 {
+    [Signal] public delegate void WindowFocusedEventHandler(string windowId, CustomWindow windowInstance);
+    [Signal] public delegate void WindowUnfocusedEventHandler(string windowId, CustomWindow windowInstance);
+
     [Signal] public delegate void WindowOpenedEventHandler(string windowId, CustomWindow windowInstance, bool modal);
     [Signal] public delegate void WindowClosedEventHandler(string windowId);
+
+    [Signal] public delegate void PauseRequestedEventHandler();
+    [Signal] public delegate void ResumeRequestedEventHandler();
 
     [Export] public Dictionary<string, PackedScene> WindowScenes;
     [Export] public float ScaleFactor = 1.0f;
@@ -18,9 +24,9 @@ public partial class WindowManager : Control
         public Vector2 Size;
     }
 
-    private readonly Dictionary<string, CustomWindow> activeWindows = [];
-    private readonly System.Collections.Generic.HashSet<string> pendingWindows = [];
-    private readonly Dictionary<string, WindowState> windowStates = [];
+    readonly Dictionary<string, CustomWindow> activeWindows = [];
+    readonly System.Collections.Generic.HashSet<string> pendingWindows = [];
+    readonly Dictionary<string, WindowState> windowStates = [];
 
     public CustomWindow GetOpenWindow(string windowId) => activeWindows.TryGetValue(windowId, out var window) ? window : null;
     public System.Collections.Generic.IEnumerable<CustomWindow> GetOpenWindows() => activeWindows.Values;
@@ -29,6 +35,8 @@ public partial class WindowManager : Control
     public bool IsAnyModalWindowOpen() => activeWindows.Values.Any(window => window.Visible && window.Modal);
     public CustomWindow GetTopmostVisibleWindow() => activeWindows.Values.LastOrDefault(window => window.Visible);
 
+    Input.MouseModeEnum LastMouseMode;
+
     #region [Godot]
     public override void _Ready() => ProcessMode = ProcessModeEnum.Always;
     #endregion
@@ -36,10 +44,12 @@ public partial class WindowManager : Control
     #region Lifecycle Operations
     public void OpenWindow(string windowId, string windowTitle = "", Variant? data = null) => _ = OpenWindowAsync(windowId, windowTitle, data);
 
-    public async Task OpenWindowAsync(string windowId, string windowTitle = "", Variant? data = null)
+    public async Task OpenWindowAsync(string windowId, string windowTitle = "", Variant? data = null, bool openInBackground = false)
     {
         if (IsWindowOpen(windowId) || pendingWindows.Contains(windowId))
             return;
+
+        LastMouseMode = Input.MouseMode;
 
         pendingWindows.Add(windowId);
 
@@ -67,8 +77,17 @@ public partial class WindowManager : Control
             UpdateInputState();
             EmitSignal(SignalName.WindowOpened, windowId, window, window.Modal);
 
-            await window.OpenAsync(data);
+            if (!openInBackground)
+            {
+                EmitSignal(SignalName.WindowFocused, windowId, window);
+                await window.OpenAsync(data);
+            }
+
+            if (window.Modal && activeWindows.Values.Count(w => w.Visible && w.Modal) == 1)
+                EmitSignal(SignalName.PauseRequested);
+
             UpdateInputState();
+            Input.MouseMode = Input.MouseModeEnum.Visible;
         }
         finally
         {
@@ -94,8 +113,13 @@ public partial class WindowManager : Control
 
         window.QueueFree();
 
+        EmitSignal(SignalName.WindowUnfocused, windowId, window);
         EmitSignal(SignalName.WindowClosed, windowId);
         UpdateInputState();
+        Input.MouseMode = LastMouseMode;
+
+        if (!IsAnyModalWindowOpen())
+            EmitSignal(SignalName.ResumeRequested);
     }
 
     public async Task ToggleWindow(string windowId, string windowTitle = "")
@@ -109,7 +133,18 @@ public partial class WindowManager : Control
     public void ToggleWindowVisibility(string windowId, string windowTitle = "")
     {
         var window = GetOpenWindow(windowId);
-        window?.Toggle();
+        if (window.Visible)
+        {
+            window.Hide();
+            EmitSignal(SignalName.WindowUnfocused, windowId, window);
+            Input.MouseMode = LastMouseMode;
+        }
+        else
+        {
+            window.Show();
+            EmitSignal(SignalName.WindowFocused, windowId, window);
+            Input.MouseMode = Input.MouseModeEnum.Visible;
+        }
     }
 
     public void Uninit()
@@ -144,6 +179,14 @@ public partial class WindowManager : Control
         MouseFilter = IsAnyModalWindowOpen()
             ? MouseFilterEnum.Stop
             : MouseFilterEnum.Ignore;
+    }
+
+    public void ToggleMouseVisibility()
+    {
+        LastMouseMode = Input.MouseMode;
+        Input.MouseMode = Input.MouseMode == Input.MouseModeEnum.Visible
+            ? Input.MouseModeEnum.Captured
+            : Input.MouseModeEnum.Visible;
     }
     #endregion
 }

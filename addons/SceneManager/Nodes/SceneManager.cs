@@ -28,8 +28,8 @@ public partial class SceneManager : Node
     string CurrentSceneName;
     Scene CurrentScene;
 
-    ColorRect FadeScene => GetNode<ColorRect>("%Fade");
-    CanvasLayer UICanvasLayer => GetNode<CanvasLayer>("UICanvasLayer");
+    [Export] ColorRect FadeScene;
+    [Export] CanvasLayer UICanvasLayer;
 
     GameContext GameContext;
     CursorManager CursorManager;

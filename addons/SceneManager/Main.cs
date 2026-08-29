@@ -9,15 +9,42 @@ public partial class Main : Node
 
     protected GameContext GameContext;
 
+    public class GameFlags
+    {
+        public const string StartGame = "start-game";
+        public const string Invincible = "invincible";
+        public const string NoCollision = "no-collision";
+        public const string FreeCam = "free-cam";
+        public const string Pause = "pause";
+        public const string DisableMusic = "disable-music";
+    }
+
     #region [Godot]
     public override void _EnterTree()
     {
         base._EnterTree();
 
-        // if (DebugConfig.IsFlagActive(CustomMain.GameFlags.SkipIntro))
-        //     SceneManager.SceneManagerResource.initialSceneName = "game";
+        DebugConfig.RegisterFlags(
+        [
+            GameFlags.StartGame,
+            GameFlags.Invincible,
+            GameFlags.NoCollision,
+            GameFlags.FreeCam,
+            GameFlags.Pause,
+            GameFlags.DisableMusic
+        ]);
+
+        DebugConfig.RegisterProfile("Default", [GameFlags.StartGame]);
+        DebugConfig.RegisterProfile("NoClip", [GameFlags.StartGame, GameFlags.Invincible, GameFlags.NoCollision]);
+        DebugConfig.RegisterProfile("Full", [GameFlags.StartGame, GameFlags.Invincible, GameFlags.NoCollision, GameFlags.FreeCam, GameFlags.DisableMusic]);
+
+        DebugConfig.InitializeFromCommandLine();
 
         GameContext = new GameContext();
+
+        if (DebugConfig.IsFlagActive(GameFlags.StartGame))
+            SceneManager.SceneManagerResource.initialSceneName = "game";
+
         SceneManager.Init(GameContext);
 
         GameContext.UISoundManager = UISoundManager;

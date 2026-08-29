@@ -6,7 +6,8 @@ using Godot.Collections;
 public partial class CentralLayoutScene : Scene
 {
     #region [Fields and Properties]
-    protected VBoxContainer ButtonsNode => GetNodeOrNull<VBoxContainer>("%Buttons");
+    [Export] protected VBoxContainer ButtonsNode;
+
     protected Array<SceneButton> SceneButtons;
     #endregion
 

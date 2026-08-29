@@ -11,6 +11,7 @@ OptionsContainer = NodePath("VBoxContainer/Content/VBoxContainer/OptionsContaine
 CloseButtonNode = NodePath("VBoxContainer/Content/VBoxContainer/HBoxContainer/CloseButton")
 QuitButtonNode = NodePath("VBoxContainer/Content/VBoxContainer/HBoxContainer/QuitButton")
 Modal = true
+Movable = false
 Title = "Options"
 
 [node name="OptionsContainer" parent="VBoxContainer/Content/VBoxContainer" parent_id_path=PackedInt32Array(2050367388) index="0" unique_id=643155132 instance=ExtResource("3_txlcq")]

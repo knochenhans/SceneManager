@@ -1,30 +1,30 @@
-[gd_scene load_steps=5 format=3 uid="uid://dc14s1yyhr3yu"]
+[gd_scene format=3 uid="uid://dc14s1yyhr3yu"]
 
 [ext_resource type="PackedScene" uid="uid://e3yjqqcvdjy" path="res://addons/SceneManager/Scenes/CentralLayoutScene.tscn" id="1_t1ptt"]
 [ext_resource type="Script" uid="uid://dr8yw1824c2w4" path="res://addons/SceneManager/Scenes/OptionsScene.cs" id="2_0pr02"]
-[ext_resource type="PackedScene" uid="uid://bf1cf06vio4fu" path="res://addons/GameOptions/OptionsContainer.tscn" id="2_is1yg"]
+[ext_resource type="PackedScene" uid="uid://bf1cf06vio4fu" path="res://CoreSystems/GameOptions/OptionsContainer.tscn" id="2_is1yg"]
 [ext_resource type="Script" uid="uid://d1l22qsiuoe6n" path="res://addons/SceneManager/Nodes/SceneButton.cs" id="2_prjpf"]
 
-[node name="OptionsScene" instance=ExtResource("1_t1ptt")]
+[node name="OptionsScene" unique_id=1949797022 node_paths=PackedStringArray("OptionGridNode", "CloseButtonNode") instance=ExtResource("1_t1ptt")]
 script = ExtResource("2_0pr02")
+OptionGridNode = NodePath("SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons/OptionGrid")
+CloseButtonNode = NodePath("SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons/BackButton")
 DefaultNextScene = "menu"
 PlayUIMusic = true
 
-[node name="Label" type="Label" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons" index="0"]
+[node name="Label" type="Label" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons" parent_id_path=PackedInt32Array(90973410) index="0" unique_id=1515621362]
 layout_mode = 2
 text = "Options"
 
-[node name="HSeparator" type="HSeparator" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons" index="1"]
+[node name="HSeparator" type="HSeparator" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons" parent_id_path=PackedInt32Array(90973410) index="1" unique_id=1519068259]
 layout_mode = 2
 
-[node name="OptionGrid" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons" index="2" instance=ExtResource("2_is1yg")]
+[node name="OptionGrid" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons" parent_id_path=PackedInt32Array(90973410) index="2" unique_id=2016021530 instance=ExtResource("2_is1yg")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="ExitButton" type="Button" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons" index="3"]
+[node name="BackButton" type="Button" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons" parent_id_path=PackedInt32Array(90973410) index="3" unique_id=1300275169]
 layout_mode = 2
 size_flags_horizontal = 8
-text = "Exit"
+text = "Back"
 script = ExtResource("2_prjpf")
-
-[connection signal="pressed" from="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer/Buttons/ExitButton" to="." method="OnExitButtonPressed"]

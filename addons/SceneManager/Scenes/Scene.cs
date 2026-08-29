@@ -23,7 +23,10 @@ public partial class Scene : Node
     [Export] Timer LifeTimerNode;
     [Export] protected ColorRect BackgroundNode;
 
+    [ExportGroup("Transitions")]
     [Export] public string DefaultNextScene = "";
+    [Export(PropertyHint.Enum, "ui_accept,ui_cancel,ui_focus_next,ui_focus_prev")] public string SkipInputAction = "ui_accept";
+    [Export] public bool AllowInputSkip = false;
     [Export] bool PlayUIMusic = false;
 
     [ExportGroup("Mouse")]
@@ -57,6 +60,18 @@ public partial class Scene : Node
 
         base._Input(@event);
     }
+
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (SceneState != SceneStateEnum.Idle || !AllowInputSkip)
+            return;
+
+        if (!string.IsNullOrEmpty(SkipInputAction) && @event.IsActionPressed(SkipInputAction))
+        {
+            GetTree().Root.SetInputAsHandled();
+            ChangeToNextScene();
+        }
+    }
     #endregion
 
     #region [Events]
@@ -67,6 +82,14 @@ public partial class Scene : Node
             GameContext.UISoundManager.PlaySound("click1");
             ChangeToNextScene();
         }
+    }
+
+    public virtual void OnWindowFocused(string windowName, CustomWindow windowInstance)
+    {
+    }
+
+    public virtual void OnWindowUnfocused(string windowName, CustomWindow windowInstance)
+    {
     }
 
     public virtual void OnWindowOpened(string windowName, CustomWindow windowInstance, bool modal = false)
