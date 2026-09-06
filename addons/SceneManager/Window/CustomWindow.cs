@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 [Tool]
 public partial class CustomWindow : Control
 {
+    [Signal] public delegate void OpenRequestedEventHandler();
     [Signal] public delegate void CloseRequestedEventHandler();
+    [Signal] public delegate void ShowRequestedEventHandler();
+    [Signal] public delegate void HideRequestedEventHandler();
 
     [Export] public CustomWindowTitlePanel TitlePanel;
     [Export] public bool Modal = false;
@@ -13,7 +16,8 @@ public partial class CustomWindow : Control
     [Export] public bool Closable = true;
     [Export] public bool HideTitleBar = false;
 
-    private string title = "Custom Window";
+    string title = "Custom Window";
+    public string ID = "";
 
     [Export]
     public string Title
@@ -44,6 +48,16 @@ public partial class CustomWindow : Control
             if (!Closable)
                 TitlePanel.HideCloseButton();
         }
+    }
+
+    public override void _ExitTree()
+    {
+        Uninit();
+        base._ExitTree();
+    }
+
+    public virtual void Uninit()
+    {
     }
 
     protected virtual void OnCloseButtonPressed() => EmitSignal(SignalName.CloseRequested);
