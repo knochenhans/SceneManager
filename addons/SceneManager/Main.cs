@@ -24,6 +24,8 @@ public partial class Main : Node
     {
         base._EnterTree();
 
+        Logger.WriteToFile = true;
+
         DebugConfig.RegisterFlags(
         [
             GameFlags.StartGame,
