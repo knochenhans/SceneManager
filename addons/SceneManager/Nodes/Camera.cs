@@ -43,10 +43,12 @@ public partial class Camera : Camera2D, ICamera<Vector2, Node2D>
         Logger.Log("Camera reset to default position and zoom", Logger.LogTypeEnum.World);
     }
 
-    public async Task MoveTo(Vector2 position, float duration)
+    public async Task MoveTo(Vector2 position, float duration, Tween.TransitionType transitionType = Tween.TransitionType.Linear, Tween.EaseType easeType = Tween.EaseType.InOut)
     {
         var tcs = new TaskCompletionSource();
         var tween = CreateTween();
+        tween.SetEase(easeType);
+        tween.SetTrans(transitionType);
         tween.TweenProperty(this, "position", position, duration);
         tween.Finished += tcs.SetResult;
         await tcs.Task;
@@ -54,10 +56,12 @@ public partial class Camera : Camera2D, ICamera<Vector2, Node2D>
         Logger.Log($"Camera moved to {position}", Logger.LogTypeEnum.World);
     }
 
-    public async Task ZoomTo(Vector2 zoom, float duration)
+    public async Task ZoomTo(Vector2 zoom, float duration, Tween.TransitionType transitionType = Tween.TransitionType.Linear, Tween.EaseType easeType = Tween.EaseType.InOut)
     {
         var tcs = new TaskCompletionSource();
         var tween = CreateTween();
+        tween.SetEase(easeType);
+        tween.SetTrans(transitionType);
         tween.TweenProperty(this, "zoom", zoom, duration);
         tween.Finished += tcs.SetResult;
         await tcs.Task;

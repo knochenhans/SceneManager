@@ -10,7 +10,7 @@ public interface ICamera
     public void Reset();
     public Vector2 GetZoom();
     public void SetZoom(Vector2 zoom);
-    public Task ZoomTo(Vector2 zoom, float duration);
+    public Task ZoomTo(Vector2 zoom, float duration = 0.0f, Tween.TransitionType transitionType = Tween.TransitionType.Linear, Tween.EaseType easeType = Tween.EaseType.InOut);
     public void SetLimits(Rect2 stageLimits);
     public Vector2 GetGlobalMousePosition();
 }
@@ -27,5 +27,5 @@ public interface ICamera<TVector, TNode> : ICamera
     public TVector GetPosition();
     public void SetPosition(TVector position);
 
-    public Task MoveTo(TVector position, float duration);
+    public Task MoveTo(TVector position, float duration = 0.0f, Tween.TransitionType transitionType = Tween.TransitionType.Linear, Tween.EaseType easeType = Tween.EaseType.InOut);
 }
