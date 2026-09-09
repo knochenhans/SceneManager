@@ -56,6 +56,10 @@ public partial class CustomWindow : Control
         base._ExitTree();
     }
 
+    public virtual void Init()
+    {
+    }
+
     public virtual void Uninit()
     {
     }
