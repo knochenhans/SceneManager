@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 public partial class WindowManager : Control
 {
     #region Signals
-    [Signal] public delegate void WindowFocusedEventHandler(string windowId, CustomWindow windowInstance);
-    [Signal] public delegate void WindowUnfocusedEventHandler(string windowId, CustomWindow windowInstance);
-    [Signal] public delegate void WindowOpenedEventHandler(string windowId, CustomWindow windowInstance, bool modal);
-    [Signal] public delegate void WindowClosedEventHandler(string windowId);
-    [Signal] public delegate void PauseRequestedEventHandler();
-    [Signal] public delegate void ResumeRequestedEventHandler();
+    public Action<string, CustomWindow> WindowFocusedEventHandler;
+    public Action<string, CustomWindow> WindowUnfocusedEventHandler;
+    public Action<string, CustomWindow, bool> WindowOpenedEventHandler;
+    public Action<string> WindowClosedEventHandler;
+    public Action PauseRequestedEventHandler;
+    public Action ResumeRequestedEventHandler;
     #endregion
 
     [Export] public Dictionary<string, PackedScene> WindowScenes { get; set; }
@@ -148,11 +148,11 @@ public partial class WindowManager : Control
             window.Visible = true;
             UpdateUIState();
 
-            EmitSignal(SignalName.WindowOpened, windowId, window, window.Modal);
-            EmitSignal(SignalName.WindowFocused, windowId, window);
+            WindowOpenedEventHandler?.Invoke(windowId, window, window.Modal);
+            WindowFocusedEventHandler?.Invoke(windowId, window);
 
             if (window.Modal && activeWindows.Values.Count(w => w.Visible && w.Modal) == 1)
-                EmitSignal(SignalName.PauseRequested);
+                PauseRequestedEventHandler?.Invoke();
 
             await window.OpenAsync(data);
         }
@@ -192,13 +192,13 @@ public partial class WindowManager : Control
 
         await window.CloseAsync();
 
-        EmitSignal(SignalName.WindowUnfocused, windowId, window);
-        EmitSignal(SignalName.WindowClosed, windowId);
+        WindowUnfocusedEventHandler?.Invoke(windowId, window);
+        WindowClosedEventHandler?.Invoke(windowId);
 
         UpdateUIState();
 
         if (!IsAnyModalWindowOpen())
-            EmitSignal(SignalName.ResumeRequested);
+            ResumeRequestedEventHandler?.Invoke();
         window.QueueFree();
     }
 
@@ -238,12 +238,12 @@ public partial class WindowManager : Control
         if (visible)
         {
             window.Show();
-            EmitSignal(SignalName.WindowFocused, windowId, window);
+            WindowFocusedEventHandler?.Invoke(windowId, window);
         }
         else
         {
             window.Hide();
-            EmitSignal(SignalName.WindowUnfocused, windowId, window);
+            WindowUnfocusedEventHandler?.Invoke(windowId, window);
         }
 
         UpdateUIState();
