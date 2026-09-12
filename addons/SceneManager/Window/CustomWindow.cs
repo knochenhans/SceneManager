@@ -50,12 +50,6 @@ public partial class CustomWindow : Control
         }
     }
 
-    public override void _ExitTree()
-    {
-        Uninit();
-        base._ExitTree();
-    }
-
     public virtual void Init()
     {
     }
@@ -70,12 +64,16 @@ public partial class CustomWindow : Control
 
     public virtual async Task OpenAsync(Variant? data = null)
     {
+        Init();
+
         Visible = true;
         await Task.CompletedTask;
     }
 
     public virtual async Task CloseAsync()
     {
+        Uninit();
+
         Visible = false;
         await Task.CompletedTask;
     }
