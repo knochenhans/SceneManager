@@ -1,3 +1,4 @@
+using CoreSystems.GameOptions;
 using Godot;
 using Godot.Collections;
 using System;
@@ -267,14 +268,11 @@ public partial class WindowManager : Control
         // CustomWindow handlers automatically clear when QueueFree destroys the node
     }
 
-    private void SaveWindowState(string windowId, CustomWindow window)
+    private void SaveWindowState(string windowId, CustomWindow window) => windowStates[windowId] = new WindowState
     {
-        windowStates[windowId] = new WindowState
-        {
-            Position = window.GlobalPosition,
-            Size = window.Size
-        };
-    }
+        Position = window.GlobalPosition,
+        Size = window.Size
+    };
 
     private void RestoreWindowState(string windowId, CustomWindow window)
     {
@@ -290,13 +288,8 @@ public partial class WindowManager : Control
     {
         bool anyWindowOpen = IsAnyWindowOpen();
 
-        MouseFilter = IsAnyModalWindowOpen()
-            ? MouseFilterEnum.Stop
-            : MouseFilterEnum.Ignore;
-
-        Input.MouseMode = anyWindowOpen
-            ? Input.MouseModeEnum.Visible
-            : defaultGameplayMouseMode;
+        MouseFilter = IsAnyModalWindowOpen() ? MouseFilterEnum.Stop : MouseFilterEnum.Ignore;
+        Input.MouseMode = anyWindowOpen ? Input.MouseModeEnum.Visible : defaultGameplayMouseMode;
     }
 
     public void SetDefaultGameplayMouseMode(Input.MouseModeEnum mode)
@@ -316,5 +309,23 @@ public partial class WindowManager : Control
             Logger.LogError($"Unhandled window task exception: {ex}", Logger.LogTypeEnum.Framework);
         }
     }
+
+    public async Task HandleCancelOrCloseTopmostAsync(string fallbackWindowId = "options_window", Action onFallbackOpened = null)
+    {
+        var topWindow = GetTopmostVisibleWindow();
+
+        if (topWindow != null)
+        {
+            await CloseWindowAsync(topWindow.ID);
+        }
+        else if (!string.IsNullOrEmpty(fallbackWindowId))
+        {
+            var window = await OpenWindowAsync(fallbackWindowId);
+            if (window is OptionsWindow optionsWindow && onFallbackOpened != null)
+                optionsWindow.QuitButtonPressedEventHandler += onFallbackOpened;
+        }
+    }
+
+    public void HandleCancelOrCloseTopmost(string fallbackWindowId = "options_window", Action onFallbackOpened = null) => ExecuteSync(() => HandleCancelOrCloseTopmostAsync(fallbackWindowId, onFallbackOpened));
     #endregion
 }

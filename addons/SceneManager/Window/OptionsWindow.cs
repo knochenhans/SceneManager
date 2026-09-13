@@ -1,9 +1,10 @@
+using System;
 using Godot;
 namespace CoreSystems.GameOptions
 {
     public partial class OptionsWindow : CustomWindow
     {
-        [Signal] public delegate void QuitButtonPressedEventHandler();
+        public Action QuitButtonPressedEventHandler;
 
         [Export] OptionsContainer OptionsContainer;
         [Export] Button CloseButtonNode;
@@ -19,6 +20,6 @@ namespace CoreSystems.GameOptions
             OptionsContainer?.Init();
         }
 
-        private void OnQuitButtonPressed() => EmitSignal(SignalName.QuitButtonPressed);
+        private void OnQuitButtonPressed() => QuitButtonPressedEventHandler?.Invoke();
     }
 }
