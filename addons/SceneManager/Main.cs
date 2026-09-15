@@ -17,6 +17,7 @@ public partial class Main : Node
         public const string FreeCam = "free-cam";
         public const string Pause = "pause";
         public const string DisableMusic = "disable-music";
+        public const string DisableLights = "disable-lights";
     }
 
     #region [Godot]
@@ -33,7 +34,8 @@ public partial class Main : Node
             GameFlags.NoCollision,
             GameFlags.FreeCam,
             GameFlags.Pause,
-            GameFlags.DisableMusic
+            GameFlags.DisableMusic,
+            GameFlags.DisableLights
         ]);
 
         DebugConfig.RegisterProfile("Default", [GameFlags.StartGame]);

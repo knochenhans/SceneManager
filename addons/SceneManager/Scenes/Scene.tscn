@@ -17,5 +17,3 @@ mouse_filter = 1
 color = Color(0, 0, 0, 1)
 
 [node name="LifeTimer" type="Timer" parent="." unique_id=1483837195]
-
-[node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=24449967]
