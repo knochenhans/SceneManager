@@ -16,9 +16,10 @@ public partial class WindowManager : Control
     public Action ResumeRequestedEventHandler;
     #endregion
 
-    [Export] public Dictionary<string, PackedScene> WindowScenes { get; set; }
-    [Export] public Dictionary<string, string> WindowScenePaths { get; set; } = [];
-    [Export] public float ScaleFactor { get; set; } = 1.0f;
+    [Export] public Dictionary<string, PackedScene> WindowScenes;
+    [Export] public Dictionary<string, string> WindowScenePaths = [];
+    [Export] public float ScaleFactor = 1.0f;
+    [Export] public Array<string> PersistentWindowIDs = ["debug_window"];
 
     Input.MouseModeEnum defaultGameplayMouseMode = Input.MouseModeEnum.Captured;
 
@@ -71,6 +72,16 @@ public partial class WindowManager : Control
     public void ShowWindow(string windowId) => ExecuteSync(() => ShowWindowAsync(windowId));
     public void HideWindow(string windowId) => ExecuteSync(() => HideWindowAsync(windowId));
     public void ToggleWindow(string windowId, string windowTitle = "") => ExecuteSync(() => ToggleWindowAsync(windowId, windowTitle));
+
+    public async Task CloseOrHideWindowAsync(string windowId)
+    {
+        if (PersistentWindowIDs != null && PersistentWindowIDs.Contains(windowId))
+            await HideWindowAsync(windowId);
+        else
+            await CloseWindowAsync(windowId);
+    }
+
+    public void CloseOrHideWindow(string windowId) => ExecuteSync(() => CloseOrHideWindowAsync(windowId));
 
     public void ToggleWindowVisibility(string windowId, string windowTitle = "")
     {
@@ -316,12 +327,11 @@ public partial class WindowManager : Control
 
         if (topWindow != null)
         {
-            await CloseWindowAsync(topWindow.ID);
+            await CloseOrHideWindowAsync(topWindow.ID);
         }
         else if (!string.IsNullOrEmpty(fallbackWindowId))
         {
-            var window = await OpenWindowAsync(fallbackWindowId);
-            if (window is OptionsWindow optionsWindow && onFallbackOpened != null)
+            if (await OpenWindowAsync(fallbackWindowId) is OptionsWindow optionsWindow && onFallbackOpened != null)
                 optionsWindow.QuitButtonPressedEventHandler += onFallbackOpened;
         }
     }
