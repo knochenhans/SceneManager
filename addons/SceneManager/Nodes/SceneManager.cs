@@ -67,10 +67,7 @@ public partial class SceneManager : Node
     #endregion
 
     #region [Lifecycle]
-    public void Init(GameContext gameContext)
-    {
-        GameContext = gameContext;
-    }
+    public void Init(GameContext gameContext) => GameContext = gameContext;
 
     public async Task ChangeToScene(string sceneName, InitData initData = null)
     {

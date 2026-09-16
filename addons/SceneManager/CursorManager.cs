@@ -70,8 +70,5 @@ public class CursorManager
         }
     }
 
-    public void ResetMouseCursor()
-    {
-        SetMouseCursor("default");
-    }
+    public void ResetMouseCursor() => SetMouseCursor("default");
 }

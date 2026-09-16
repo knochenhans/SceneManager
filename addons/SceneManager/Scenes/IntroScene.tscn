@@ -5,7 +5,3 @@
 [node name="IntroScene" unique_id=963450210 instance=ExtResource("1_0edhc")]
 DefaultNextScene = "menu"
 AllowInputSkip = true
-
-[node name="MusicPlayer" parent="." index="2" unique_id=24449967]
-autoplay = true
-bus = &"Music"

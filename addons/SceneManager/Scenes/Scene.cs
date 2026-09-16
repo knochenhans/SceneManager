@@ -48,10 +48,7 @@ public partial class Scene : Node
     #endregion
 
     #region [Godot]
-    public override void _Ready()
-    {
-        Log($"Starting scene {SceneFilePath}", "SceneManager", LogTypeEnum.Framework);
-    }
+    public override void _Ready() => Log($"Starting scene {SceneFilePath}", "SceneManager", LogTypeEnum.Framework);
 
     public override void _Input(InputEvent @event)
     {
