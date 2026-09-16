@@ -11,7 +11,7 @@ public partial class Main : Node
 
     public class GameFlags
     {
-        public const string StartGame = "start-game";
+        public const string SkipToGame = "skip-to-game";
         public const string Invincible = "invincible";
         public const string NoCollision = "no-collision";
         public const string FreeCam = "free-cam";
@@ -29,7 +29,7 @@ public partial class Main : Node
 
         DebugConfig.RegisterFlags(
         [
-            GameFlags.StartGame,
+            GameFlags.SkipToGame,
             GameFlags.Invincible,
             GameFlags.NoCollision,
             GameFlags.FreeCam,
@@ -38,15 +38,15 @@ public partial class Main : Node
             GameFlags.DisableLights
         ]);
 
-        DebugConfig.RegisterProfile("Default", [GameFlags.StartGame]);
-        DebugConfig.RegisterProfile("NoClip", [GameFlags.StartGame, GameFlags.Invincible, GameFlags.NoCollision]);
-        DebugConfig.RegisterProfile("Full", [GameFlags.StartGame, GameFlags.Invincible, GameFlags.NoCollision, GameFlags.FreeCam, GameFlags.DisableMusic]);
+        DebugConfig.RegisterProfile("Default", [GameFlags.SkipToGame]);
+        DebugConfig.RegisterProfile("NoClip", [GameFlags.SkipToGame, GameFlags.Invincible, GameFlags.NoCollision]);
+        DebugConfig.RegisterProfile("Full", [GameFlags.SkipToGame, GameFlags.Invincible, GameFlags.NoCollision, GameFlags.FreeCam, GameFlags.DisableMusic]);
 
         DebugConfig.InitializeFromCommandLine();
 
         GameContext = new GameContext();
 
-        if (DebugConfig.IsFlagActive(GameFlags.StartGame))
+        if (DebugConfig.IsFlagActive(GameFlags.SkipToGame))
             SceneManager.SceneManagerResource.initialSceneName = "game";
 
         SceneManager.Init(GameContext);
