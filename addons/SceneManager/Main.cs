@@ -25,6 +25,8 @@ public partial class Main : Node
     {
         base._EnterTree();
 
+        GameContext = CreateGameContext();
+
         Logger.WriteToFile = true;
 
         DebugConfig.RegisterFlags(
@@ -44,8 +46,6 @@ public partial class Main : Node
 
         DebugConfig.InitializeFromCommandLine();
 
-        GameContext = new GameContext();
-
         if (DebugConfig.IsFlagActive(GameFlags.SkipToGame))
             SceneManager.SceneManagerResource.initialSceneName = "game";
 
@@ -53,5 +53,7 @@ public partial class Main : Node
 
         GameContext.UISoundManager = UISoundManager;
     }
+
+    protected virtual GameContext CreateGameContext() => new();
     #endregion
 }
