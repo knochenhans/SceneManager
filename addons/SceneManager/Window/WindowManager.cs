@@ -69,6 +69,13 @@ public partial class WindowManager : Control
 
     public void OpenWindow(string windowId, string windowTitle = "", Variant? data = null) => ExecuteSync(() => OpenWindowAsync(windowId, windowTitle, data));
     public void CloseWindow(string windowId) => ExecuteSync(() => CloseWindowAsync(windowId));
+    public void CloseAllWindows()
+    {
+        foreach (var windowId in activeWindows.Keys.ToList())
+            CloseOrHideWindow(windowId);
+
+        UpdateUIState();
+    }
     public void ShowWindow(string windowId) => ExecuteSync(() => ShowWindowAsync(windowId));
     public void HideWindow(string windowId) => ExecuteSync(() => HideWindowAsync(windowId));
     public void ToggleWindow(string windowId, string windowTitle = "") => ExecuteSync(() => ToggleWindowAsync(windowId, windowTitle));

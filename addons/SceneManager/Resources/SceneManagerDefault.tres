@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="SceneManagerResource" load_steps=7 format=3 uid="uid://b18aenp3m56bn"]
+[gd_resource type="Resource" script_class="SceneManagerResource" format=3 uid="uid://b18aenp3m56bn"]
 
 [ext_resource type="PackedScene" uid="uid://b4hulv2gjask8" path="res://addons/SceneManager/Scenes/IntroScene.tscn" id="1_6a48i"]
 [ext_resource type="PackedScene" uid="uid://bvqfhvj8n4khq" path="res://addons/SceneManager/Scenes/GameScene.tscn" id="2_6a48i"]
