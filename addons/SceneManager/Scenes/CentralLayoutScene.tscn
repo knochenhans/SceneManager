@@ -39,7 +39,6 @@ layout_mode = 2
 mouse_filter = 2
 
 [node name="Buttons" type="VBoxContainer" parent="SceneBackground/MarginContainer/CenterContainer/PanelContainer/MarginContainer" index="0" unique_id=90973410]
-unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 

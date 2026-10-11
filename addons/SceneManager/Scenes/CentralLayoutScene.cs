@@ -1,5 +1,5 @@
 using System.Linq;
-
+using CoreSystems;
 using Godot;
 using Godot.Collections;
 
@@ -18,6 +18,12 @@ public partial class CentralLayoutScene : Scene
 
         if (ButtonsNode != null)
             SceneButtons = [.. ButtonsNode.GetChildren().OfType<SceneButton>()];
+
+        if (SceneButtons == null)
+            return;
+
+        foreach (var button in SceneButtons)
+            button.Init(GameContext);
     }
     #endregion
 
